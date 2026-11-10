@@ -1,0 +1,1335 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<script>
+/* Optional: URL that accepts a JSON POST from the feedback form (CORS enabled).
+   Leave empty to show a copyable summary instead.
+   For the Russian page, use an endpoint that stores data inside Russia. */
+window.LW_FORM_ENDPOINT = "";
+</script>
+</head>
+<body>
+<title>Loopwise Россия и СНГ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a decision ledger. Fixed section index on wide screens, sticky tab strip on phones; one section in view at a time, every claim tagged by evidence type. */
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --ink:#16201E; --muted:#56625F; --line:#D5DAD5;
+  --accent:#1F4FD8; --accent-ink:#FFFFFF; --accent-soft:#E3EAFB;
+  --amber:#A86400; --amber-soft:#FBEFD9; --good:#1E7A4C; --good-soft:#E0F2E8; --bad:#B3261E; --bad-soft:#FBE4E2;
+  --code:#EEF0EC;
+  --f-display:"Golos Text","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111615; --surface:#1A201F; --ink:#E6ECE9; --muted:#9AA6A2; --line:#2E3836;
+  --accent:#7EA0FF; --accent-ink:#0D1530; --accent-soft:#1E2A4D;
+  --amber:#F0B45A; --amber-soft:#3A2C14; --good:#6FD39C; --good-soft:#15301F; --bad:#FF8A80; --bad-soft:#3A1916;
+  --code:#222A28; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111615; --surface:#1A201F; --ink:#E6ECE9; --muted:#9AA6A2; --line:#2E3836;
+  --accent:#7EA0FF; --accent-ink:#0D1530; --accent-soft:#1E2A4D;
+  --amber:#F0B45A; --amber-soft:#3A2C14; --good:#6FD39C; --good-soft:#15301F; --bad:#FF8A80; --bad-soft:#3A1916;
+  --code:#222A28; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100%}
+nav.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;border-right:1px solid var(--line);padding-block:24px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:16px;background:var(--bg)}
+.brand{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0 0 2px}
+.brand-sub{font-size:12.5px;color:var(--muted);margin:0 0 20px}
+nav.side ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.side a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:6px;font-size:14px}
+nav.side a .n{font-family:var(--f-mono);font-size:11.5px;min-width:18px}
+nav.side a:hover{color:var(--ink);background:var(--code)}
+nav.side a[aria-current="page"]{color:var(--accent-ink);background:var(--accent)}
+.theme-btn{margin-top:20px;font:inherit;font-size:12.5px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer}
+.tabs{display:none}
+main{padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.wrap{max-width:980px;margin:0 auto;min-width:0}
+section.view{display:flex;flex-direction:column;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;letter-spacing:-.01em;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.2vw,40px);font-weight:700}
+h2{font-size:24px;font-weight:700;margin-top:14px}
+h3{font-size:18px;font-weight:600;margin-top:8px}
+h4{font-size:15.5px;font-weight:600}
+p{margin:0;max-width:70ch}
+ul,ol{margin:0;padding-left:20px;max-width:72ch}
+li{margin:3px 0}
+.lede{font-size:17.5px;color:var(--ink);max-width:66ch}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.callout.warn{border-color:var(--amber);background:var(--amber-soft)}
+.callout.risk{border-color:var(--bad);background:var(--bad-soft)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:600;background:var(--code);position:sticky;top:0;font-size:12.5px}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.w-wide table{min-width:900px}
+.w-mid table{min-width:680px}
+.t{display:inline-block;font-family:var(--f-mono);font-size:10.5px;font-weight:500;line-height:1;padding:3px 5px;border-radius:4px;vertical-align:1px;margin-right:4px;border:1px solid currentColor}
+.t-f{color:var(--muted)} .t-s{color:var(--good)} .t-h{color:var(--accent)} .t-a{color:var(--amber)} .t-r{color:var(--ink);background:var(--code)} .t-q{color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;color:var(--muted)}
+.ref{font-family:var(--f-mono);font-size:11px;vertical-align:super;text-decoration:none;margin-left:1px}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.p-auto{background:var(--good-soft);color:var(--good)} .p-appr{background:var(--amber-soft);color:var(--amber)} .p-human{background:var(--accent-soft);color:var(--accent)} .p-no{background:var(--bad-soft);color:var(--bad)}
+.why{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 16px;font-size:14px}
+.why dt{font-weight:600;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+.why dd{margin:0}
+pre.diagram{font-family:var(--f-mono);font-size:12px;line-height:1.45;background:var(--code);border-radius:10px;padding:16px;overflow-x:auto;margin:0;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.flow span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+.flow i{color:var(--muted);font-style:normal}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.5;cursor:default}
+label{font-size:13.5px;font-weight:600;display:flex;flex-direction:column;gap:5px}
+input,select,textarea{font:inherit;font-size:14.5px;font-weight:400;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+textarea{min-height:84px;resize:vertical}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form .full{grid-column:1/-1}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:400}
+.checks label{flex-direction:row;align-items:center;font-weight:400;gap:6px}
+.checks input{width:auto}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.calc .inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{background:var(--code);border-radius:8px;padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums;font-weight:500}
+.kpi span{font-size:12px;color:var(--muted)}
+.bar{height:10px;border-radius:5px;background:var(--code);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent)}
+.seg-row{display:grid;grid-template-columns:140px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.seg-row b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;font-weight:500}
+.sliders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.sliders label{font-weight:400;font-size:13px;flex-direction:row;justify-content:space-between;align-items:center;gap:10px}
+.sliders input{width:120px;padding:0}
+.status{font-size:13.5px;padding:10px 12px;border-radius:8px}
+.status.ok{background:var(--good-soft);color:var(--good)} .status.err{background:var(--bad-soft);color:var(--bad)} .status.info{background:var(--code);color:var(--muted)}
+details{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:10px 14px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px}
+details[open] summary{margin-bottom:8px}
+.copytext{white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;background:var(--code);padding:12px;border-radius:8px;max-height:260px;overflow:auto}
+@media (max-width:900px){
+  .shell{display:block}
+  nav.side{display:none}
+  .tabs{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto;gap:4px;padding-block:8px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));scrollbar-width:none}
+  .tabs a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+  .tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .grid3{grid-template-columns:1fr}
+  .calc{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .grid2,.form,.sliders,.calc .inputs{grid-template-columns:1fr}
+  .why{grid-template-columns:1fr}
+  .seg-row{grid-template-columns:100px minmax(0,1fr) 44px}
+  body{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="shell">
+<nav class="side" aria-label="Разделы">
+  <p class="brand">Loopwise</p>
+  <p class="brand-sub">Рабочее название · план запуска · Россия и СНГ · 10 ноября 2026</p>
+  <ol id="navlist"></ol>
+  <button class="theme-btn" id="themeBtn" type="button">Тема</button>
+</nav>
+<div class="tabs" id="tabs" role="navigation" aria-label="Разделы"></div>
+<main><div class="wrap" id="app">
+<style>p,li,td,dd{hyphens:auto;-webkit-hyphens:auto}</style>
+<!-- ============ 0 РЕКОМЕНДАЦИЯ ============ -->
+<section class="view" id="v-summary" data-title="Рекомендация" data-n="00">
+  <p class="eyebrow">Главная рекомендация</p>
+  <h1>Стать оператором решений о росте для средних брендов, продающих через маркетплейсы. Платформу строить из повторяющейся работы.</h1>
+  <p class="lede">Не запускать полносервисное агентство и не запускать self-serve SaaS. Запустить управляемый сервис, который ежемесячно отвечает на один вопрос: <b>куда направить следующий рубль продвижения (внутренняя реклама маркетплейса, внешний трафик, скидки и акции), чтобы вырос маржинальный доход после комиссий, логистики и возвратов</b>. Каждое изменение согласовано, записано в журнал решений и проверено. Программный продукт строится только там, где работа повторяется.</p>
+  <div class="legend" aria-label="Обозначения">
+    <span><span class="t t-f">F</span>контекст основателей</span>
+    <span><span class="t t-s">S</span>факт с источником</span>
+    <span><span class="t t-h">H</span>гипотеза</span>
+    <span><span class="t t-a">A</span>допущение</span>
+    <span><span class="t t-r">R</span>рекомендация</span>
+    <span><span class="t t-q">Q</span>открытый вопрос</span>
+  </div>
+
+  <div class="callout risk">
+    <p><b>Сначала юрист по санкциям, потом продажи.</b> <span class="t t-s">S</span>Статья 5n Регламента ЕС 833/2014 запрещает оказывать российским юрлицам, в частности, рекламные услуги, маркетинговые исследования, ИТ-консалтинг и доступ к ИИ-моделям; запрет распространяется на компании, зарегистрированные в ЕС, включая дочерние компании российских групп<a class="ref" href="#sources">[16]</a>. Если кто-то из основателей, сотрудников или подрядчиков является гражданином или резидентом ЕС, либо часть бизнеса оформлена в ЕС, структуру нужно согласовать с квалифицированным юристом до первого договора. Этот план не является юридической консультацией и не предлагает обходных схем.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="box">
+      <h4>Пять решений</h4>
+      <ol class="small">
+        <li><span class="t t-r">R</span><b>Плацдарм:</b> средние потребительские бренды в России, у которых маркетплейсы (Wildberries, Ozon, Яндекс Маркет) дают значимую долю выручки, а рекламный бюджет составляет примерно 1,5–15 млн ₽ в месяц на 2+ каналах (диапазоны проверить).</li>
+        <li><span class="t t-r">R</span><b>Первый сценарий:</b> ежемесячный цикл «прибыль на рубль продвижения»: диагностика, перераспределение в согласованных рамках, один причинный тест в квартал, отчёт в маржинальном доходе.</li>
+        <li><span class="t t-r">R</span><b>Модель:</b> управляемый сервис на собственной платформе с фиксированным вознаграждением по диапазонам бюджета, без процента от медиа.</li>
+        <li><span class="t t-r">R</span><b>География:</b> Россия → Казахстан (месяцы 9–12) → Узбекистан (год 2). Для каждой страны отдельный юридический и инфраструктурный контур хранения данных.</li>
+        <li><span class="t t-r">R</span><b>Автономность:</b> по умолчанию только рекомендации; автоматическое исполнение лишь для обратимых действий в пределах бюджета, письменно согласованных с клиентом, и только после маркировки рекламы.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h4>Почему так</h4>
+      <ul class="small">
+        <li><span class="t t-s">S</span>Деньги ушли в e-retail media: по оценке Easy Commerce, рекламодатели потратили на продвижение в e-retail media 805 млрд ₽ в 2025 году, из них 80,5% рекламной выручки пришлось на маркетплейсы<a class="ref" href="#sources">[3]</a>. Решение о бюджете на маркетплейсах стало ключевым для потребительских брендов.</li>
+        <li><span class="t t-s">S</span>Рынок замедляется: по данным АКАР, российский рекламный рынок вырос на 8,5% в 2025 году, около 981,6 млрд ₽, против «сверхдинамичных» 2023–2024 годов<a class="ref" href="#sources">[1]</a>; в I квартале 2026 года рост составил 5%<a class="ref" href="#sources">[2]</a>. При замедлении рынка ценность доказанной эффективности растёт.</li>
+        <li><span class="t t-s">S</span>Набор каналов нестабилен: ФАС сочла рекламу в Telegram и YouTube формально незаконной, но пообещала не наказывать до конца 2026 года; реклама в Instagram и Facebook остаётся под запретом<a class="ref" href="#sources">[7]</a>. Брендам нужен план перераспределения бюджета на 2027 год, и его стоит строить на измерениях, а не на отчётах площадок.</li>
+        <li><span class="t t-f">F</span>Основатели уже планируют инструмент сценарного прогнозирования для МСБ. Он становится модулем диагностики и планирования.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flow" aria-label="Операционный цикл">
+    <span>Бизнес-цель</span><i>→</i><span>Готовность данных и диагностика</span><i>→</i><span>Сценарный план</span><i>→</i><span>Согласованный бюджет и бриф</span><i>→</i><span>Маркировка и запуск</span><i>→</i><span>Продажи и маржа</span><i>→</i><span>Причинный тест</span><i>→</i><span>Журнал решений</span><i>→</i><span>Следующий план</span>
+  </div>
+
+  <h2>Что должно быть правдой</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Условие</th><th>Сигнал остановиться или пересмотреть</th><th>Как узнаем</th><th>Срок</th></tr></thead>
+    <tbody>
+      <tr><td><span class="t t-h">H</span>Собственники средних брендов воспринимают неопределённость в распределении бюджета на маркетплейсах как дорогую и регулярную проблему</td><td>Менее 8 из 15 собеседников называют решение по бюджету за последние 90 дней, в котором сомневались</td><td>Проблемные интервью</td><td class="num">День 30</td></tr>
+      <tr><td><span class="t t-h">H</span>Готовы платить за пилот до появления продукта</td><td>Меньше 2 оплаченных пилотов из 10 квалифицированных предложений</td><td>Предложение пилота</td><td class="num">День 60</td></tr>
+      <tr><td><span class="t t-h">H</span>Данные клиентов (выгрузки маркетплейсов, рекламных кабинетов, себестоимость) позволяют получить причинную оценку за 90 дней</td><td>Меньше половины проверенных клиентов проходят порог готовности данных</td><td>Платные аудиты данных</td><td class="num">День 45</td></tr>
+      <tr><td><span class="t t-h">H</span>Обслуживание укладывается примерно в 40 часов на клиента в месяц к 9-му месяцу</td><td>Больше 60 часов после 3 циклов без снижения</td><td>Учёт времени по процессам</td><td class="num">Месяц 9</td></tr>
+      <tr><td><span class="t t-h">H</span>Пилот приводит к решению, которое клиент принимает и не принял бы без нас</td><td>Нет ни одного согласованного перераспределения или тест без вывода и без способа исправить дизайн</td><td>Журнал решений, итоговая встреча</td><td class="num">День 90</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 1 ДОПУЩЕНИЯ И ВОПРОСЫ ============ -->
+<section class="view" id="v-questions" data-title="Допущения и вопросы" data-n="01" hidden>
+  <p class="eyebrow">01 · Ключевые решения основателей</p>
+  <h1>Восемь вопросов, способных изменить план</h1>
+  <p>У каждого вопроса есть рабочий ответ, чтобы план можно было продолжать. Если ваш ответ другой, в таблице указано, что изменится. Ответить можно в <a href="#feedback">форме обратной связи</a>.</p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>№</th><th>Вопрос</th><th>Рабочее допущение</th><th>Если ответ другой</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Q1</td><td><span class="t t-q">Q</span><b>Юридическая структура и гражданство/резидентство участников?</b></td><td><span class="t t-a">A</span>Российское юрлицо обслуживает российских клиентов; для Казахстана и Узбекистана создаются местные юрлица. Никто из исполнителей не подпадает под санкционные ограничения ЕС.</td><td>Если хоть один участник подпадает под санкционное право ЕС (или иное), до продаж нужна консультация; возможно, этот участник не сможет работать с российскими клиентами вовсе<a class="ref" href="#sources">[16]</a>.</td></tr>
+      <tr><td class="num">Q2</td><td><span class="t t-q">Q</span><b>Кто в команде и сколько времени вкладывает?</b></td><td><span class="t t-a">A</span>2–3 основателя: коммерческий лидер, специалист по моделированию, часть разработки на подряде. <span class="t t-f">F</span>Один из основателей имеет опыт трансграничной торговли для русскоязычных покупателей и изучает React.</td><td>Без специалиста по маркетинговой аналитике нанять его до первого пилота. Без продавца пилоты не появятся при любом качестве продукта.</td></tr>
+      <tr><td class="num">Q3</td><td><span class="t t-q">Q</span><b>Бюджет на первые 12 месяцев?</b></td><td><span class="t t-a">A</span>15–25 млн ₽ (собственные средства, ангелы или pre-seed). Базовый сценарий тратит около 22 млн ₽.</td><td>Меньше 8 млн ₽: 6 месяцев работать как сервис из двух человек, найм под платформу отложить.</td></tr>
+      <tr><td class="num">Q4</td><td><span class="t t-q">Q</span><b>До каких клиентов основатели могут дотянуться лично?</b></td><td><span class="t t-a">A</span>Тёплые контакты с 15–30 средними брендами и селлерами; почти нет выхода на руководство крупных FMCG.</td><td>Сильные связи в FMCG или ритейле повышают оценку сегмента FMCG (пресет в разделе 02) и оправдывают параллельное предложение по измерению ритейл-медиа.</td></tr>
+      <tr><td class="num">Q5</td><td><span class="t t-q">Q</span><b>Денежный поток сервиса сейчас или экономика ПО позже?</b></td><td><span class="t t-a">A</span>Сначала прибыльная сервисная выручка; лицензирование платформы со второго года.</td><td>Венчурный путь требует раннего найма разработчиков и доказательства падения трудозатрат на клиента.</td></tr>
+      <tr><td class="num">Q6</td><td><span class="t t-q">Q</span><b>Какую ответственность за исполнение вы готовы нести?</b></td><td><span class="t t-a">A</span>Кабинеты на маркетплейсах и в рекламных системах принадлежат клиенту, клиент платит площадкам напрямую; у нас ограниченный доступ и письменная политика действий.</td><td>Приём рекламных бюджетов через себя добавляет оборотный капитал, кредитный риск и, вероятно, обязанность платить сбор 3%<a class="ref" href="#sources">[5]</a>.</td></tr>
+      <tr><td class="num">Q7</td><td><span class="t t-q">Q</span><b>Каналы и объём услуг на старте?</b></td><td><span class="t t-a">A</span>Внутренняя реклама WB/Ozon/Я.Маркета, Яндекс Директ, VK Реклама; Telegram только с юридической оговоркой; брифы и вариации креативов да; имиджевые кампании, PR, SEO и офлайн-ритейл нет.</td><td>Офлайн-ритейл-медиа (X5, «Магнит» и др.) тянет план к FMCG; креативное производство резко увеличивает часы.</td></tr>
+      <tr><td class="num">Q8</td><td><span class="t t-q">Q</span><b>Как сюда вписывается инструмент сценарного прогнозирования для МСБ?</b></td><td><span class="t t-a">A</span>Становится модулем планирования и бесплатной 10-минутной диагностикой для привлечения клиентов.</td><td>Если остаётся отдельным продуктом, сохранить общую модель данных и определения метрик.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Допущения, на которых построен план</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Область</th><th>Допущение</th><th>Риск, если неверно</th></tr></thead>
+    <tbody>
+      <tr><td>Рынок</td><td><span class="t t-a">A</span>Старт в России, русский язык; Казахстан и Узбекистан позже</td><td class="num">Высокий</td></tr>
+      <tr><td>Право</td><td><span class="t t-a">A</span>Санкционная структура согласована юристом до продаж</td><td class="num">Критичный</td></tr>
+      <tr><td>Команда</td><td><span class="t t-a">A</span>4–6 человек к 6-му месяцу, включая специалиста по аналитике и full-stack разработчика</td><td class="num">Высокий</td></tr>
+      <tr><td>Капитал</td><td><span class="t t-a">A</span>Около 22 млн ₽ расходов в первый год, базовый сценарий</td><td class="num">Средний</td></tr>
+      <tr><td>Доступ к данным</td><td><span class="t t-q">Q</span>API Яндекс Директа, VK Рекламы и рекламные/статистические API маркетплейсов доступны агентству по доверенности клиента; условия не проверялись в этом исследовании</td><td class="num">Высокий</td></tr>
+      <tr><td>Цена</td><td><span class="t t-a">A</span>900 тыс. ₽ за 90-дневный пилот, 450 тыс. ₽ в месяц в базовом сценарии; не проверено на покупателях</td><td class="num">Высокий</td></tr>
+      <tr><td>Трудозатраты</td><td><span class="t t-a">A</span>Около 40 часов на клиента в месяц в устойчивом режиме</td><td class="num">Высокий</td></tr>
+      <tr><td>Удержание</td><td><span class="t t-a">A</span>Отток 3,5% клиентов в месяц после пилота</td><td class="num">Средний</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 2 КЛИЕНТЫ И СЕГМЕНТЫ ============ -->
+<section class="view" id="v-customers" data-title="Клиенты и сегменты" data-n="02" hidden>
+  <p class="eyebrow">02 · Потребности клиентов и выбор сегмента</p>
+  <h1>Три сегмента, одно правило классификации, один плацдарм</h1>
+
+  <h2>Сначала определения, потом рейтинги</h2>
+  <div class="grid2">
+    <div class="box">
+      <h4>«Крупнейший рынок FMCG»</h4>
+      <p class="small"><span class="t t-r">R</span>Для глобального сравнения стран использовать <b>розничные продажи FMCG во всех каналах в постоянных долларах</b> (продукты питания, напитки, товары личной гигиены и бытовая химия): этой мерой Euromonitor оценивает мировой рынок примерно в 6,6 трлн долларов в 2025 году<a class="ref" href="#sources">[17]</a>. Из рынков этого плана в мировой топ-10 по такой мере потенциально входит только Россия; это надо подтвердить платной таблицей Euromonitor.</p>
+      <p class="small"><span class="t t-r">R</span>Для работы внутри региона важнее не рейтинг стран, а размер категории в стране по данным розничных панелей. Если панельные данные недоступны, использовать прокси: расходы домохозяйств на продукты, напитки и товары для дома из национальной статистики (Росстат, Бюро нацстатистики Казахстана, Нацкомстат Узбекистана). Рейтинги рекламных расходов не подменяют размер рынка.</p>
+    </div>
+    <div class="box">
+      <h4>«Локальный бренд из топ-5»</h4>
+      <p class="small"><span class="t t-r">R</span>Бренд из первой пятёрки по доле розничных продаж в стоимостном выражении <b>в одной категории в одной стране</b>, владелец которого зарегистрирован в этой стране и не входит в 50 крупнейших мировых FMCG-компаний.</p>
+      <p class="small">В CRM хранить раздельно: <b>бренд</b>, <b>владельца бренда</b> (кто подписывает договор), <b>категорию</b> и <b>страну</b>. Для России важна ещё одна сущность: <b>канал продаж</b> (маркетплейс, сеть, собственный сайт), поскольку на маркетплейсах один бренд могут продавать несколько селлеров.</p>
+      <p class="small"><span class="t t-q">Q</span>Ранжирование брендов в России требует данных розничных панелей (какие панели доступны в России сейчас и на каких условиях, нужно проверить отдельно) и аналитики маркетплейсов.</p>
+    </div>
+  </div>
+
+  <h3>Правило классификации (один сегмент на компанию)</h3>
+  <ol class="small">
+    <li><b>Крупный FMCG</b>, если владелец бренда продаёт в основном через сети и дистрибьюторов и либо входит в 50 крупнейших мировых FMCG-компаний, либо владеет брендом из топ-5 в категории на одном из целевых рынков.</li>
+    <li>Иначе <b>быстрорастущий</b>, если выручка выросла не менее чем на 40% за 12 месяцев, категория растёт быстрее рынка, и есть подтверждение соответствия продукта рынку (повторные покупки или когорты удержания).</li>
+    <li>Иначе <b>средний устойчивый</b>, если компания торгует 3+ года, имеет положительную валовую маржу, базу повторных покупателей и проходит критерии ниже.</li>
+  </ol>
+  <p class="small muted">Размер, рост категории, зрелость продукта и маркетинговая потребность хранятся как отдельные признаки; сегмент выводится из них в указанном порядке, поэтому компания не учитывается дважды. Пороги являются <span class="t t-a">A</span>допущениями и уточняются после оценки 30 компаний.</p>
+
+  <h3>Критерии «среднего коммерчески устойчивого» бизнеса</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Критерий</th><th>Стартовый диапазон <span class="t t-a">A</span></th><th>Зачем</th></tr></thead>
+    <tbody>
+      <tr><td>Годовая выручка</td><td class="num">300 млн – 5 млрд ₽</td><td>Хватает на вознаграждение и статистический сигнал</td></tr>
+      <tr><td>Рекламный бюджет в месяц (включая рекламу на маркетплейсах)</td><td class="num">1,5–15 млн ₽</td><td>Меньше: вознаграждение слишком велико относительно бюджета; больше: скорее всего, своя команда или крупное агентство</td></tr>
+      <tr><td>История продаж с чистыми данными</td><td class="num">≥18 мес.</td><td>Сезонность и базовая линия</td></tr>
+      <tr><td>Доля маркетплейсов в выручке</td><td class="num">≥30%</td><td>Сценарий распределения бюджета на маркетплейсах актуален</td></tr>
+      <tr><td>Известна себестоимость и юнит-экономика SKU (комиссии, логистика, возвраты)</td><td>Да или можно собрать за 2 недели</td><td>Отчёт в маржинальном доходе — основное обещание</td></tr>
+      <tr><td>Доступ к лицу, принимающему решение</td><td>Собственник, генеральный директор, директор по маркетингу</td><td>Полномочия на пилот</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Карта закупочного центра</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Сегмент</th><th>Экономический покупатель</th><th>Чемпион</th><th>Пользователи</th><th>Закупки</th><th>Блокеры</th></tr></thead>
+    <tbody>
+      <tr><td><b>Крупный FMCG</b></td><td>Директор по маркетингу или по категории; руководитель медиа</td><td>Бренд-менеджер, менеджер по ритейл-медиа, отдел исследований</td><td>Маркетинг, медиа, e-com, коммерческий отдел (KAM по сетям)</td><td>Тендеры, проверка контрагента, ИБ, соглашение об обработке ПДн</td><td>Действующее медиаагентство; договорённости с сетями; служба безопасности; юристы по рекламным утверждениям</td></tr>
+      <tr><td><b>Средний устойчивый</b></td><td>Собственник или финансовый директор</td><td>Руководитель маркетинга или e-com/маркетплейсов</td><td>Маркетинг, менеджеры маркетплейсов, финансы</td><td>Лёгкие: подписывает собственник</td><td>Текущее агентство или фрилансеры; «уже пробовали агентство»; недоверие финансов к цифрам маркетинга</td></tr>
+      <tr><td><b>Быстрорастущий</b></td><td>Основатель</td><td>Руководитель роста</td><td>Рост, продукт, CRM</td><td>Лёгкие, быстрые</td><td>Кассовые разрывы; желание всё делать внутри</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Матрица «боль — ценность»</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Сегмент</th><th>Покупатель</th><th>Задача</th><th>Боль</th><th>Текущее решение</th><th>Влияние на бизнес</th><th>Возможность</th><th>Нужные данные</th><th>Доказательство ценности</th><th>Уверенность</th></tr></thead>
+    <tbody>
+      <tr><td>Крупный FMCG</td><td>Директор по маркетингу</td><td>Распределить бюджет между ТВ/диджитал, ритейл-медиа сетей и маркетплейсов и промо</td><td>Каждая сеть и маркетплейс отчитываются сами о себе; данные о продажах в сетях приходят с опозданием и агрегированно</td><td>Годовая эконометрика от подрядчика; отчёты агентства</td><td>Неэффективные промо- и медиабюджеты; слабая позиция перед финансами</td><td>Независимое измерение инкрементальности ритейл-медиа и сценарное планирование промо и медиа</td><td>Продажи сетей по неделям и регионам, медиаплан, промокалендарь, цены, дистрибуция</td><td>Гео- или магазинный тест, изменивший квартальный план</td><td><span class="t t-h">H</span>Низкая</td></tr>
+      <tr><td>Средний</td><td>Собственник</td><td>Понять, какое продвижение реально приносит прибыль</td><td>ДРР в кабинете маркетплейса не учитывает органические продажи, скидки и возвраты; внешний трафик неясно окупается</td><td>Таблица из выгрузок кабинетов; отчёт агентства</td><td>Переплата за рекламу, «покупающую» органический спрос; недофинансирование работающих каналов</td><td>Дашборд маржинального дохода, календарь причинных тестов, согласованное перераспределение</td><td>Заказы и выкупы по SKU, себестоимость, комиссии и логистика, расходы на рекламу по дням и кампаниям, скидки, возвраты</td><td>Перераспределение, согласованное и оценённое заранее зарегистрированным тестом</td><td><span class="t t-h">H</span>Средняя</td></tr>
+      <tr><td>Средний</td><td>Руководитель маркетинга</td><td>Обновлять креативы и карточки без большой команды</td><td>Выгорание креативов, тесты карточек бессистемны</td><td>Фрилансеры, генераторы площадок</td><td>Рост стоимости заказа</td><td>Бриф → вариации → тест, с проверкой утверждений и маркировкой</td><td>Результаты по креативам и карточкам, фирменный стиль</td><td>Доля новых вариантов, побеждающих контроль</td><td><span class="t t-h">H</span>Средняя</td></tr>
+      <tr><td>Быстрорастущий</td><td>Основатель</td><td>Найти следующий масштабируемый канал, не сломав юнит-экономику</td><td>Рост упирается в насыщение первого канала; неясность с Telegram в 2027 году</td><td>Нанять маркетолога по росту, фрилансеры</td><td>Сжигание денег без выводов</td><td>Бэклог экспериментов с ограничением окупаемости</td><td>Когорты, стоимость привлечения по каналам, окупаемость, маржа</td><td>Тест канала, достигший заранее заданного порога окупаемости</td><td><span class="t t-h">H</span>Средняя</td></tr>
+    </tbody>
+  </table></div>
+
+  <details>
+    <summary>Детали сегментов: задачи, запрос и потребность, триггеры, стоп-факторы, вопросы для интервью</summary>
+    <div class="grid3">
+      <div class="box">
+        <h4>Крупный FMCG</h4>
+        <p class="small"><b>Запрос:</b> «стратегия ритейл-медиа», «ИИ для контента».<br><b>Потребность:</b> независимая и защитимая оценка того, какое сочетание медиа, промо и ритейл-медиа растит долю категории.</p>
+        <p class="small"><b>Триггеры:</b> годовое планирование, тендер агентства, новый рекламный продукт сети, потеря доли.</p>
+        <p class="small"><b>Данные:</b> потребительских данных почти нет; данные сетей и маркетплейсов доступны по договорённости и в их отчётных системах.</p>
+        <p class="small"><b>Стоп-факторы:</b> эксклюзивный контракт на измерения с агентской группой; нет доступа к продажам сетей; цикл закупки пилота дольше 9 месяцев.</p>
+        <p class="small"><b>Вопросы:</b> Как в этом году определяли бюджет на ритейл-медиа? Какую цифру оспорили финансы? Чему вы поверите больше, внешнему тесту или отчёту сети?</p>
+      </div>
+      <div class="box">
+        <h4>Средний устойчивый</h4>
+        <p class="small"><b>Запрос:</b> «больше продаж», «снизить ДРР», «агентство получше».<br><b>Потребность:</b> уверенность и время; ответственный, который связывает расходы с прибылью и объясняет, что согласовать дальше.</p>
+        <p class="small"><b>Триггеры:</b> падение маржи на маркетплейсах, рост комиссий, плохой квартал после увеличения бюджета, смена агентства, неясность с Telegram.</p>
+        <p class="small"><b>Данные:</b> выгрузки маркетплейсов и рекламных кабинетов обычно есть; себестоимость и юнит-экономика часто в таблицах финансистов.</p>
+        <p class="small"><b>Стоп-факторы:</b> бюджет ниже диапазона; нет истории; ожидание гарантированной выручки; отказ ставить что-либо на паузу ради теста.</p>
+        <p class="small"><b>Вопросы:</b> Расскажите о последнем изменении рекламного бюджета. На что смотрели? Как поняли, что сработало? Кто был против?</p>
+      </div>
+      <div class="box">
+        <h4>Быстрорастущий (поиск)</h4>
+        <p class="small"><b>Запрос:</b> «гроуз-хакинг», «быстро масштабироваться».<br><b>Потребность:</b> дисциплинированная система экспериментов, защищающая юнит-экономику.</p>
+        <p class="small"><b>Вертикали для сравнения <span class="t t-h">H</span>:</b> товарные бренды на маркетплейсах в растущих нишах (функциональное питание и напитки, уход за собой, товары для дома и питомцев); финтех и e-commerce в Узбекистане, где по данным отрасли рынок рекламы вырос на 30–40% в 2025 году<a class="ref" href="#sources">[10]</a>; селлеры на Uzum<a class="ref" href="#sources">[12]</a> и Kaspi.</p>
+        <p class="small"><b>Вне рамок:</b> накрутка отзывов и выкупов, нарушение правил площадок, тёмные паттерны, недоказанные утверждения о здоровье, рост с отрицательным маржинальным доходом после возвратов и скидок, реклама без маркировки.</p>
+        <p class="small"><b>Вопросы:</b> Какая окупаемость по каналам? Какой тест последним изменил план? Что вы никогда не станете делать ради роста?</p>
+      </div>
+    </div>
+  </details>
+
+  <h2>Привлекательность с весами</h2>
+  <p class="small">Оценки 1–5 по каждому критерию (чем выше, тем лучше для нас, поэтому трудоёмкость внедрения и конкуренция инвертированы). Меняйте веса или выберите профиль основателей. <span class="t t-h">H</span>Оценки являются суждениями и должны быть заменены данными интервью.</p>
+  <div class="box">
+    <label for="preset">Профиль основателей
+      <select id="preset">
+        <option value="boot">Без внешнего финансирования, связи со средними брендами (по умолчанию)</option>
+        <option value="cpg">Есть финансирование и связи в FMCG и сетях</option>
+        <option value="vc">Венчурный путь, связи со стартапами</option>
+      </select>
+    </label>
+    <div class="sliders" id="sliders"></div>
+    <div id="segbars" style="display:flex;flex-direction:column;gap:10px;margin-top:6px"></div>
+    <p class="small muted" id="segnote"></p>
+  </div>
+  <div class="tbl w-mid"><table id="segtable"></table></div>
+
+  <h2>Страны</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Страна</th><th>Что известно</th><th>Особенности</th><th>Очередь</th></tr></thead>
+    <tbody>
+      <tr><td><b>Россия</b></td><td><span class="t t-s">S</span>Рекламный рынок ≈981,6 млрд ₽ в 2025 г., +8,5% (АКАР)<a class="ref" href="#sources">[1]</a>; I кв. 2026 г. ≈220 млрд ₽, +5%, интернет >117 млрд ₽, +8%<a class="ref" href="#sources">[2]</a>; Wildberries, Ozon и Яндекс Маркет заработали на рекламе 500–600 млрд ₽ в 2025 г. (оценка Data Insight)<a class="ref" href="#sources">[3]</a></td><td>Маркировка рекламы (ЕРИР, ОРД, erid), сбор 3%<a class="ref" href="#sources">[5]</a>; локализация ПДн при сборе<a class="ref" href="#sources">[6]</a>; нестабильный набор каналов<a class="ref" href="#sources">[7]</a></td><td>Первая</td></tr>
+      <tr><td><b>Казахстан</b></td><td><span class="t t-s">S</span>Рынок рекламы ≈135 млрд ₸ в 2024 г., диджитал ≈69,5 млрд ₸ (более половины), +29% (Wunder Digital)<a class="ref" href="#sources">[8]</a></td><td>Строгая локализация ПДн на территории РК, уточнена в августе 2026 г.<a class="ref" href="#sources">[9]</a>; экосистема Kaspi; русский и казахский языки</td><td>Вторая, месяцы 9–12</td></tr>
+      <tr><td><b>Узбекистан</b></td><td><span class="t t-s">S</span>Рынок рекламы вырос на 30–40% в 2025 г. до $260 млн, может превысить $300 млн в 2026 г.; доля российских компаний ≈10%<a class="ref" href="#sources">[10]</a>; Uzum: GMV >$500 млн, >17 тыс. продавцов в 2025 г.<a class="ref" href="#sources">[12]</a></td><td>С 26.03.2026 обязательная локализация ПДн сужена до биометрических, генетических данных и данных абонентов связи<a class="ref" href="#sources">[11]</a>; Telegram — ключевой канал; узбекский язык</td><td>Третья, год 2</td></tr>
+      <tr><td>Беларусь, Армения, Кыргызстан и др.</td><td colspan="2"><span class="t t-q">Q</span>Не исследовались в этом плане. Рассматривать по запросу клиентов, уже работающих с нами в первых трёх странах.</td><td>Отложить</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 3 ПЛАЦДАРМ ============ -->
+<section class="view" id="v-beachhead" data-title="Плацдарм и позиционирование" data-n="03" hidden>
+  <p class="eyebrow">03 · Плацдарм и позиционирование</p>
+  <h1>Отвечать за решение о бюджете для брендов, растущих на маркетплейсах</h1>
+
+  <div class="box">
+    <h4>Идеальный клиент на старте <span class="t t-r">R</span></h4>
+    <p class="small">Российский потребительский бренд с выручкой 300 млн – 5 млрд ₽, у которого маркетплейсы дают не менее 30% продаж, рекламный бюджет 1,5–15 млн ₽ в месяц распределён между внутренней рекламой маркетплейсов и 1–2 внешними каналами, есть 18+ месяцев данных, руководитель маркетинга без аналитика-эконометриста и собственник, который сомневается в отчётных цифрах. Предпочтительны категории, близкие к FMCG (продукты, напитки, уход, товары для дома): они формируют компетенции, нужные для сегмента FMCG.</p>
+    <h4>Первый сценарий</h4>
+    <p class="small"><b>Ежемесячный цикл «прибыль на рубль продвижения»:</b> одна общая цель (маржинальный доход при заданном росте), предложение по перераспределению между внутренней рекламой маркетплейсов, внешним трафиком и скидками с диапазонами неопределённости, согласование, исполнение в рамках политики и один заранее зарегистрированный тест в квартал.</p>
+    <h4>Обещание клиенту</h4>
+    <p class="small">«Каждый месяц вы знаете, сколько маржи принесло продвижение, что мы меняем дальше и почему, и что требует вашего согласия. Каждое крупное изменение проверено тестом или объяснено».</p>
+    <h4>Мы отвечаем за</h4>
+    <p class="small">Диагностику, дизайн измерений, рекомендации по бюджету, исполнение согласованных изменений в оговорённых каналах, брифы и вариации в рамках объёма, маркировку наших креативов через ОРД клиента, отчётность. <b>Мы не отвечаем</b> за общий рост компании, цены, ассортимент, остатки на складах маркетплейсов, переговоры с сетями и работу отдела продаж. Они отражаются в отчётах как ограничения и искажающие факторы.</p>
+  </div>
+
+  <dl class="why box">
+    <dt>Почему это</dt><dd>Решение повторяется каждый месяц, у него видимое денежное последствие, нужные данные у клиента уже есть, а делать его хорошо без статистических навыков трудно.</dd>
+    <dt>Почему сейчас</dt><dd><span class="t t-s">S</span>Объём e-retail media огромен<a class="ref" href="#sources">[3]</a>, рост рынка замедлился<a class="ref" href="#sources">[1][2]</a>, а будущее Telegram как рекламного канала после 2026 года не определено<a class="ref" href="#sources">[7]</a>. Открытые библиотеки для эконометрики и гео-тестов бесплатны, но главным ограничением остаются качество данных и экспертиза<a class="ref" href="#sources">[18]</a>.</dd>
+    <dt>Отвергнутая альтернатива</dt><dd>Полносервисное агентство для крупного FMCG: высокая готовность платить, но длинные тендеры, сильные действующие агентские группы<a class="ref" href="#sources">[4]</a> и ограниченный доступ к данным сетей замедляют обучение.</dd>
+    <dt>Что должно быть правдой</dt><dd>Достаточно клиентов проходят порог данных; независимость ценится настолько, что за неё платят фиксированное вознаграждение; трудозатраты падают с каждым циклом.</dd>
+    <dt>Что изменит решение</dt><dd>Партнёр из FMCG, готовый в течение 90 дней профинансировать пилот по измерению ритейл-медиа, или доказательство, что средние бренды платят только за объём исполнения.</dd>
+  </dl>
+
+  <h2>Конкуренция и замещение</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Альтернатива</th><th>Сильные стороны</th><th>Где пробел</th><th>Наш ответ</th></tr></thead>
+    <tbody>
+      <tr><td>Крупные агентские группы</td><td><span class="t t-s">S</span>По рейтингу AdIndex за 2025 г. лидируют Group 1 (≈119 млрд ₽ медиазакупок), Okkam (≈76,7 млрд ₽), SkyAlliance, АДВ, RoRe Group<a class="ref" href="#sources">[4]</a></td><td>Средние бренды ниже их порога обслуживания; независимость измерений под вопросом, если та же группа закупает медиа</td><td>Независимые измерения; без медиамаржи; фиксированное вознаграждение</td></tr>
+      <tr><td>Агентства по маркетплейсам и фрилансеры</td><td>Знание кабинетов, скорость, цена</td><td>Оптимизируют ДРР внутри площадки, редко считают инкрементальность и полную маржу</td><td>Партнёрство и white-label ядра измерений со второго года</td></tr>
+      <tr><td>Автоматизация площадок</td><td>Автостратегии и автопродвижение маркетплейсов и рекламных систем</td><td>Каждая площадка оптимизирует и отчитывается о себе</td><td>Автоматику площадок использовать для исполнения; кросс-канальный бюджет и тест за нами</td></tr>
+      <tr><td>Сервисы аналитики маркетплейсов и сквозной аналитики</td><td>Дашборды и выгрузки</td><td>Инструмент без ответственного за решение</td><td>Продаём решение и его исполнение, а не дашборд; интегрируемся с их данными</td></tr>
+      <tr><td>Внутренние команды</td><td>Знание продукта</td><td>В средних компаниях редко есть эконометрика и дизайн экспериментов</td><td>Усиливать внутренние команды; тариф «только измерения»</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Ров: что может накапливаться</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Кандидат</th><th>Как формируется</th><th>Срок</th><th>Как может не сработать</th></tr></thead>
+    <tbody>
+      <tr><td><b>Библиотека калиброванных эффектов</b> по категориям, площадкам и уровням бюджета</td><td>Каждый зарегистрированный тест добавляет оценку эффекта, улучшающую модель и дизайн тестов для следующего клиента</td><td class="num">18–36 мес.</td><td>Мало тестов; договоры запрещают обезличенное повторное использование; площадки меняют алгоритмы слишком часто</td></tr>
+      <tr><td><b>История решений</b> клиента</td><td>Согласованные решения, их результаты и причины становятся памятью компании</td><td class="num">6–12 мес.</td><td>Клиент выгружает её (и должен иметь эту возможность)</td></tr>
+      <tr><td><b>Доверие и управляемость</b></td><td>Ноль несогласованных действий, полные журналы, независимость от медиазакупок, соблюдение маркировки и локализации</td><td class="num">12+ мес.</td><td>Один инцидент; сделка с медиамаржой</td></tr>
+      <tr><td>Не ров</td><td colspan="3">Доступ к языковым моделям, библиотеки промптов, список интеграций, дашборды. Всё это конкуренты могут купить.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Почему купить, а не построить:</b> один специалист по эконометрике стоит дороже вознаграждения; библиотеку эффектов внутри не собрать; независимый тест убедительнее для финансового директора; ритм и дисциплина согласований появляются с первого дня.</p>
+</section>
+<!-- ============ 4 БИЗНЕС- И ОПЕРАЦИОННАЯ МОДЕЛЬ ============ -->
+<section class="view" id="v-model" data-title="Бизнес- и операционная модель" data-n="04" hidden>
+  <p class="eyebrow">04 · Бизнес-модель и операционная модель</p>
+  <h1>Управляемый сервис на собственной платформе, продаваемый как цикл решений</h1>
+
+  <h2>Сравнение моделей</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Модель</th><th>Качество выручки</th><th>До первой выручки</th><th>Скорость обучения</th><th>Капитал</th><th>Главный риск</th><th>Вывод</th></tr></thead>
+    <tbody>
+      <tr><td>ИИ-агентство с полным сервисом</td><td>Регулярная, трудоёмкая</td><td class="num">1–2 мес.</td><td>Высокая</td><td>Низкий</td><td>Превращение в консалтинг; маржа ограничена часами</td><td>Хорошо для старта, плохо как цель</td></tr>
+      <tr><td><b>Сервис + платформа</b></td><td>Регулярная, маржа растёт</td><td class="num">2–3 мес.</td><td>Высокая</td><td>Средний</td><td>Строить платформу раньше, чем появится повторяемость</td><td><span class="t t-r">R</span>Начать здесь</td></tr>
+      <tr><td>SaaS-платформа</td><td>Высокая маржа при принятии</td><td class="num">9–15 мес.</td><td>Низкая вначале</td><td>Высокий</td><td>Средним брендам не хватает времени и навыков для self-serve; конкуренция с сервисами аналитики маркетплейсов</td><td>Пока нет</td></tr>
+      <tr><td>Партнёрство / white-label для агентств по маркетплейсам</td><td>Лицензии, мало ручной работы</td><td class="num">12+ мес.</td><td>Средняя</td><td>Средний</td><td>Конфликт каналов; качество партнёров</td><td>Расширение со второго года</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Эволюция:</b> месяцы 0–6 — ручной сервис на ноутбуках и скриптах → месяцы 6–12 — клиентское рабочее пространство (согласования, журнал решений, дашборд маржи) → год 2 — лицензия ядра измерений 3–5 агентствам по маркетплейсам и тариф «только измерения» для внутренних команд; выход в Казахстан.</p>
+
+  <h2>Полный цикл: от подключения до продления</h2>
+  <p class="small">«Полный цикл» означает ответственность за согласованный процесс и его стыки с продажами, коммерцией и продуктом. Роли: <b>АН</b> — аналитик-эконометрист, <b>ОР</b> — оператор роста, <b>КП</b> — креативный продюсер, <b>КЛ</b> — согласующий со стороны клиента.</p>
+  <div class="tbl w-wide"><table style="min-width:1280px">
+    <thead><tr><th>Процесс</th><th>Триггер</th><th>Входные данные</th><th>Логика решения</th><th>Исполнение</th><th>Результат</th><th>Владелец</th><th>Правило согласования</th><th>Метрика успеха</th><th>Обработка сбоев</th><th>Обратная связь</th></tr></thead>
+    <tbody>
+      <tr><td><b>1 Диагностика бизнеса и готовности данных</b></td><td>Подписан пилот</td><td>Доступ на чтение к кабинетам маркетплейсов и рекламных систем, метрике, таблица себестоимости</td><td>Правила: полнота, длина истории, вариативность бюджета, сходимость выгрузок; пороги готовности</td><td>Коннекторы и автоматические проверки; проверка АН</td><td>Оценка готовности, пробелы, уровень измерений (L0–L3)</td><td>АН</td><td>Не требуется (только чтение)</td><td>Отчёт за ≤10 рабочих дней</td><td>Порог не пройден → спринт по данным или остановка</td><td>Пороги уточняются по итогам тестов</td></tr>
+      <tr><td><b>2 Исследования и инсайты</b></td><td>После диагностики; ежеквартально</td><td>Заказы и когорты, отзывы на маркетплейсах, поисковые запросы, карточки конкурентов, 5–8 интервью с покупателями</td><td>Сегментация по ценности и поведению; обобщение текстов языковой моделью со ссылками на исходные строки</td><td>Аналитик + языковая модель в российском контуре</td><td>Сегменты, задачи, возражения, гипотезы позиционирования</td><td>ОР</td><td>КЛ согласует позиционирование</td><td>Гипотезы используются в брифах</td><td>Утверждения без ссылки на источник блокируются</td><td>Какие инсайты дали выигрышные варианты</td></tr>
+      <tr><td><b>3 Стратегия, прогноз и бюджет</b></td><td>Ежемесячно; квартальный план</td><td>Оценки модели с неопределённостью, цель, ограничения (остатки, оборачиваемость, кассовый поток, комиссии)</td><td>Оптимизатор по кривым отклика; сценарии на трёх уровнях бюджета; запрет планов за пределами наблюдаемого диапазона</td><td>Сценарное рабочее пространство</td><td>Предложение по перераспределению с диапазонами и ожидаемой маржой</td><td>АН</td><td>КЛ согласует любое изменение более 10% по каналу и общего бюджета</td><td>Предложение принято; ошибка прогноза в пределах диапазона</td><td>Слишком широкие интервалы → предложить тест вместо сдвига</td><td>Факт против прогноза калибрует модель</td></tr>
+      <tr><td><b>4 Бриф и производство креативов и карточек</b></td><td>Выгорание, новый тест, новая акция</td><td>Инсайты, фирменный стиль, библиотека согласованных утверждений, результаты по атрибутам</td><td>Анализ атрибутов; языковая модель готовит бриф и варианты в рамках правил бренда и утверждений</td><td>Генерация + редактура человеком + чек-лист</td><td>Бриф, варианты, план теста</td><td>КП</td><td>КЛ согласует новые утверждения, акции, использование образов людей; варианты по согласованным шаблонам согласованы заранее</td><td>Доля вариантов, побеждающих контроль</td><td>Блок проверки утверждений; отказ на контроле бренда</td><td>Оценки атрибутов обновляются</td></tr>
+      <tr><td><b>5 Маркировка и запуск</b></td><td>Согласован план или бриф</td><td>Согласованные изменения, лимиты политики, договоры для ЕРИР</td><td>Детерминированная проверка: есть erid, лимит не превышен, ключ идемпотентности на каждое изменение</td><td>Адаптеры площадок; автоматика площадок внутри наших бюджетов; регистрация креативов через ОРД клиента</td><td>Журнал изменений, подтверждение площадки, erid</td><td>ОР</td><td>По матрице автономности (раздел 06)</td><td>Изменения применены как согласовано; ноль нарушений политики и маркировки</td><td>Повтор с задержкой; сверка; откат или компенсирующее действие</td><td>Результаты изменений связываются с журналом решений</td></tr>
+      <tr><td><b>6 Карточки товара и конверсия</b></td><td>Падение конверсии; план теста</td><td>Воронка карточки, отзывы, позиции в выдаче</td><td>Приоритизация по ожидаемой марже × трафик</td><td>Менеджер клиента или наш оператор</td><td>A/B-тест или последовательный тест</td><td>ОР</td><td>КЛ согласует изменения карточек и цен</td><td>Конверсия и маржа на визит</td><td>Автостоп при нарушении ограничений</td><td>Реестр тестов</td></tr>
+      <tr><td><b>7 CRM и передача в продажи</b> (если применимо)</td><td>Лид или событие ценного клиента</td><td>Поля CRM, статус согласия на обработку ПДн и на рассылки</td><td>Сначала проверка согласия; правила маршрутизации</td><td>CRM или сервис рассылок клиента, хранение в России</td><td>Сегменты, цепочки, передача</td><td>ОР</td><td>КЛ согласует новые цепочки и тексты</td><td>Повторные покупки и выручка на получателя (по контрольной группе)</td><td>Исключение при несоответствии согласия</td><td>Контрольные группы измеряют прирост</td></tr>
+      <tr><td><b>8 Измерения и эксперименты</b></td><td>Ежеквартально; крупный сдвиг; расхождение моделей</td><td>Гео- и временные ряды, расходы, расчёт мощности</td><td>Регистрация заранее: гипотеза, метрика, минимальный эффект, длительность, правило решения</td><td>Гео-тест, отключение/включение по регионам, тесты по времени</td><td>Оценка эффекта с интервалом; решение</td><td>АН</td><td>КЛ согласует дизайн и бюджет под риском</td><td>Тест набрал плановую мощность; решение принято</td><td>Недостаточно мощности → продлить или перепроектировать; загрязнение → признать недействительным</td><td>Обновление априорных оценок и библиотеки</td></tr>
+      <tr><td><b>9 Отчётность и разбор</b></td><td>Еженедельная сводка; ежемесячная встреча</td><td>Всё перечисленное</td><td>Шаблон: что произошло, почему это важно, что дальше, что нужно согласовать</td><td>Текст из рассчитанных чисел; подпись АН</td><td>Сводка и журнал решений</td><td>АН</td><td>Внутренняя проверка перед отправкой</td><td>Прочитано и решено за 5 дней</td><td>Несовпадение чисел → отправка блокируется</td><td>Вопросы клиента → новые пункты отчёта</td></tr>
+      <tr><td><b>10 Продление</b></td><td>2-й месяц каждого квартала</td><td>Журнал решений, измеренные результаты</td><td>Сравнение с целями пилота</td><td>Встреча</td><td>Продление, изменение объёма или выход</td><td>Основатель</td><td>КЛ</td><td>Удержание выручки</td><td>Выход с выгрузкой данных</td><td>Причины ухода кодируются</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Особенности FMCG (для последующего выхода)</h3>
+  <ul class="small">
+    <li><b>Отгрузки и продажи с полки:</b> отгрузки в сети и на склады маркетплейсов искажают недельные продажи; моделировать на продажах с полки и выкупах, отгрузки считать сигналом запасов.</li>
+    <li><b>Искажающие факторы:</b> дистрибуция, ценовой индекс к категории, глубина и частота промо, отсутствие товара, позиции в выдаче маркетплейса.</li>
+    <li><b>Ритейл-медиа:</b> отчёты сетей и маркетплейсов о «доходности рекламы» требуют независимой гео- или магазинной проверки.</li>
+    <li><b>Горизонт бренда:</b> долгосрочные эффекты требуют длинного адстока и трекинга здоровья бренда; короткие тесты их занижают.</li>
+    <li><b>Зависимости:</b> сети, маркетплейсы и дистрибьюторы контролируют данные, полку и цену; платформа фиксирует это как внешние ограничения, а не наши рычаги.</li>
+  </ul>
+
+  <h3>Ядро платформы, отраслевые процессы, индивидуальная работа</h3>
+  <div class="grid3">
+    <div class="box"><h4>Повторяемое ядро</h4><p class="small">Коннекторы, единые метрики, модель маржи с комиссиями и логистикой маркетплейсов, пороги готовности, движок эконометрики и тестов, согласования, движок политик, журнал решений, учёт маркировки, еженедельная сводка.</p></div>
+    <div class="box"><h4>Отраслевые процессы</h4><p class="small">Маркетплейсы: юнит-экономика SKU, внутренняя реклама против внешнего трафика. FMCG: продажи сетей, промо, ритейл-медиа. Быстрорастущие: бэклог экспериментов и пороги окупаемости.</p></div>
+    <div class="box"><h4>Индивидуальная работа (за отдельную плату или отказ)</h4><p class="small">Нестандартные интеграции, имиджевые кампании, PR, разовые исследования. Правило: задача, повторившаяся у третьего клиента, становится частью ядра или прекращается.</p></div>
+  </div>
+  <p class="small"><b>Как не стать консалтингом:</b> учитывать часы по каждому процессу и клиенту ежемесячно; каждый квартал автоматизировать два самых трудоёмких процесса; индивидуальная работа не более 15% часов; стандартный договор с фиксированным объёмом; отказывать клиентам вне профиля, даже если они готовы платить.</p>
+</section>
+
+<!-- ============ 5 ПРОДУКТ И АРХИТЕКТУРА ============ -->
+<section class="view" id="v-product" data-title="Продукт и архитектура" data-n="05" hidden>
+  <p class="eyebrow">05 · Продукт, UX и архитектура</p>
+  <h1>Сначала простое решение, глубина доступна по запросу</h1>
+  <p class="lede">Видение продукта: каждое маркетинговое изменение клиента — это решение с ответственным, доказательствами, ожидаемым результатом и последующей оценкой.</p>
+
+  <h2>Пользователи и экраны</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Экран</th><th>Основной пользователь</th><th>Задача</th><th>Приоритет</th></tr></thead>
+    <tbody>
+      <tr><td>Подключение и проверка готовности</td><td>Руководитель маркетинга клиента</td><td>Подключить источники; увидеть оценку готовности и пробелы простым языком</td><td>P0</td></tr>
+      <tr><td>Цели и ограничения</td><td>Собственник</td><td>Задать цель (маржа при заданном росте), потолок бюджета, остатки, кассовые и операционные ограничения</td><td>P0</td></tr>
+      <tr><td>Входящие на согласование</td><td>Согласующий</td><td>Согласовать, отклонить или изменить предложение; в каждом — доказательства, ожидаемый эффект и обратимость</td><td>P0</td></tr>
+      <tr><td>Сводка для руководителя и история решений</td><td>Собственник, финансовый директор</td><td>Маржа от продвижения, принятые решения, их оценки</td><td>P0</td></tr>
+      <tr><td>Планирование и сценарии</td><td>Маркетинг, АН</td><td>Сравнить 2–3 сценария с диапазонами</td><td>P1</td></tr>
+      <tr><td>Кампании и эксперименты</td><td>ОР, АН</td><td>Спроектировать, зарегистрировать, провести, прочитать тест</td><td>P1</td></tr>
+      <tr><td>Операционная консоль агентства</td><td>Наша команда</td><td>Очередь по клиентам, сроки, инциденты, часы по процессам, статус маркировки</td><td>P0 (внутр.)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Три пользовательских пути</h2>
+  <div class="grid3">
+    <div class="box">
+      <h4>Руководитель бренда в крупной FMCG-компании</h4>
+      <ol class="small">
+        <li>Получает от бренд-менеджера предложение квартального теста ритейл-медиа в сети.</li>
+        <li>Смотрит дизайн: регионы, длительность, бюджет под риском, правило решения; согласует с юристом.</li>
+        <li>Раз в неделю видит строку статуса, а не дашборд.</li>
+        <li>Получает вывод с интервалом и записку для финансов; выгружает в свою систему планирования.</li>
+      </ol>
+      <p class="small muted">Важно: управляемость, выгрузки, единый вход, ничего нового не изучать.</p>
+    </div>
+    <div class="box">
+      <h4>Собственник среднего бренда</h4>
+      <ol class="small">
+        <li>Понедельник: уведомление «3 решения ждут вас, 2 минуты».</li>
+        <li>Открывает: «Перенести 400 тыс. ₽ с поисковой рекламы WB на внешний трафик из VK Рекламы на 3 SKU. Ожидаемо +150–350 тыс. ₽ маржи. Отменяется за 1 день». Согласует.</li>
+        <li>В конце месяца: одна страница с маржой от продвижения, изменениями и выводами.</li>
+      </ol>
+      <p class="small muted">Важно: простой язык, рубли, телефон, доверие.</p>
+    </div>
+    <div class="box">
+      <h4>Руководитель роста в быстрорастущей компании</h4>
+      <ol class="small">
+        <li>Ежедневно работает с доской экспериментов, добавляет гипотезы.</li>
+        <li>Смотрит расчёт мощности, исходные данные и диагностику модели.</li>
+        <li>Задаёт ограничения (максимальная стоимость заказа, окупаемость), в которых система ведёт тесты сама.</li>
+      </ol>
+      <p class="small muted">Важно: глубина, скорость, API и выгрузки, больше автономности.</p>
+    </div>
+  </div>
+
+  <h2>Архитектура</h2>
+  <pre class="diagram" aria-label="Схема архитектуры">
+ ИСТОЧНИКИ                    ЗАГРУЗКА И ДОВЕРИЕ                    МОДЕЛИ И РЕШЕНИЯ
+ ┌────────────────┐   ┌──────────────────────────────┐   ┌──────────────────────────────┐
+ │ WB, Ozon, ЯМ   │──▶│ Коннекторы (API, выгрузки)   │──▶│ Единая модель и метрики:     │
+ │ Директ, VK Ads │   │ сырой слой по клиенту        │   │ расходы, заказы, выкупы,     │
+ │ Метрика, CRM   │   │ проверки качества, lineage,  │   │ комиссии, маржа, тесты,      │
+ │ 1С, ОРД/ЕРИР   │   │ SLA свежести                 │   │ решения, erid                │
+ └────────────────┘   └──────────────────────────────┘   └──────────────┬───────────────┘
+                                                                        │
+ ДОСТУП И ИЗОЛЯЦИЯ          ┌───────────────────────────────────────────▼───────────────┐
+ ┌────────────────────────┐ │ Аналитика: байесовская эконометрика, гео-тесты, прогнозы, │
+ │ Роли, согласия на ПДн  │ │ оптимизатор бюджета                                        │
+ │ Клиент = схема + RLS   │ └───────────────────────────────┬───────────────────────────┘
+ │ Ключи и индексы по     │      ┌──────────────────────────▼──────────────────────────┐
+ │ клиенту; ПДн только в  │      │ Оркестрация процессов (надёжное исполнение):        │
+ │ российском облаке      │      │ шаги · таймеры · повторы · идемпотентность          │
+ └────────────────────────┘      └───┬────────────────┬────────────────┬───────────────┘
+ ЗНАНИЯ                              │                │                │
+ ┌──────────────────────────┐ ┌──────▼────────┐ ┌─────▼────────┐ ┌─────▼─────────┐
+ │ Бренд, утверждения,      │▶│ Языковая      │ │ Политики,    │ │ Согласования  │
+ │ прошлые решения (клиент) │ │ модель (RU),  │▶│ бюджет,      │◀│ (люди)        │
+ └──────────────────────────┘ │ ограниченные  │ │ маркировка   │ └───────────────┘
+                              │ инструменты   │ └─────┬────────┘
+                              └───────────────┘ ┌─────▼──────────────────┐
+                                                │ Адаптеры исполнения:   │──▶ площадки
+                                                │ пробный · теневой ·    │
+                                                │ боевой · откат/компенс.│
+                                                └─────┬──────────────────┘
+ ┌────────────────────────────────────────────────────▼──────────────────────────────────┐
+ │ Оценка качества ИИ · мониторинг · неизменяемый аудит · реагирование · учёт затрат     │
+ └───────────────────────────────────────────────────────────────────────────────────────┘</pre>
+
+  <h3>Какой инструмент для какой задачи</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Задача</th><th>Правила</th><th>Оптимизация</th><th>Статистика</th><th>Языковая модель</th><th>Человек</th></tr></thead>
+    <tbody>
+      <tr><td>Проверка данных, лимиты, согласия, маркировка</td><td>●</td><td></td><td></td><td></td><td>исключения</td></tr>
+      <tr><td>Распределение бюджета между каналами</td><td>лимиты</td><td>●</td><td>кривые отклика</td><td>объясняет</td><td>согласует</td></tr>
+      <tr><td>Оценка инкрементальности, прогнозы</td><td></td><td></td><td>●</td><td></td><td>проверяет</td></tr>
+      <tr><td>Анализ отзывов и интервью</td><td></td><td></td><td></td><td>●</td><td>проверяет</td></tr>
+      <tr><td>Брифы, тексты, вариации карточек и креативов</td><td>правила бренда</td><td></td><td></td><td>●</td><td>редактирует новое</td></tr>
+      <tr><td>Позиционирование, утверждения, акции, цены</td><td></td><td></td><td></td><td>черновик</td><td>●</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><span class="t t-r">R</span>Никаких мультиагентных систем на старте. Один оркестрированный процесс на каждую операцию; языковая модель — ограниченный шаг, который читает рассчитанные числа и никогда не создаёт числа сама.</p>
+
+  <h3>Языковые модели и локализация</h3>
+  <ul class="small">
+    <li><span class="t t-s">S</span>С 1 июля 2025 г. запрещена запись, систематизация, накопление и хранение ПДн граждан РФ в базах за пределами России<a class="ref" href="#sources">[6]</a>. Следствие: ПДн клиентов и их покупателей обрабатываются только в российском облаке, а во внешние модели передаются лишь обезличенные агрегаты, и только после проверки юристом.</li>
+    <li><span class="t t-s">S</span>Цены на API российских моделей снизились до 67% за год: GigaChat Lite ≈0,065 ₽, GigaChat Pro ≈0,5 ₽, YandexGPT Pro 5.1 ≈0,8 ₽ за 1 000 токенов (август 2026 г.); аналогичные зарубежные модели, по той же оценке, до 10 раз дешевле, а доступ к ним через российские облака дороже прямого<a class="ref" href="#sources">[13]</a>.</li>
+    <li><span class="t t-r">R</span>Слой абстракции над моделями; задачи с ПДн — российские модели или открытые модели в российском облаке; оценивать качество на собственном наборе задач, а не по маркетингу провайдеров.</li>
+    <li><span class="t t-s">S</span>Регламент ЕС запрещает поставщикам из ЕС предоставлять российским юрлицам доступ к ИИ-моделям и платформам обучения и вывода<a class="ref" href="#sources">[16]</a>; на европейских провайдеров для российского контура рассчитывать нельзя.</li>
+  </ul>
+
+  <h3>ИИ-роли</h3>
+  <div class="tbl w-wide"><table style="min-width:1100px">
+    <thead><tr><th>Роль</th><th>Цель</th><th>Входы</th><th>Инструменты</th><th>Права</th><th>Выход</th><th>Оценка</th><th>Эскалация</th><th>Владелец</th></tr></thead>
+    <tbody>
+      <tr><td>Хранитель данных</td><td>Объяснять аномалии в данных</td><td>Результаты проверок</td><td>SQL только на чтение по представлениям клиента</td><td>Чтение</td><td>Пояснения к аномалиям</td><td>Точность против разметки АН</td><td>Нарушение свежести &gt;24 ч</td><td>АН</td></tr>
+      <tr><td>Автор диагностики</td><td>Описать, что произошло и почему</td><td>Рассчитанные метрики, выходы моделей</td><td>Шаблон, поиск по прошлым решениям</td><td>Чтение</td><td>Черновик сводки</td><td>Сверка чисел (100%); оценка АН</td><td>Любое число не из таблицы-источника</td><td>АН</td></tr>
+      <tr><td>Проектировщик тестов</td><td>Черновики дизайна тестов</td><td>Гео-данные, расчёт мощности из статистического кода</td><td>Функция расчёта мощности</td><td>Чтение; черновик теста</td><td>Черновик регистрации</td><td>Доля принятых АН</td><td>Минимальный эффект &gt;15% или &lt;10 регионов</td><td>АН</td></tr>
+      <tr><td>Креативный ассистент</td><td>Брифы и варианты</td><td>Бренд, библиотека утверждений, оценки атрибутов</td><td>Генерация, проверка утверждений</td><td>Создание черновиков</td><td>Варианты с метками утверждений</td><td>Доля прошедших контроль; доля побед</td><td>Новое утверждение, образ человека, регулируемая категория (БАД, детские товары)</td><td>КП</td></tr>
+      <tr><td>Медиаоператор</td><td>Применять согласованные изменения</td><td>Согласованный набор изменений, erid</td><td>Адаптеры исполнения через движок политик</td><td>Запись в рамках политики</td><td>Журнал изменений</td><td>Сверка; ноль нарушений</td><td>Отказ политики, нет erid, ошибка API после повторов</td><td>ОР</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Защиты</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Угроза</th><th>Мера</th></tr></thead>
+    <tbody>
+      <tr><td>Промпт-инъекции из отзывов, карточек конкурентов, писем</td><td>Недоверенный текст не попадает в шаги с вызовом инструментов; выход модели не может вызвать исполнение напрямую; все действия через детерминированный движок политик</td></tr>
+      <tr><td>Утечка между клиентами</td><td>Учётные данные, схемы и поисковые индексы по клиенту; общий контекст запрещён; автотесты на межклиентское чтение</td></tr>
+      <tr><td>Выдуманные числа и утверждения</td><td>Числа подставляются из запросов шаблоном; сверка блокирует отправку; утверждения только из согласованной библиотеки</td></tr>
+      <tr><td>Нарушение маркировки и рекламного закона</td><td>Запуск без erid технически невозможен; проверка категорий (БАД, алкоголь, финансы, детские товары)</td></tr>
+      <tr><td>Повторное исполнение</td><td>Ключ идемпотентности; состояние процесса хранится надёжно; сверка перед повтором</td></tr>
+      <tr><td>Перерасход бюджета</td><td>Жёсткие дневные и месячные лимиты по клиенту до и после каждого изменения; аварийная остановка</td></tr>
+      <tr><td>Изменения API, блокировки, сбои интеграций</td><td>Версионированные адаптеры, контрактные тесты, теневой режим после обновлений, ручной регламент</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Доступ к API: что проверить до разработки</h3>
+  <ul class="small">
+    <li><span class="t t-q">Q</span>Условия API Яндекс Директа и VK Рекламы для агентского доступа к кабинетам клиентов, лимиты запросов, требования к приложению.</li>
+    <li><span class="t t-q">Q</span>API продавцов Wildberries, Ozon и Яндекс Маркета: какие методы рекламы и статистики доступны, лимиты, разрешено ли управление ставками сторонним сервисом.</li>
+    <li><span class="t t-q">Q</span>API выбранного ОРД для автоматической регистрации креативов и передачи статистики.</li>
+    <li><span class="t t-a">A</span>Пока API не подтверждены, всё исполнение в пилотах ручное, а данные загружаются выгрузками.</li>
+  </ul>
+
+  <h3>Купить, построить, взять open source</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Компонент</th><th>Решение</th><th>Причина</th></tr></thead>
+    <tbody>
+      <tr><td>Коннекторы</td><td>Купить у российских сервисов аналитики или написать узкие</td><td>Для маркетплейсов готовых открытых коннекторов мало; проверить</td></tr>
+      <tr><td>Хранилище и вычисления</td><td>Управляемый PostgreSQL / ClickHouse в российском облаке</td><td>Локализация ПДн; небольшие объёмы на клиента</td></tr>
+      <tr><td>Эконометрика и гео-тесты</td><td>Open source (PyMC-Marketing или Meridian; GeoLift)<a class="ref" href="#sources">[18]</a></td><td>Прозрачно и бесплатно; наша ценность в калибровке и экспертизе</td></tr>
+      <tr><td>Надёжное исполнение процессов</td><td>Открытый движок durable execution, развёрнутый у себя</td><td>Повторы, таймеры, идемпотентность сложно сделать надёжно самим</td></tr>
+      <tr><td>Движок политик, согласования, журнал решений, адаптеры</td><td><b>Построить</b></td><td>Это и есть продукт</td></tr>
+      <tr><td>Языковые модели</td><td>Российские API и открытые модели в российском облаке</td><td>Локализация, санкционные ограничения, цена</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Опыт основателей в React и TypeScript подходит для клиентского интерфейса; модели пишутся на Python. Каждый слой выбирается по требованиям, а не по привычке.</p>
+</section>
+<!-- ============ 6 ИЗМЕРЕНИЯ И УПРАВЛЕНИЕ ============ -->
+<section class="view" id="v-measurement" data-title="Измерения и управление" data-n="06" hidden>
+  <p class="eyebrow">06 · Измерения, наука о решениях, автономность и управление</p>
+  <h1>Измерять настолько точно, насколько позволяют данные, и говорить об этом прямо</h1>
+
+  <div class="callout">
+    <p><b>Пять разных чисел.</b> <i>Корреляция</i> (расходы и продажи двигались вместе) · <i>атрибутированные заказы</i> (площадка или модель приписала заслугу; например, ДРР в кабинете маркетплейса) · <i>модельный вклад</i> (оценка эконометрики, зависит от допущений) · <i>экспериментальный прирост</i> (разница при рандомизации или квазиэксперименте) · <i>инкрементальная прибыль</i> (прирост × маржа − реклама − вознаграждение − скидки, комиссии, логистика и возвраты). В отчётах каждое число помечено, к какому типу оно относится.</p>
+  </div>
+
+  <h2>Лестница измерений по зрелости данных</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Уровень</th><th>Условие входа</th><th>Методы</th><th>Не используем</th><th>Какие решения поддерживает</th></tr></thead>
+    <tbody>
+      <tr><td><b>L0</b> Отчётность</td><td>&lt;12 месяцев данных или разрывы в учёте</td><td>Финансовая отчётность, маржинальный доход по SKU, базовые когорты, качественные данные</td><td>Эконометрика, детальная атрибуция</td><td>Починить учёт; защитить маржу; небольшие обратимые тесты</td></tr>
+      <tr><td><b>L1</b> Диагностика</td><td>12–18 месяцев, 2+ канала</td><td>Атрибуция площадок как диагностика, «до/после» с синтетическим контролем, тесты включения/выключения по SKU</td><td>Эконометрика как основа решений</td><td>Выбор креативов, ставок и аудиторий внутри канала; сигнал о подозрительном ДРР</td></tr>
+      <tr><td><b>L2</b> Причинность</td><td>≥18 месяцев; продажи по регионам; ≥10–20 сопоставимых регионов</td><td>Гео-эксперименты, контрольные группы, переключения по времени</td><td>Эконометрика без калибровки</td><td>Перенос бюджета между каналами</td></tr>
+      <tr><td><b>L3</b> Интеграция</td><td>≥2 лет недельных данных, вариативность бюджета, несколько завершённых тестов</td><td>Байесовская эконометрика с калибровкой по тестам, прогнозы и сценарная оптимизация</td><td>Экстраполяция за пределы наблюдавшихся бюджетов</td><td>Годовое и квартальное распределение бюджета</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Достаточность данных и типичные ошибки</h3>
+  <ul class="small">
+    <li><span class="t t-s">S</span>Гео-тесты: практики рекомендуют закладывать минимальный обнаруживаемый эффект 5–10% на 4–8 недель с периодом затухания после; квазиэксперименты требуют около 25+ периодов до воздействия и 10–20+ регионов, в идеале год истории<a class="ref" href="#sources">[18]</a>.</li>
+    <li><span class="t t-s">S</span>Эконометрика с настройками по умолчанию может сильно ошибаться: в опубликованном синтетическом тесте модель показала доходность 10,61 для канала с истинной доходностью 4,20<a class="ref" href="#sources">[18]</a>. Калибровать тестами и проверять на известных эффектах.</li>
+    <li><b>Особенности маркетплейсов:</b> внутренняя реклама влияет на позиции в органической выдаче, поэтому ДРР в кабинете систематически не равен приросту; региональная логистика и склады ограничивают гео-тесты; акции маркетплейса за его счёт искажают цену.</li>
+    <li><b>Искажающие факторы:</b> акции и скидки, цены конкурентов, отсутствие товара на складах, сезонность, изменения алгоритмов выдачи и комиссий, блокировки и замедления каналов, изменения учёта.</li>
+    <li><b>Малые бренды:</b> если мощности не хватает, не притворяться. Делать более крупные, длинные и обратимые изменения, использовать априорные оценки из библиотеки и формулировать решение как ставку с датой пересмотра.</li>
+  </ul>
+
+  <h3>От доказательства к решению</h3>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Доказательство</th><th>Что меняет</th><th>Кто согласует</th><th>Скорость</th><th>Как оцениваем</th></tr></thead>
+    <tbody>
+      <tr><td>Тест показывает прирост канала ниже безубыточности при текущем бюджете</td><td>Бюджет канала −20–50%</td><td>Согласующий клиента</td><td>За неделю</td><td>Динамика маржи против коридора прогноза 4 недели</td></tr>
+      <tr><td>Кривая отклика не насыщена, тест положительный</td><td>Бюджет + шагами ≤20% в неделю</td><td>Согласующий клиента</td><td>2–4 недели</td><td>Предельная стоимость инкрементального заказа</td></tr>
+      <tr><td>Атрибут креатива или карточки выигрывает в 3+ тестах</td><td>Стандарт брифа</td><td>Креативный продюсер</td><td>Следующий бриф</td><td>Доля побед новых вариантов</td></tr>
+      <tr><td>Акция растит заказы, но снижает маржу после возвратов</td><td>Отмена или изменение акции</td><td>Клиент (владелец акции)</td><td>Следующий цикл</td><td>Маржинальный доход на заказ</td></tr>
+      <tr><td>Канал под правовым риском (например, Telegram после 2026 г.)</td><td>План замещения и тест альтернатив</td><td>Собственник и юрист клиента</td><td>За квартал до срока</td><td>Маржа при новом наборе каналов</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Горизонты и качество:</b> короткие тесты читаются вместе с метриками бренда (брендовые запросы в Яндексе и на маркетплейсах, прямой трафик, опросы при наличии бюджета). Каждый результат очищается от скидок, возвратов, отсутствия товара и ограничений склада. Отчёты отделяют <b>причинный вклад маркетинга</b> от <b>общего роста компании</b>, который зависит также от ассортимента, цен, дистрибуции и экономики.</p>
+
+  <h2>Матрица автономности</h2>
+  <p class="small"><span class="pill p-auto">Авто</span> автономно в рамках политики · <span class="pill p-appr">Согласование</span> явное согласие клиента · <span class="pill p-human">Решает человек</span> ИИ помогает · <span class="pill p-no">Не автоматизируется</span></p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Действие</th><th>Средний бренд</th><th>Крупный FMCG</th><th>Быстрорастущий</th><th>Лимиты</th><th>Мониторинг и обратимость</th></tr></thead>
+    <tbody>
+      <tr><td>Черновик (бриф, текст, отчёт)</td><td><span class="pill p-auto">Авто</span></td><td><span class="pill p-auto">Авто</span></td><td><span class="pill p-auto">Авто</span></td><td>Только внутри до проверки</td><td>Версии; внешнего эффекта нет</td></tr>
+      <tr><td>Публикация контента и рассылки</td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-auto">Авто</span> по согласованным шаблонам</td><td>Только согласованные утверждения; erid для рекламы</td><td>Публикацию можно снять, письмо отозвать нельзя</td></tr>
+      <tr><td>Запуск кампании</td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-appr">Согласование</span></td><td>В пределах месячного бюджета; маркировка обязательна</td><td>Пауза за минуты; потраченное не вернуть</td></tr>
+      <tr><td>Изменение ставок и бюджетов</td><td><span class="pill p-auto">Авто</span> ≤10%/день по каналу</td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-auto">Авто</span> ≤20%/день</td><td>Жёсткий месячный лимит; общий бюджет неизменен</td><td>Откат на следующий день; оповещения о темпе</td></tr>
+      <tr><td>Ротация креативов из согласованного набора</td><td><span class="pill p-auto">Авто</span></td><td><span class="pill p-auto">Авто</span></td><td><span class="pill p-auto">Авто</span></td><td>Только промаркированные материалы</td><td>Обратимо</td></tr>
+      <tr><td>Изменение утверждений, акций, цен</td><td><span class="pill p-human">Решает человек</span></td><td><span class="pill p-human">Решает человек</span></td><td><span class="pill p-human">Решает человек</span></td><td>Юрист клиента / владелец цены</td><td>История цен и утверждений в журнале</td></tr>
+      <tr><td>Выгрузка данных покупателей</td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-appr">Согласование</span></td><td><span class="pill p-appr">Согласование</span></td><td>Только в российский контур, поручение на обработку</td><td>Необратимо; журнал</td></tr>
+      <tr><td>Удаление данных покупателей</td><td><span class="pill p-no">Не автоматизируется</span></td><td><span class="pill p-no">Не автоматизируется</span></td><td><span class="pill p-no">Не автоматизируется</span></td><td>Запросы субъектов через процесс клиента</td><td>Необратимо; правило двух лиц</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Как выдаются и отзываются права:</b> уровни автономности фиксируются в политике действий — приложении к договору, по каждому каналу и действию, с подписью согласующего. По умолчанию только рекомендации. Уровень повышается после двух чистых циклов на предыдущем, пересматривается ежеквартально, отзывается мгновенно (аварийная остановка), а каждое действие записывает, кто или что его выполнило и по какой версии политики. Рекомендация ничего не меняет вне нашей системы; исполнение — отдельный записанный шаг.</p>
+
+  <h3>Юридические вопросы для квалифицированной проверки <span class="t t-q">Q</span></h3>
+  <ul class="small">
+    <li><b>Санкции:</b> применимость ст. 5n Регламента ЕС 833/2014 и других режимов к участникам и подрядчикам<a class="ref" href="#sources">[16]</a>; структура юрлиц в России, Казахстане и Узбекистане.</li>
+    <li><b>Персональные данные (152-ФЗ):</b> роли (оператор или обработчик по поручению), локализация при сборе<a class="ref" href="#sources">[6]</a>, уведомление Роскомнадзора, трансграничная передача, тексты согласий; аналоги в Казахстане<a class="ref" href="#sources">[9]</a> и Узбекистане<a class="ref" href="#sources">[11]</a>.</li>
+    <li><b>Реклама:</b> маркировка и отчётность в ЕРИР через ОРД; кто плательщик сбора 3% при нашей модели<a class="ref" href="#sources">[5]</a>; правовой статус рекламы в Telegram и YouTube после 2026 года<a class="ref" href="#sources">[7]</a>; требования к утверждениям для БАД, детских товаров, алкоголя, финансов.</li>
+    <li><b>Генеративный контент:</b> требования к обозначению контента, созданного ИИ, на целевых рынках; права на созданные материалы и на обезличенную библиотеку эффектов.</li>
+    <li><b>Договоры:</b> оферты и правила маркетплейсов о доступе третьих лиц к кабинетам; ограничение ответственности; отсутствие гарантий результата.</li>
+  </ul>
+  <p class="small muted">Этот список — отправная точка для юриста, а не юридическое заключение.</p>
+</section>
+
+<!-- ============ 7 ЭКОНОМИКА ============ -->
+<section class="view" id="v-economics" data-title="Экономика" data-n="07" hidden>
+  <p class="eyebrow">07 · Коммерческая модель и юнит-экономика</p>
+  <h1>Фиксированное вознаграждение по диапазонам бюджета, рекламные деньги не проходят через нас</h1>
+
+  <h2>Варианты ценообразования</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Модель</th><th>Плюсы</th><th>Минусы и конфликты</th><th>Использование</th></tr></thead>
+    <tbody>
+      <tr><td>% от рекламного бюджета</td><td>Привычно рынку</td><td>Нам выгодно рекомендовать больше рекламы; подрывает независимость; если бюджет проходит через нас — сбор 3% и оборотный капитал</td><td>Нет</td></tr>
+      <tr><td>Абонентская плата</td><td>Предсказуемо</td><td>Расползание объёма; слабая связь с ценностью</td><td>Основа гибрида</td></tr>
+      <tr><td>Подписка на ПО</td><td>Масштабируется</td><td>Покупатели хотят результат, а не места</td><td>Тариф «только измерения», год 2</td></tr>
+      <tr><td>Оплата за объём</td><td>Подходит для вариантов и тестов</td><td>Сложно прогнозировать покупателю</td><td>Дополнение для креативов</td></tr>
+      <tr><td>Плата за внедрение</td><td>Покрывает подключение</td><td>Трение при подписании</td><td>Внутри платного пилота</td></tr>
+      <tr><td>Бонус за результат</td><td>Связь с итогом</td><td>Споры о контрфактическом сценарии; вознаграждает удачу и сезонность</td><td>По желанию, не более 20% вознаграждения, только по заранее зарегистрированным тестам</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><span class="t t-r">R</span><b>Структура цены <span class="t t-a">A</span>:</b> платный 90-дневный пилот 900 тыс. ₽; затем ежемесячное вознаграждение по диапазону бюджета под управлением: 300 тыс. ₽ (до 3 млн ₽), 450 тыс. ₽ (3–8 млн ₽), 650 тыс. ₽ (8–15 млн ₽). Вознаграждение меняется только при смене диапазона. Клиенты заключают договоры с площадками и платят им напрямую; гарантий результата нет. Цены без НДС; налоговый режим определяет бухгалтер.</p>
+
+  <h2>Калькулятор юнит-экономики</h2>
+  <p class="small">На одного клиента в устойчивом месяце. По умолчанию базовый сценарий. Все значения — допущения. Сбор 3% включён консервативно; применимость к нашей модели проверит юрист.</p>
+  <div class="calc box">
+    <div class="inputs" id="calcInputs"></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="kpis" id="calcOut"></div>
+      <div class="status info" id="calcVerdict"></div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn" type="button" data-scn="down">Пессимистичный</button>
+    <button class="btn primary" type="button" data-scn="base">Базовый</button>
+    <button class="btn" type="button" data-scn="up">Оптимистичный</button>
+  </div>
+
+  <h3>Сценарии</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Допущение / результат</th><th class="num">Пессим.</th><th class="num">Базовый</th><th class="num">Оптим.</th></tr></thead>
+    <tbody>
+      <tr><td>Ежемесячное вознаграждение</td><td class="num">300 000 ₽</td><td class="num">450 000 ₽</td><td class="num">650 000 ₽</td></tr>
+      <tr><td>Часы обслуживания в месяц</td><td class="num">50</td><td class="num">40</td><td class="num">32</td></tr>
+      <tr><td>Полная стоимость часа</td><td class="num">2 500 ₽</td><td class="num">2 500 ₽</td><td class="num">2 500 ₽</td></tr>
+      <tr><td>ПО, облако, языковые модели</td><td class="num">30 000 ₽</td><td class="num">25 000 ₽</td><td class="num">25 000 ₽</td></tr>
+      <tr><td>Производство креативов</td><td class="num">45 000 ₽</td><td class="num">35 000 ₽</td><td class="num">30 000 ₽</td></tr>
+      <tr><td>Сбор 3% (если применим)</td><td class="num">9 000 ₽</td><td class="num">13 500 ₽</td><td class="num">19 500 ₽</td></tr>
+      <tr><td><b>Валовая прибыль в месяц</b></td><td class="num">91 000 ₽</td><td class="num">276 500 ₽</td><td class="num">495 500 ₽</td></tr>
+      <tr><td><b>Валовая маржа</b></td><td class="num">30,3%</td><td class="num">61,4%</td><td class="num">76,2%</td></tr>
+      <tr><td>Отток в месяц</td><td class="num">5%</td><td class="num">3,5%</td><td class="num">2,5%</td></tr>
+      <tr><td>Стоимость привлечения клиента</td><td class="num">1 000 000 ₽</td><td class="num">800 000 ₽</td><td class="num">700 000 ₽</td></tr>
+      <tr><td><b>Окупаемость привлечения</b></td><td class="num">11,0 мес.</td><td class="num">2,9 мес.</td><td class="num">1,4 мес.</td></tr>
+      <tr><td><b>LTV : CAC</b> (валовая прибыль ÷ отток)</td><td class="num">1,8</td><td class="num">9,9</td><td class="num">28,3</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Формулы: стоимость обслуживания = часы × ставка; себестоимость = обслуживание + ПО + креативы + сбор; валовая прибыль = вознаграждение − себестоимость; окупаемость = CAC ÷ валовая прибыль; LTV = валовая прибыль ÷ месячный отток. <b>Вывод:</b> ниже стоимость труда, чем в ЕС, даёт запас маржи, но при 300 тыс. ₽ и 50 часах бизнес едва окупает привлечение. Ключевая метрика платформы та же: часы обслуживания на клиента.</p>
+
+  <h3>Первые 12 месяцев на уровне компании</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th></th><th class="num">Пессим.</th><th class="num">Базовый</th></tr></thead>
+    <tbody>
+      <tr><td>Платящих клиентов к 12-му месяцу</td><td class="num">4</td><td class="num">8</td></tr>
+      <tr><td>Выручка за 12 месяцев</td><td class="num">≈7,2 млн ₽</td><td class="num">≈20,3 млн ₽</td></tr>
+      <tr><td>Операционные расходы (команда растёт до 5–6)</td><td class="num">≈18 млн ₽</td><td class="num">≈22,8 млн ₽</td></tr>
+      <tr><td>Потребность в деньгах</td><td class="num">≈10,8 млн ₽</td><td class="num">пик ≈6,9 млн ₽ (6-й месяц); ≈2,5 млн ₽ к 12-му</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Базовая выручка: месяцы 4–6 — три пилота по 300 тыс. ₽ в месяц; 7–9 — пять клиентов по 450 тыс. ₽; 10–12 — восемь клиентов по 450 тыс. ₽. Пессимистичный: два пилота, затем два и четыре клиента по 300 тыс. ₽. Расходы: ≈1,4; 1,8; 2,1 и 2,3 млн ₽ в месяц по кварталам. Оборотный капитал: ежемесячный счёт авансом; рекламные бюджеты не проходят через нас. Ответственность ограничена вознаграждением за 12 месяцев (проверить с юристом).</p>
+</section>
+<!-- ============ 8 ВАЛИДАЦИЯ И ДОРОЖНАЯ КАРТА ============ -->
+<section class="view" id="v-roadmap" data-title="Валидация и дорожная карта" data-n="08" hidden>
+  <p class="eyebrow">08 · MVP, валидация и дорожная карта</p>
+  <h1>Сначала доказать ценность решения, потом строить машину</h1>
+
+  <h2>Минимальный платный пилот</h2>
+  <div class="box">
+    <p class="small"><b>90 дней, 900 тыс. ₽, 2–3 партнёра.</b> Недели 1–2 — диагностика готовности данных; 3–4 — базовая линия маржи по SKU и первое предложение по перераспределению; 5–10 — один заранее зарегистрированный тест (гео или по SKU) и ежемесячные согласования; 11–12 — вывод и решение о продлении.</p>
+    <p class="small"><b>Допустимо вручную:</b> ноутбуки вместо сервиса моделирования, таблица вместо экрана согласований, ручная сборка отчёта, ручное исполнение оператором, загрузка выгрузок вместо API. <b>Недопустимо даже вручную:</b> действия без письменного согласия, выдуманные числа, непроверенные утверждения, реклама без маркировки, хранение ПДн вне России.</p>
+  </div>
+
+  <h2>Приоритеты возможностей</h2>
+  <div class="grid3">
+    <div class="box"><h4>P0 (к 90-му дню)</h4><ul class="small"><li>Загрузка выгрузок WB, Ozon, Я.Маркета, Директа, VK Рекламы, Метрики; таблица себестоимости</li><li>Единые метрики и модель маржи с комиссиями, логистикой, возвратами</li><li>Отчёт о готовности данных</li><li>Дизайн и чтение гео- и SKU-тестов (обёртка над open source)</li><li>Согласования и журнал решений (простое веб-приложение)</li><li>Генератор сводки со сверкой чисел (российская модель)</li><li>Аудит, изоляция клиентов, лимиты бюджета; всё в российском облаке</li></ul></div>
+    <div class="box"><h4>P1 (месяцы 4–9)</h4><ul class="small"><li>Коннекторы по API после проверки условий</li><li>Калиброванная байесовская эконометрика и сценарии</li><li>Адаптеры исполнения с пробным и теневым режимами; интеграция с ОРД</li><li>Конвейер брифов и вариаций карточек с проверкой утверждений</li><li>Операционная консоль с часами по процессам</li></ul></div>
+    <div class="box"><h4>Отложено</h4><ul class="small"><li>Офлайн ритейл-медиа и продажи сетей (FMCG)</li><li>Казахстанский контур данных (до месяца 9)</li><li>Self-serve подключение</li><li>Мультиагентная оркестрация</li><li>White-label для агентств</li></ul></div>
+  </div>
+
+  <h2>Контрольные точки</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Точка</th><th>Масштабировать</th><th>Пересмотреть</th><th>Остановиться</th></tr></thead>
+    <tbody>
+      <tr><td>День 30: проблема</td><td>≥8/15 подтверждают дорогое сомнение; ≥5 просят предложение</td><td>Боль реальна, но про нехватку рук → изменить позиционирование</td><td>&lt;4/15 подтверждают</td></tr>
+      <tr><td>День 60: готовность платить</td><td>≥2 оплаченных пилота</td><td>Интерес только по низкой цене → тариф «аудит данных»</td><td>0 пилотов из 10 предложений</td></tr>
+      <tr><td>День 90: ценность</td><td>≥2 из 3 пилотов продлеваются; в каждом ≥1 согласованное перераспределение</td><td>Ценность видна, но данных мало → ужесточить порог</td><td>Ни один пилот не принял рекомендацию</td></tr>
+      <tr><td>Месяц 9: масштабируемость</td><td>≤40 часов на клиента и снижается</td><td>Часы не падают → автоматизировать до новых продаж</td><td>&gt;60 часов и растёт</td></tr>
+      <tr><td>Месяц 9: Казахстан</td><td>≥2 российских клиента продают в РК и просят обслуживание; юрлицо и хранение в РК готовы</td><td>Спрос есть, инфраструктуры нет → партнёр в РК</td><td>Нет спроса</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Первые 30 дней: исследование</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Неделя</th><th>Доказательства</th><th>Продукт</th><th>Коммерция</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Консультация юриста по санкциям и 152-ФЗ; гайд интервью; список 60 компаний, оценённых по правилу классификации</td><td>Чек-лист готовности данных</td><td>Обращения по тёплым контактам</td></tr>
+      <tr><td class="num">2</td><td>10 проблемных интервью (средние бренды), 2 FMCG, 2 быстрорастущих</td><td>Ноутбук оценки готовности</td><td>Бесплатная 10-минутная диагностика как повод для встречи</td></tr>
+      <tr><td class="num">3</td><td>Ещё 5 интервью; 3 аудита на реальных выгрузках</td><td>Шаблон модели маржи по SKU</td><td>Предложение пилота с ценой</td></tr>
+      <tr><td class="num">4</td><td>Синтез; обновление оценок сегментов</td><td>Шаблон брифа</td><td>5–10 предложений пилота</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>90 дней: MVP и пилоты</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Дни</th><th>Продукт</th><th>Подключение и коммерция</th></tr></thead>
+    <tbody>
+      <tr><td class="num">31–45</td><td>Загрузка выгрузок и единая модель для маркетплейсов и 1–2 рекламных систем</td><td>Старт пилота 1; шаблоны договора, поручения на обработку ПДн, политики действий</td></tr>
+      <tr><td class="num">46–60</td><td>Согласования и журнал решений v0; генератор сводки</td><td>Старт пилота 2; первое согласованное перераспределение в пилоте 1</td></tr>
+      <tr><td class="num">61–75</td><td>Обёртка тестов; аудит и лимиты</td><td>Тесты в пилотах 1–2; подписан пилот 3</td></tr>
+      <tr><td class="num">76–90</td><td>Учёт часов; бэклог P1 по сэкономленным часам</td><td>Выводы, разговоры о продлении, кейсы</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Дорожная карта на 12 месяцев</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Этап</th><th>Месяцы</th><th>Клиенты</th><th>Команда</th><th>Фокус</th></tr></thead>
+    <tbody>
+      <tr><td>Проверка</td><td class="num">1–3</td><td class="num">0–3 пилота</td><td>3: коммерческий основатель, аналитик-эконометрист, full-stack разработчик</td><td>Юрист, интервью, пилоты, P0</td></tr>
+      <tr><td>Повторение</td><td class="num">4–6</td><td class="num">3–5</td><td>+ оператор маркетплейсов; креативный продюсер на подряде</td><td>Стандартный договор, регламенты, старт P1</td></tr>
+      <tr><td>Систематизация</td><td class="num">7–9</td><td class="num">5–8</td><td>+ инженер данных (частично)</td><td>Эконометрика, адаптеры, консоль; решение по Казахстану</td></tr>
+      <tr><td>Готовность к росту</td><td class="num">10–12</td><td class="num">8–10</td><td>6–7</td><td>&lt;40 часов на клиента; клиентский интерфейс; пилот партнёрства; первый клиент в РК</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Один → десять → сто клиентов.</b> При одном: основатели делают всё и записывают каждый шаг. При десяти: группы по одному оператору на 5–6 клиентов и одному аналитику на 10–12; еженедельный ритм идёт из платформы. При ста: около 40–50 человек <span class="t t-a">A</span>, группы по вертикалям и странам, self-serve подключение, партнёрский канал через агентства по маркетплейсам; библиотека эффектов — главная причина оставаться.</p>
+  <p class="small muted">Трудозатраты P0: 2 разработчика × 10–12 недель и аналитик на половину ставки. P1: 2–3 разработчика × 6 месяцев. Стоимость — в разделе 07.</p>
+</section>
+
+<!-- ============ 9 МАТЕРИАЛЫ ============ -->
+<section class="view" id="v-artefacts" data-title="Рабочие материалы" data-n="09" hidden>
+  <p class="eyebrow">09 · Материалы и следующие шаги</p>
+  <h1>Тезис основателей и рабочие документы</h1>
+
+  <div class="box">
+    <h4>Тезис на одной странице</h4>
+    <p class="small"><b>Проблема.</b> Средние потребительские бренды тратят миллионы рублей в месяц на продвижение на маркетплейсах и во внешних каналах, не зная, сколько маржи это приносит. Кабинеты площадок оценивают сами себя, подрядчикам платят за объём, а навыков эконометрики не хватает.</p>
+    <p class="small"><b>Инсайт.</b> Бюджеты ушли в ритейл-медиа, рынок замедлился, а набор каналов меняется под давлением регулирования. Дефицитна независимая причинная оценка, превращённая в ответственные решения.</p>
+    <p class="small"><b>Решение.</b> Управляемый цикл решений на собственной платформе: порог готовности, базовая маржа по SKU, сценарный план, согласования, исполнение в рамках политики с маркировкой, заранее зарегистрированные тесты, журнал решений.</p>
+    <p class="small"><b>Бизнес.</b> Фиксированное вознаграждение по диапазонам бюджета, без медиамаржи. Сначала сервис, затем ПО по мере падения трудозатрат; лицензия ядра измерений агентствам по маркетплейсам; Казахстан, затем Узбекистан.</p>
+    <p class="small"><b>Ров.</b> Растущая библиотека калиброванных эффектов по категориям и площадкам, история решений клиентов, чистая история соблюдения закона.</p>
+    <p class="small"><b>Что доказать за 90 дней.</b> Два оплаченных пилота, по одному принятому перераспределению в каждом, трудозатраты движутся к 40 часам.</p>
+  </div>
+
+  <h2>Журнал решений</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>№</th><th>Решение</th><th>Обоснование</th><th>Когда пересмотреть</th></tr></thead>
+    <tbody>
+      <tr><td class="num">D1</td><td>Плацдарм: средние бренды, продающие через маркетплейсы</td><td>Максимальная оценка при реальном доступе основателей; бюджеты сосредоточены в e-retail media</td><td>Синтез интервью на 30-й день</td></tr>
+      <tr><td class="num">D2</td><td>Сервис + собственная платформа</td><td>Ранняя выручка, продукт из повторяемости</td><td>Анализ часов на 9-й месяц</td></tr>
+      <tr><td class="num">D3</td><td>Фиксированное вознаграждение, без % от медиа</td><td>Независимость — это продукт; рекламные бюджеты не проходят через нас</td><td>Если 3+ клиента откажутся от фиксированной цены</td></tr>
+      <tr><td class="num">D4</td><td>По умолчанию только рекомендации</td><td>Сначала доверие, потом скорость; ответственность</td><td>После двух чистых циклов у клиента</td></tr>
+      <tr><td class="num">D5</td><td>Россия → Казахстан → Узбекистан</td><td>Язык, доступ, размер рынка; разные требования к данным</td><td>9-й месяц</td></tr>
+      <tr><td class="num">D6</td><td>Все ПДн и вычисления с ними в российском облаке; российские или открытые модели</td><td>Локализация; санкционные ограничения на доступ к ИИ-сервисам ЕС</td><td>При изменении закона</td></tr>
+      <tr><td class="num">D7</td><td>Санкционная экспертиза до первого договора</td><td>Риск, который невозможно исправить задним числом</td><td>Не пересматривается</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Реестр допущений по риску</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Ранг</th><th>Допущение</th><th>Влияние × неопределённость</th><th>Проверка</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Структура и участники не нарушают санкционных режимов</td><td class="num">Крит. × Выс.</td><td>Юрист, неделя 1</td></tr>
+      <tr><td class="num">2</td><td>Покупатели платят фиксированное вознаграждение за решения, а не за объём исполнения</td><td class="num">Выс. × Выс.</td><td>Предложения пилота с ценой</td></tr>
+      <tr><td class="num">3</td><td>Часы обслуживания падают ниже 40</td><td class="num">Выс. × Выс.</td><td>Учёт времени с пилота 1</td></tr>
+      <tr><td class="num">4</td><td>API маркетплейсов и рекламных систем позволяют работать по доверенности клиента</td><td class="num">Выс. × Сред.</td><td>Проверка документации и тестовый доступ, неделя 1–3</td></tr>
+      <tr><td class="num">5</td><td>Тесты набирают мощность при бюджетах средних брендов</td><td class="num">Выс. × Сред.</td><td>Расчёт мощности на данных аудита</td></tr>
+      <tr><td class="num">6</td><td>Сеть основателей даёт 15 квалифицированных интервью</td><td class="num">Сред. × Сред.</td><td>Обращения, неделя 1</td></tr>
+      <tr><td class="num">7</td><td>Отток 3,5% в месяц</td><td class="num">Сред. × Выс.</td><td>Когорты с 6-го месяца</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>План исследования клиентов</h2>
+  <ul class="small">
+    <li><b>Выборка:</b> 15 средних брендов, 5 FMCG (бренд и медиа), 5 быстрорастущих; собственники и руководители маркетинга; минимум 5 текущих клиентов агентств.</li>
+    <li><b>Метод:</b> 45-минутные интервью о прошлых решениях (первые 30 минут без продажи); затем платный аудит данных для согласившихся. Записи и расшифровки хранятся в России.</li>
+    <li><b>Ключевые вопросы:</b> последнее изменение бюджета и его основание; кто был против; что показывает кабинет и чему верят финансы; сколько времени уходит на отчёты; за что перестали бы платить; план на случай ограничения Telegram.</li>
+    <li><b>Результат:</b> кодированные расшифровки, частота и сила боли, обновлённые оценки сегментов, реакция на цену. Выводы по средним брендам не переносить на FMCG без отдельных данных.</li>
+  </ul>
+
+  <h2>Приоритетный бэклог</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>№</th><th>Задача</th><th>Тип</th><th>Зачем</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Юридическая структура, санкционная экспертиза, политика ПДн</td><td>Право</td><td>Блокирует всё</td></tr>
+      <tr><td class="num">2</td><td>Проверка API WB, Ozon, Я.Маркета, Директа, VK Рекламы, ОРД</td><td>Зависимость</td><td>Определяет объём автоматизации</td></tr>
+      <tr><td class="num">3</td><td>Единая схема: расходы, заказы, выкупы, комиссии, логистика, маржа, решения, тесты, erid</td><td>Данные</td><td>Основа всего</td></tr>
+      <tr><td class="num">4</td><td>Модель маржи по SKU с возвратами и скидками</td><td>Модель</td><td>Главное обещание</td></tr>
+      <tr><td class="num">5</td><td>Согласования и журнал решений v0</td><td>Продукт</td><td>Доверие и ров</td></tr>
+      <tr><td class="num">6</td><td>Обёртка гео- и SKU-тестов с формой регистрации</td><td>Модель</td><td>Причинные доказательства</td></tr>
+      <tr><td class="num">7</td><td>Генератор сводки со сверкой чисел</td><td>ИИ</td><td>Главная экономия часов</td></tr>
+      <tr><td class="num">8</td><td>Изоляция клиентов, аудит, лимиты, развёртывание в российском облаке</td><td>Безопасность</td><td>До любого исполнения</td></tr>
+      <tr><td class="num">9</td><td>Адаптеры в пробном и теневом режимах, проверка erid</td><td>Платформа</td><td>До автономности</td></tr>
+      <tr><td class="num">10</td><td>Калиброванная эконометрика</td><td>Модель</td><td>Клиенты уровня L3</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Предложение пилота и черновик договора</h2>
+  <div class="box">
+    <p class="small"><b>Предложение.</b> «Пилот „Прибыль на рубль продвижения“: за 90 дней — базовая маржа по SKU, одно проверенное тестом перераспределение бюджета и ежемесячный цикл решений, который может проверить ваш финансовый директор». Стоимость 900 тыс. ₽ тремя ежемесячными платежами; засчитывается в 3 месяца абонентской платы при продлении в течение 30 дней после пилота <span class="t t-a">A</span>.</p>
+    <details>
+      <summary>Структура договора (для проверки юристом)</summary>
+      <ol class="small">
+        <li><b>Стороны и срок:</b> 90 дней с момента предоставления доступа к данным.</li>
+        <li><b>Объём:</b> диагностика; базовая маржа; до 2 предложений по перераспределению; 1 зарегистрированный тест; еженедельные сводки; итоговый вывод.</li>
+        <li><b>Вне объёма:</b> оплата рекламы, производство креативов сверх 10 вариантов, изменение цен, работа с сетями.</li>
+        <li><b>Обязанности клиента:</b> доступ на чтение за 5 дней; данные о себестоимости; назначенный согласующий; ответ на согласования за 3 рабочих дня; договор с ОРД.</li>
+        <li><b>Политика действий:</b> приложение с разрешёнными действиями и лимитами; по умолчанию только рекомендации.</li>
+        <li><b>Критерии приёмки:</b> отчёт о готовности; тест зарегистрирован и проведён по плану или есть обоснование; итоговый вывод.</li>
+        <li><b>Персональные данные:</b> поручение на обработку, хранение в России, удаление при выходе, выгрузка журнала решений.</li>
+        <li><b>Без гарантий:</b> нет гарантий выручки или ДРР; результаты зависят от факторов, контролируемых клиентом и площадками.</li>
+        <li><b>Оплата и ответственность:</b> фиксированное вознаграждение; ограничение ответственности; клиенту принадлежат его данные и результаты; мы сохраняем обезличенные агрегированные выводы, если клиент не возражает.</li>
+      </ol>
+    </details>
+  </div>
+
+  <h2>Анкета нового клиента</h2>
+  <details>
+    <summary>Анкета (20 вопросов)</summary>
+    <ol class="small">
+      <li>Диапазон годовой выручки и рост за 12 месяцев</li>
+      <li>Каналы продаж и доля выручки каждого (WB, Ozon, Я.Маркет, сайт, сети, Kaspi, Uzum)</li>
+      <li>Рекламный бюджет в месяц по каналам, включая рекламу внутри маркетплейсов</li>
+      <li>Кто согласует изменения бюджета и как часто</li>
+      <li>Цель на 12 месяцев (рост, маржа, окупаемость)</li>
+      <li>Себестоимость и юнит-экономика по SKU: есть ли и где</li>
+      <li>Доля выкупа, возвратов, скидок и акций маркетплейса</li>
+      <li>Длина истории продаж и в каких системах (1С, кабинеты)</li>
+      <li>Настройка аналитики; известные разрывы</li>
+      <li>Продаёте ли в нескольких регионах или странах</li>
+      <li>Ограничения по остаткам и складам</li>
+      <li>Текущие подрядчики и их задачи</li>
+      <li>Последнее решение по бюджету, в котором сомневались</li>
+      <li>Тесты за год и что изменилось после них</li>
+      <li>Как создаются креативы и карточки, сколько</li>
+      <li>CRM и рассылки; статус согласий; где хранятся данные</li>
+      <li>ОРД и порядок маркировки</li>
+      <li>Регулируемые утверждения в категории</li>
+      <li>Действия, которые вы никогда не доверите подрядчику</li>
+      <li>Что сделает следующие 90 дней успешными</li>
+    </ol>
+  </details>
+
+  <h2>Пять главных решений</h2>
+  <ol class="small">
+    <li><b>Юридическая структура и санкционная экспертиза</b> (Q1): определяет, кто вообще может работать с клиентами.</li>
+    <li><b>Кто отвечает за аналитику</b>: основатель или первый наём.</li>
+    <li><b>Список из 60 компаний</b> и ответственный за обращения.</li>
+    <li><b>Тест цены пилота</b>: 900 тыс. ₽ или более дешёвый вход через аудит данных.</li>
+    <li><b>Место инструмента прогнозирования</b>: модуль и диагностика для привлечения или отдельный продукт.</li>
+  </ol>
+</section>
+
+<!-- ============ ИСТОЧНИКИ ============ -->
+<section class="view" id="v-sources" data-title="Реестр источников" data-n="10" hidden>
+  <p class="eyebrow">10 · Реестр источников</p>
+  <h1>Источники фактов в этом плане</h1>
+  <p class="small">Получены 10 ноября 2026 г. Тип: <b>Н</b> — независимое исследование или пресса, <b>К</b> — заявление компании, <b>О</b> — официальный документ, <b>Ю</b> — анализ юридической или консалтинговой фирмы. Интервью, данные клиентов и закрытые документы не использовались: их пока нет.</p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>№</th><th>Использованный факт</th><th>Источник</th><th>Дата</th><th>Тип</th><th>Уверенность</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Рынок рекламы РФ 2025 г. ≈981,6 млрд ₽, +8,5% (АКАР)</td><td><a href="https://ppc.world/news/tempy-rosta-rossiyskogo-reklamnogo-rynka-rezko-snizilis-v-2025-godu-issledovanie-akar/" target="_blank" rel="noopener">PPC.world</a></td><td>24.03.2026</td><td>Н</td><td>Высокая</td></tr>
+      <tr><td class="num">2</td><td>I кв. 2026 г.: ≈220 млрд ₽, +5%; интернет >117 млрд ₽, +8% (АКАР)</td><td><a href="https://www.comnews.ru/content/245957/2026-06-23/2026-w26/1008/rossiyskiy-rynok-reklamy-vyros-5" target="_blank" rel="noopener">ComNews</a></td><td>23.06.2026</td><td>Н</td><td>Высокая</td></tr>
+      <tr><td class="num">3</td><td>E-retail media 805 млрд ₽ в 2025 г., доля маркетплейсов 80,5% (Easy Commerce); WB+Ozon+ЯМ 500–600 млрд ₽ (Data Insight). Методики отличаются от АКАР, суммировать нельзя</td><td><a href="https://www.sostav.ru/publication/wildberries-ozon-i-yandeks-market-zarabotali-na-reklame-do-600-mlrd-rublej-83105.html" target="_blank" rel="noopener">Sostav</a></td><td>14.04.2026</td><td>Н</td><td>Средняя (оценки)</td></tr>
+      <tr><td class="num">4</td><td>Рейтинг агентских групп по медиазакупкам 2025 г.</td><td><a href="https://adindex.ru/ratings/mediaservice/2026/345346/" target="_blank" rel="noopener">AdIndex</a></td><td>2026</td><td>Н</td><td>Средняя</td></tr>
+      <tr><td class="num">5</td><td>Сбор 3% (479-ФЗ) с 01.04.2025; связь с ЕРИР; кто плательщик</td><td><a href="https://kontur.ru/articles/190" target="_blank" rel="noopener">Контур</a></td><td>2025</td><td>К</td><td>Средняя; проверить с юристом</td></tr>
+      <tr><td class="num">6</td><td>Локализация ПДн при записи и хранении с 01.07.2025 (ч. 5 ст. 18 152-ФЗ)</td><td><a href="https://www.comnews.ru/digital-economy/content/241730/2025-10-13/2025-w42/1016/granica-zamke-osobennosti-raboty-personalnymi-dannymi-rossii" target="_blank" rel="noopener">ComNews</a></td><td>13.10.2025</td><td>Н</td><td>Высокая; проверить с юристом</td></tr>
+      <tr><td class="num">7</td><td>ФАС: реклама в Telegram и YouTube формально незаконна, наказаний нет до конца 2026 г.; Instagram и Facebook — ответственность сохраняется</td><td><a href="https://incrussia.ru/news/fas-dala-biznesu-otsrochku-po-reklame-v-telegram-i-youtube/" target="_blank" rel="noopener">Inc. Russia</a></td><td>25.03.2026</td><td>Н</td><td>Высокая</td></tr>
+      <tr><td class="num">8</td><td>Казахстан: рынок рекламы ≈135 млрд ₸ (2024), диджитал ≈69,5 млрд ₸, +29%</td><td><a href="https://digitalbusiness.kz/2025-07-09/rinok-reklami-v-kazahstane-viros-do-135-mlrd-tenge-digital-zabral-bolshe-polovini/" target="_blank" rel="noopener">Digital Business</a></td><td>09.07.2025</td><td>Н</td><td>Средняя (одна оценка)</td></tr>
+      <tr><td class="num">9</td><td>Казахстан: локализация ПДн (ст. 12 закона 94-V), уточнение от 25.08.2026</td><td><a href="https://uppersetup.com/ru/blog/personal-data-and-localisation-in-kazakhstan-in-2026-law-no" target="_blank" rel="noopener">UPPERSETUP</a></td><td>2026</td><td>Ю</td><td>Средняя; сверить с официальным текстом</td></tr>
+      <tr><td class="num">10</td><td>Узбекистан: рынок рекламы +30–40% в 2025 г. до $260 млн; доля российских компаний ≈10%; спрос на Telegram</td><td><a href="https://www.sostav.ru/publication/brendy-narashchivayut-prodvizhenie-v-telegram-cherez-uzbekistan-86120.html" target="_blank" rel="noopener">Sostav</a></td><td>17.08.2026</td><td>Н</td><td>Средняя</td></tr>
+      <tr><td class="num">11</td><td>Узбекистан: локализация ПДн сужена 26.03.2026</td><td><a href="https://www.spot.uz/ru/2026/08/04/personal-data-abroad/" target="_blank" rel="noopener">Spot.uz</a></td><td>04.08.2026</td><td>Н</td><td>Средняя; сверить с законом</td></tr>
+      <tr><td class="num">12</td><td>Uzum: GMV >$500 млн, >17 тыс. продавцов в 2025 г. (неаудированные данные)</td><td><a href="https://uzum.com/en/press-center/news-and-press-releases/uzum-reports-strong-2025-results-as-investments-fuel-sustained-growth-across-fintech-and-e-commerce/" target="_blank" rel="noopener">Uzum</a></td><td>12.02.2026</td><td>К</td><td>Средняя</td></tr>
+      <tr><td class="num">13</td><td>Цены API GigaChat и YandexGPT, снижение до 67%</td><td><a href="https://www.tks.ru/technology/2026/08/25/0004/rossijskie-yazyikovyie-modeli-podesheveli-do-67-procent-za-god/" target="_blank" rel="noopener">ТКС.ру</a></td><td>25.08.2026</td><td>Н</td><td>Средняя</td></tr>
+      <tr><td class="num">14</td><td>Замедление Cloudflare в России с 9 июня 2025 г.</td><td><a href="https://zona.media/news/2025/06/27/cf-confirmed" target="_blank" rel="noopener">Медиазона</a></td><td>27.06.2025</td><td>Н</td><td>Высокая</td></tr>
+      <tr><td class="num">15</td><td>Проблемы доступа к GitHub из России в мае 2026 г.</td><td><a href="https://esports.ru/news/v-rossii-massovo-nedostupen-github/" target="_blank" rel="noopener">Esports.ru</a></td><td>08.05.2026</td><td>Н</td><td>Средняя</td></tr>
+      <tr><td class="num">16</td><td>Ст. 5n Регламента ЕС 833/2014: запрет рекламных услуг, маркетинговых исследований, ИТ-консалтинга, доступа к ИИ для российских юрлиц</td><td><a href="https://celnisprava.gov.cz/cz/Documents/2026-01-26--FAQs-sanctions-Russia-Services-provision_en.pdf" target="_blank" rel="noopener">FAQ Еврокомиссии</a></td><td>22.01.2026</td><td>О</td><td>Высокая; применение — только с юристом</td></tr>
+      <tr><td class="num">17</td><td>Мировые продажи FMCG ≈$6,6 трлн в 2025 г.</td><td><a href="https://www.businesswire.com/news/home/20251205817373/en/Global-FMCG-sales-to-reach-USD6.6-trillion-by-year-end-Euromonitor-International" target="_blank" rel="noopener">Euromonitor / Business Wire</a></td><td>12.2025</td><td>Н</td><td>Высокая</td></tr>
+      <tr><td class="num">18</td><td>Открытые библиотеки эконометрики; ограничения; ошибки моделей; дизайн гео-тестов</td><td><a href="https://martech.org/open-source-made-mmm-cheaper-not-easier/" target="_blank" rel="noopener">MarTech</a>; <a href="https://ppc.land/explaining-meridian/" target="_blank" rel="noopener">PPC Land</a>; <a href="https://towardsdatascience.com/why-are-marketers-turning-to-quasi-geo-lift-experiments-and-how-to-plan-them/" target="_blank" rel="noopener">TDS</a>; <a href="https://blckalpaca.at/en/knowledge-base/social-media/paid-social-performance-marketing/conversion-lift-meta-tiktok-platform-lift-tests" target="_blank" rel="noopener">blckalpaca</a></td><td>2026</td><td>Н</td><td>Средняя (практики)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ ОБРАТНАЯ СВЯЗЬ ============ -->
+<section class="view" id="v-feedback" data-title="Обратная связь" data-n="11" hidden>
+  <p class="eyebrow">11 · Обратная связь и интерес к партнёрству</p>
+  <h1>Скажите, где план ошибается</h1>
+  <p>Основателям, будущим партнёрам по пилотам, разработчикам и инвесторам: ваши ответы определят следующую версию. Поля со звёздочкой обязательны.</p>
+  <p class="small muted">Эта страница не сохраняет ваши ответы на чужих серверах: персональные данные граждан России должны записываться в базы на территории России. После отправки вы получите текст, который можно скопировать и отправить основателям.</p>
+  <form class="form box" id="leadForm" novalidate>
+    <label for="f-name">Имя *<input id="f-name" name="name" required autocomplete="name"></label>
+    <label for="f-contact">Почта, телефон или Telegram *<input id="f-contact" name="contact" required></label>
+    <label for="f-company">Компания<input id="f-company" name="company" autocomplete="organization"></label>
+    <label for="f-role">Роль
+      <select id="f-role" name="role"><option value="">Выберите</option><option>Собственник / CEO</option><option>Маркетинг или рост</option><option>Маркетплейсы / e-com</option><option>Финансы</option><option>Агентство</option><option>Разработчик / данные</option><option>Инвестор</option><option>Другое</option></select></label>
+    <label for="f-seg">Ваш бизнес
+      <select id="f-seg" name="segment"><option value="">Выберите</option><option>Крупный FMCG</option><option>Средняя устойчивая компания</option><option>Быстрорастущая компания</option><option>Не потенциальный клиент</option></select></label>
+    <label for="f-spend">Рекламный бюджет в месяц
+      <select id="f-spend" name="spend"><option value="">Выберите</option><option>До 1,5 млн ₽</option><option>1,5–5 млн ₽</option><option>5–15 млн ₽</option><option>Более 15 млн ₽</option><option>Не хочу указывать</option></select></label>
+    <div class="full"><span style="font-size:13.5px;font-weight:600">Что вам интересно</span>
+      <div class="checks" id="f-interest">
+        <label><input type="checkbox" value="пилот">Пилот</label>
+        <label><input type="checkbox" value="аудит данных">Аудит данных</label>
+        <label><input type="checkbox" value="инвестиции">Инвестиции</label>
+        <label><input type="checkbox" value="консультирование">Консультирование</label>
+        <label><input type="checkbox" value="работа в команде">Работа в команде</label>
+      </div></div>
+    <label class="full" for="f-decision">Маркетинговое решение, для которого вам не хватает доказательств<textarea id="f-decision" name="decision"></textarea></label>
+    <label class="full" for="f-feedback">Что в плане неверно, чего не хватает, что проверить первым?<textarea id="f-feedback" name="feedback"></textarea></label>
+    <label class="full" style="flex-direction:row;font-weight:400;gap:8px;align-items:flex-start"><input type="checkbox" id="f-consent" style="width:auto;margin-top:4px"> Я согласен(на) на обработку указанных данных основателями проекта для связи со мной. *</label>
+    <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="btn primary" type="submit" id="f-submit">Отправить</button>
+      <span class="small muted" id="f-mode"></span>
+    </div>
+    <div class="full" id="f-status" hidden></div>
+    <div class="full" id="f-copywrap" hidden>
+      <p class="small">Ваши ответы, готовые к копированию:</p>
+      <div class="copytext" id="f-copy"></div>
+      <button class="btn" type="button" id="f-copybtn" style="margin-top:8px">Скопировать</button>
+    </div>
+  </form>
+</section>
+
+<nav class="pager" id="pager" aria-label="Предыдущий и следующий раздел"></nav>
+</div></main>
+</div>
+<script>
+document.documentElement.lang = "ru";
+window.LW = {
+  lang: "ru",
+  form: { claudeDb: false, endpoint: window.LW_FORM_ENDPOINT || "" },
+  seg: {
+    crit: ["Сила боли","Способность платить","Скорость продажи","Доступность данных","Низкая трудоёмкость внедрения","Доступ основателей","Низкая конкуренция","Соответствие ядру"],
+    accessIndex: 5,
+    segs: {
+      cpg: {name:"Крупный FMCG", s:[4,5,1,2,1,1,1,3]},
+      mid: {name:"Средний устойчивый", s:[5,3,3,4,3,3,3,4]},
+      hg:  {name:"Быстрорастущий", s:[4,3,4,3,4,2,2,3]}
+    },
+    presets: {
+      boot: {w:[15,10,20,15,10,15,5,10], access:{cpg:1,mid:3,hg:2}, note:"Скорость выручки и доступ основателей решают; крупный FMCG получает наименьшую оценку."},
+      cpg:  {w:[15,20,5,10,5,25,5,15], access:{cpg:5,mid:3,hg:2}, note:"С реальными связями в FMCG и финансированием оценка FMCG растёт; проверьте, обгоняет ли она средних, прежде чем менять плацдарм."},
+      vc:   {w:[15,10,20,10,10,15,5,15], access:{cpg:1,mid:2,hg:4}, note:"Сеть стартапов поднимает быстрорастущих; они могут лидировать, но отток и кассовый риск у них выше, чем показывает оценка."}
+    }
+  },
+  econ: {
+    locale: "ru-RU", pre: "", post: " ₽",
+    fields: [
+      {k:"fee", l:"Вознаграждение в месяц, ₽", step:10000},
+      {k:"hours", l:"Часы обслуживания в месяц", step:1},
+      {k:"rate", l:"Полная стоимость часа, ₽", step:100},
+      {k:"sw", l:"ПО, облако, языковые модели, ₽", step:1000},
+      {k:"creative", l:"Производство креативов, ₽", step:1000},
+      {k:"levy", l:"Сбор с вознаграждения, %", step:1},
+      {k:"churn", l:"Отток в месяц, %", step:0.5},
+      {k:"cac", l:"Стоимость привлечения клиента, ₽", step:50000}
+    ],
+    scen: {
+      down:{fee:300000,hours:50,rate:2500,sw:30000,creative:45000,levy:3,churn:5,cac:1000000},
+      base:{fee:450000,hours:40,rate:2500,sw:25000,creative:35000,levy:3,churn:3.5,cac:800000},
+      up:{fee:650000,hours:32,rate:2500,sw:25000,creative:30000,levy:3,churn:2.5,cac:700000}
+    }
+  },
+  t: {
+    theme: "Тема", themes: {system:"как в системе", dark:"тёмная", light:"светлая"},
+    leads: "лидер", criterion: "Критерий", weight: "Вес", weighted: "Взвешенная оценка (из 5)",
+    k_gp: "Валовая прибыль на клиента в месяц", k_gm: "Валовая маржа", k_pay: "Окупаемость привлечения", mo: "мес.", never: "никогда",
+    v_loss: "Каждый клиент убыточен ещё до затрат на привлечение. При этом вознаграждении обслуживание должно занимать меньше {h} часов в месяц.",
+    v_weak: "Маржа или окупаемость вне приемлемого диапазона (цель: маржа ≥50%, окупаемость ≤12 мес.). Безубыточность по валовой марже — {h} часов обслуживания.",
+    v_ok: "Жизнеспособно как сервисный бизнес. Платформа должна поднять маржу выше 55%.",
+    v_great: "Маржа как у ПО. Убедитесь, что допущение по часам измерено, а не ожидается.",
+    labels: {name:"Имя", contact:"Контакт", company:"Компания", role:"Роль", segment:"Сегмент", spend:"Рекламный бюджет", interest:"Интерес", decision:"Решение, которому не хватает доказательств", feedback:"Комментарии к плану"},
+    copy: "Скопировать", copied: "Скопировано", selected: "Текст выделен, скопируйте его",
+    e_required: "Укажите имя и контакт, чтобы основатели могли ответить.",
+    e_consent: "Отметьте согласие на обработку данных.",
+    s_copy: "Скопируйте ответы ниже и отправьте их основателям удобным способом.",
+    sending: "Отправка…", send: "Отправить", update: "Обновить",
+    s_saved_db: "Сохранено. Спасибо.",
+    s_saved_ep: "Отправлено. Спасибо.",
+    e_save: "Ответы не отправлены ({c}). Скопируйте их ниже и отправьте основателям.",
+    m_db: "Ответы сохраняются для основателей.",
+    m_endpoint: "Ответы отправляются основателям при нажатии кнопки.",
+    m_copy: "Страница не отправляет ответы; вы получите текст для копирования."
+  }
+};
+</script>
+<script>
+(function(){
+  "use strict";
+  var C = window.LW || {};
+  var T = C.t || {};
+  var views = Array.prototype.slice.call(document.querySelectorAll("section.view"));
+  var ids = views.map(function(v){ return v.id.slice(2); });
+  var navlist = document.getElementById("navlist");
+  var tabs = document.getElementById("tabs");
+  var pager = document.getElementById("pager");
+  function plain(s){ return s.replace(/&amp;/g,"&"); }
+
+  views.forEach(function(v){
+    var id = v.id.slice(2), title = v.getAttribute("data-title"), n = v.getAttribute("data-n");
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#" + id; a.setAttribute("data-id", id);
+    a.innerHTML = '<span class="n">' + n + '</span><span>' + title + '</span>';
+    li.appendChild(a); navlist.appendChild(li);
+    var t = document.createElement("a");
+    t.href = "#" + id; t.setAttribute("data-id", id); t.innerHTML = title;
+    tabs.appendChild(t);
+  });
+
+  function show(id, scroll){
+    if (ids.indexOf(id) < 0) id = ids[0];
+    views.forEach(function(v){ v.hidden = (v.id !== "v-" + id); });
+    document.querySelectorAll("[data-id]").forEach(function(a){
+      if (a.getAttribute("data-id") === id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    var tab = tabs.querySelector('[data-id="' + id + '"]');
+    if (tab && getComputedStyle(tabs).display !== "none") {
+      try { tab.scrollIntoView({block:"nearest", inline:"center"}); } catch(e){}
+    }
+    var i = ids.indexOf(id);
+    pager.innerHTML = "";
+    if (i > 0) { var p = document.createElement("a"); p.className="btn"; p.href="#"+ids[i-1]; p.textContent = "← " + plain(views[i-1].getAttribute("data-title")); pager.appendChild(p); }
+    else pager.appendChild(document.createElement("span"));
+    if (i < ids.length-1) { var nx = document.createElement("a"); nx.className="btn primary"; nx.href="#"+ids[i+1]; nx.textContent = plain(views[i+1].getAttribute("data-title")) + " →"; pager.appendChild(nx); }
+    if (scroll) window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange", function(){ show((location.hash || "").replace("#",""), true); });
+  show((location.hash || "").replace("#",""), false);
+
+  /* Theme toggle: system -> dark -> light */
+  var themeBtn = document.getElementById("themeBtn");
+  var themeNames = T.themes || {system:"system", dark:"dark", light:"light"};
+  function applyTheme(t){
+    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    themeBtn.textContent = (T.theme || "Theme") + ": " + themeNames[t || "system"];
+  }
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem("lw-theme"); } catch(e){}
+  applyTheme(savedTheme);
+  themeBtn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var next = !cur ? "dark" : (cur === "dark" ? "light" : null);
+    applyTheme(next);
+    try { if (next) localStorage.setItem("lw-theme", next); else localStorage.removeItem("lw-theme"); } catch(e){}
+  });
+
+  /* Segment scoring */
+  var S = C.seg;
+  var sliders = document.getElementById("sliders");
+  var segbars = document.getElementById("segbars");
+  var segnote = document.getElementById("segnote");
+  var segtable = document.getElementById("segtable");
+  var presetSel = document.getElementById("preset");
+  var weights = S.presets.boot.w.slice();
+  var access = Object.assign({}, S.presets.boot.access);
+  S.crit.forEach(function(name, i){
+    var lab = document.createElement("label");
+    lab.setAttribute("for", "w-" + i);
+    lab.innerHTML = '<span>' + name + ' <b id="wv-' + i + '" style="font-family:var(--f-mono);font-weight:500"></b></span>';
+    var inp = document.createElement("input");
+    inp.type = "range"; inp.min = 0; inp.max = 30; inp.step = 1; inp.id = "w-" + i;
+    inp.addEventListener("input", function(){ weights[i] = +inp.value; renderSeg(); });
+    lab.appendChild(inp); sliders.appendChild(lab);
+  });
+  function renderSeg(){
+    var tw = weights.reduce(function(a,b){return a+b;},0) || 1;
+    S.crit.forEach(function(c,i){
+      document.getElementById("w-" + i).value = weights[i];
+      document.getElementById("wv-" + i).textContent = Math.round(weights[i]/tw*100) + "%";
+    });
+    var res = Object.keys(S.segs).map(function(k){
+      var s = S.segs[k].s.slice(); s[S.accessIndex] = access[k];
+      var tot = s.reduce(function(a,v,i){return a + v*weights[i];},0)/tw;
+      return {k:k, name:S.segs[k].name, v:tot, s:s};
+    });
+    var best = res.slice().sort(function(a,b){return b.v-a.v;})[0].k;
+    segbars.innerHTML = "";
+    res.forEach(function(r){
+      var row = document.createElement("div"); row.className = "seg-row";
+      row.innerHTML = '<span>' + r.name + (r.k===best ? ' <span class="pill p-auto">' + T.leads + '</span>' : '') + '</span><div class="bar"><i style="width:' + (r.v/5*100).toFixed(1) + '%"></i></div><b>' + r.v.toFixed(2) + '</b>';
+      segbars.appendChild(row);
+    });
+    segnote.textContent = S.presets[presetSel.value].note;
+    var h = '<thead><tr><th>' + T.criterion + '</th><th class="num">' + T.weight + '</th>' + res.map(function(r){return '<th class="num">'+r.name+'</th>';}).join("") + '</tr></thead><tbody>';
+    S.crit.forEach(function(c,i){
+      h += '<tr><td>' + c + '</td><td class="num">' + Math.round(weights[i]/tw*100) + '%</td>' + res.map(function(r){return '<td class="num">'+r.s[i]+'</td>';}).join("") + '</tr>';
+    });
+    h += '<tr><td><b>' + T.weighted + '</b></td><td></td>' + res.map(function(r){return '<td class="num"><b>'+r.v.toFixed(2)+'</b></td>';}).join("") + '</tr></tbody>';
+    segtable.innerHTML = h;
+  }
+  presetSel.addEventListener("change", function(){
+    var p = S.presets[presetSel.value];
+    weights = p.w.slice(); access = Object.assign({}, p.access); renderSeg();
+  });
+  renderSeg();
+
+  /* Unit economics calculator */
+  var E = C.econ;
+  var ci = document.getElementById("calcInputs");
+  var co = document.getElementById("calcOut");
+  var cv = document.getElementById("calcVerdict");
+  E.fields.forEach(function(f){
+    var lab = document.createElement("label"); lab.setAttribute("for","c-"+f.k); lab.textContent = f.l;
+    var inp = document.createElement("input"); inp.type="number"; inp.id="c-"+f.k; inp.step=f.step; inp.min=0; inp.inputMode="decimal";
+    inp.addEventListener("input", calc);
+    lab.appendChild(inp); ci.appendChild(lab);
+  });
+  function money(n){
+    var s = Math.abs(Math.round(n)).toLocaleString(E.locale);
+    return (n<0?"−":"") + E.pre + s + E.post;
+  }
+  function setScn(name){
+    var s = E.scen[name];
+    E.fields.forEach(function(f){ document.getElementById("c-"+f.k).value = s[f.k] != null ? s[f.k] : 0; });
+    document.querySelectorAll("[data-scn]").forEach(function(b){ b.classList.toggle("primary", b.getAttribute("data-scn")===name); });
+    calc();
+  }
+  function calc(){
+    var v = {}; E.fields.forEach(function(f){ v[f.k] = parseFloat(document.getElementById("c-"+f.k).value) || 0; });
+    var levy = v.levy ? v.fee * v.levy / 100 : 0;
+    var cogs = v.hours * v.rate + v.sw + v.creative + levy;
+    var gp = v.fee - cogs;
+    var gm = v.fee > 0 ? gp / v.fee * 100 : 0;
+    var churn = v.churn / 100;
+    var ltv = churn > 0 ? gp / churn : NaN;
+    var pay = gp > 0 ? v.cac / gp : Infinity;
+    var beh = v.rate > 0 ? (v.fee - v.sw - v.creative - levy) / v.rate : 0;
+    co.innerHTML =
+      '<div class="kpi"><b>' + money(gp) + '</b><span>' + T.k_gp + '</span></div>' +
+      '<div class="kpi"><b>' + gm.toFixed(1) + '%</b><span>' + T.k_gm + '</span></div>' +
+      '<div class="kpi"><b>' + (isFinite(pay) ? pay.toFixed(1) + ' ' + T.mo : T.never) + '</b><span>' + T.k_pay + '</span></div>' +
+      '<div class="kpi"><b>' + (isFinite(ltv) && v.cac>0 ? (ltv / v.cac).toFixed(1) : '—') + '</b><span>LTV : CAC</span></div>';
+    var cls = "ok", msg, h = Math.max(0, beh).toFixed(0);
+    if (gp <= 0) { cls = "err"; msg = T.v_loss.replace("{h}", h); }
+    else if (gm < 40 || pay > 12) { cls = "err"; msg = T.v_weak.replace("{h}", h); }
+    else if (gm < 55) { cls = "info"; msg = T.v_ok; }
+    else { msg = T.v_great; }
+    cv.className = "status " + cls; cv.textContent = msg;
+  }
+  document.querySelectorAll("[data-scn]").forEach(function(b){ b.addEventListener("click", function(){ setScn(b.getAttribute("data-scn")); }); });
+  setScn("base");
+
+  /* Feedback form: claude.ai store (if allowed), else configured endpoint, else copyable summary */
+  var form = document.getElementById("leadForm");
+  var modeEl = document.getElementById("f-mode");
+  var statusEl = document.getElementById("f-status");
+  var copyWrap = document.getElementById("f-copywrap");
+  var copyEl = document.getElementById("f-copy");
+  var copyBtn = document.getElementById("f-copybtn");
+  var db = null, userId = null, mode = "copy";
+  var endpoint = (C.form && C.form.endpoint) || "";
+
+  function setStatus(cls, text){ statusEl.hidden = false; statusEl.className = "full status " + cls; statusEl.textContent = text; }
+  function val(id){ return document.getElementById(id).value.trim(); }
+  function collect(){
+    return {
+      name: val("f-name"), contact: val("f-contact"), company: val("f-company"),
+      role: val("f-role"), segment: val("f-seg"), spend: val("f-spend"),
+      interest: Array.prototype.slice.call(document.querySelectorAll("#f-interest input:checked")).map(function(i){return i.value;}),
+      decision: val("f-decision"), feedback: val("f-feedback"),
+      consent: document.getElementById("f-consent").checked,
+      page: C.lang || "en"
+    };
+  }
+  function asText(d){
+    var L = T.labels;
+    return L.name + ": " + d.name + "\n" + L.contact + ": " + d.contact + "\n" + L.company + ": " + d.company + "\n" + L.role + ": " + d.role +
+      "\n" + L.segment + ": " + d.segment + "\n" + L.spend + ": " + d.spend + "\n" + L.interest + ": " + d.interest.join(", ") +
+      "\n\n" + L.decision + ":\n" + d.decision + "\n\n" + L.feedback + ":\n" + d.feedback;
+  }
+  function showCopy(d){ copyEl.textContent = asText(d); copyWrap.hidden = false; copyBtn.textContent = T.copy; }
+  function selectCopy(){
+    var r = document.createRange(); r.selectNodeContents(copyEl);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    copyBtn.textContent = T.selected;
+  }
+  copyBtn.addEventListener("click", function(){
+    try { navigator.clipboard.writeText(copyEl.textContent).then(function(){ copyBtn.textContent = T.copied; }, selectCopy); }
+    catch(e){ selectCopy(); }
+  });
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var d = collect();
+    if (!d.name || !d.contact) { setStatus("err", T.e_required); return; }
+    if (!d.consent) { setStatus("err", T.e_consent); return; }
+    var btn = document.getElementById("f-submit");
+    if (mode === "copy") { setStatus("info", T.s_copy); showCopy(d); return; }
+    btn.disabled = true; btn.textContent = T.sending;
+    d.submittedAt = new Date().toISOString();
+    var p = mode === "db"
+      ? db.doc("leads/" + userId).set(d)
+      : fetch(endpoint, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body: JSON.stringify(d)})
+          .then(function(r){ if (!r.ok) throw {code: "http_" + r.status}; });
+    p.then(function(){
+      setStatus("ok", mode === "db" ? T.s_saved_db : T.s_saved_ep);
+      btn.disabled = false; btn.textContent = mode === "db" ? T.update : T.send;
+    }, function(err){
+      setStatus("err", T.e_save.replace("{c}", (err && err.code) || "error"));
+      showCopy(d); btn.disabled = false; btn.textContent = T.send;
+    });
+  });
+
+  function useCopy(){ mode = "copy"; modeEl.textContent = T.m_copy; }
+  function useEndpoint(){ mode = "endpoint"; modeEl.textContent = T.m_endpoint; }
+  var canUseClaude = C.form && C.form.claudeDb && window.claude && typeof window.claude.use === "function";
+  if (canUseClaude) {
+    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function(r){
+      db = r[0]; var user = r[1];
+      if (!db || !user) { endpoint ? useEndpoint() : useCopy(); return; }
+      return user.id().then(function(id){
+        if (!id) { endpoint ? useEndpoint() : useCopy(); return; }
+        userId = id;
+        return user.can("data.write").then(function(ok){
+          if (ok === false) { endpoint ? useEndpoint() : useCopy(); return; }
+          mode = "db"; modeEl.textContent = T.m_db;
+          return db.doc("leads/" + id).get().then(function(snap){
+            var v = snap && snap.exists ? snap.data() : null;
+            if (!v) return;
+            ["name","contact","company","decision","feedback"].forEach(function(k){ if (v[k]) document.getElementById("f-" + k).value = v[k]; });
+            if (v.role) document.getElementById("f-role").value = v.role;
+            if (v.segment) document.getElementById("f-seg").value = v.segment;
+            if (v.spend) document.getElementById("f-spend").value = v.spend;
+            document.querySelectorAll("#f-interest input").forEach(function(i){ i.checked = (v.interest || []).indexOf(i.value) >= 0; });
+            document.getElementById("f-consent").checked = !!v.consent;
+            document.getElementById("f-submit").textContent = T.update;
+          }).catch(function(){});
+        });
+      });
+    }).catch(function(){ endpoint ? useEndpoint() : useCopy(); });
+  } else if (endpoint) { useEndpoint(); } else { useCopy(); }
+})();
+</script>
+
+</body>
+</html>

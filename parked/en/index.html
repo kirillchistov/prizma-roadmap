@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<script>
+/* Optional: URL that accepts a JSON POST from the feedback form (CORS enabled).
+   Leave empty to show a copyable summary instead.
+   For the Russian page, use an endpoint that stores data inside Russia. */
+window.LW_FORM_ENDPOINT = "";
+</script>
+</head>
+<body>
+<!-- PARKED 10 Nov 2026. Not built by build.sh and not published. Live plan: src/ru/index.html -->
+<div style="position:sticky;top:0;z-index:20;background:#3A2C14;color:#FBEFD9;padding:10px 16px;font:14px/1.45 sans-serif">Parked on 10 Nov 2026. This EU/UK draft is not built or published. The live plan is the Russian page, src/ru/index.html.</div>
+<title>Loopwise Founding Blueprint (parked)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a decision ledger. Fixed section index on wide screens, sticky tab strip on phones; one section in view at a time, every claim tagged by evidence type. */
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --ink:#16201E; --muted:#56625F; --line:#D5DAD5;
+  --accent:#1F4FD8; --accent-ink:#FFFFFF; --accent-soft:#E3EAFB;
+  --amber:#A86400; --amber-soft:#FBEFD9; --good:#1E7A4C; --good-soft:#E0F2E8; --bad:#B3261E; --bad-soft:#FBE4E2;
+  --code:#EEF0EC;
+  --f-display:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111615; --surface:#1A201F; --ink:#E6ECE9; --muted:#9AA6A2; --line:#2E3836;
+  --accent:#7EA0FF; --accent-ink:#0D1530; --accent-soft:#1E2A4D;
+  --amber:#F0B45A; --amber-soft:#3A2C14; --good:#6FD39C; --good-soft:#15301F; --bad:#FF8A80; --bad-soft:#3A1916;
+  --code:#222A28; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111615; --surface:#1A201F; --ink:#E6ECE9; --muted:#9AA6A2; --line:#2E3836;
+  --accent:#7EA0FF; --accent-ink:#0D1530; --accent-soft:#1E2A4D;
+  --amber:#F0B45A; --amber-soft:#3A2C14; --good:#6FD39C; --good-soft:#15301F; --bad:#FF8A80; --bad-soft:#3A1916;
+  --code:#222A28; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100%}
+nav.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;border-right:1px solid var(--line);padding-block:24px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:16px;background:var(--bg)}
+.brand{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0 0 2px}
+.brand-sub{font-size:12.5px;color:var(--muted);margin:0 0 20px}
+nav.side ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.side a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:6px;font-size:14px}
+nav.side a .n{font-family:var(--f-mono);font-size:11.5px;min-width:18px}
+nav.side a:hover{color:var(--ink);background:var(--code)}
+nav.side a[aria-current="page"]{color:var(--accent-ink);background:var(--accent)}
+.theme-btn{margin-top:20px;font:inherit;font-size:12.5px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer}
+.tabs{display:none}
+main{padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.wrap{max-width:980px;margin:0 auto;min-width:0}
+section.view{display:flex;flex-direction:column;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;letter-spacing:-.01em;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.2vw,40px);font-weight:700}
+h2{font-size:24px;font-weight:700;margin-top:14px}
+h3{font-size:18px;font-weight:600;margin-top:8px}
+h4{font-size:15.5px;font-weight:600}
+p{margin:0;max-width:70ch}
+ul,ol{margin:0;padding-left:20px;max-width:72ch}
+li{margin:3px 0}
+.lede{font-size:17.5px;color:var(--ink);max-width:66ch}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.callout.warn{border-color:var(--amber);background:var(--amber-soft)}
+.callout.risk{border-color:var(--bad);background:var(--bad-soft)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:600;background:var(--code);position:sticky;top:0;font-size:12.5px}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.w-wide table{min-width:900px}
+.w-mid table{min-width:680px}
+.t{display:inline-block;font-family:var(--f-mono);font-size:10.5px;font-weight:500;line-height:1;padding:3px 5px;border-radius:4px;vertical-align:1px;margin-right:4px;border:1px solid currentColor}
+.t-f{color:var(--muted)} .t-s{color:var(--good)} .t-h{color:var(--accent)} .t-a{color:var(--amber)} .t-r{color:var(--ink);background:var(--code)} .t-q{color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;color:var(--muted)}
+.ref{font-family:var(--f-mono);font-size:11px;vertical-align:super;text-decoration:none;margin-left:1px}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.p-auto{background:var(--good-soft);color:var(--good)} .p-appr{background:var(--amber-soft);color:var(--amber)} .p-human{background:var(--accent-soft);color:var(--accent)} .p-no{background:var(--bad-soft);color:var(--bad)}
+.why{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 16px;font-size:14px}
+.why dt{font-weight:600;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+.why dd{margin:0}
+pre.diagram{font-family:var(--f-mono);font-size:12px;line-height:1.45;background:var(--code);border-radius:10px;padding:16px;overflow-x:auto;margin:0;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.flow span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+.flow i{color:var(--muted);font-style:normal}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.5;cursor:default}
+label{font-size:13.5px;font-weight:600;display:flex;flex-direction:column;gap:5px}
+input,select,textarea{font:inherit;font-size:14.5px;font-weight:400;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+textarea{min-height:84px;resize:vertical}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form .full{grid-column:1/-1}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:400}
+.checks label{flex-direction:row;align-items:center;font-weight:400;gap:6px}
+.checks input{width:auto}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.calc .inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{background:var(--code);border-radius:8px;padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums;font-weight:500}
+.kpi span{font-size:12px;color:var(--muted)}
+.bar{height:10px;border-radius:5px;background:var(--code);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent)}
+.seg-row{display:grid;grid-template-columns:140px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.seg-row b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;font-weight:500}
+.sliders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.sliders label{font-weight:400;font-size:13px;flex-direction:row;justify-content:space-between;align-items:center;gap:10px}
+.sliders input{width:120px;padding:0}
+.status{font-size:13.5px;padding:10px 12px;border-radius:8px}
+.status.ok{background:var(--good-soft);color:var(--good)} .status.err{background:var(--bad-soft);color:var(--bad)} .status.info{background:var(--code);color:var(--muted)}
+details{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:10px 14px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px}
+details[open] summary{margin-bottom:8px}
+.copytext{white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;background:var(--code);padding:12px;border-radius:8px;max-height:260px;overflow:auto}
+@media (max-width:900px){
+  .shell{display:block}
+  nav.side{display:none}
+  .tabs{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto;gap:4px;padding-block:8px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));scrollbar-width:none}
+  .tabs a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+  .tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .grid3{grid-template-columns:1fr}
+  .calc{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .grid2,.form,.sliders,.calc .inputs{grid-template-columns:1fr}
+  .why{grid-template-columns:1fr}
+  .seg-row{grid-template-columns:100px minmax(0,1fr) 44px}
+  body{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="shell">
+<nav class="side" aria-label="Sections">
+  <p class="brand">Loopwise</p>
+  <p class="brand-sub">Working name · founding blueprint · 10 Nov 2026</p>
+  <ol id="navlist"></ol>
+  <button class="theme-btn" id="themeBtn" type="button">Switch theme</button>
+</nav>
+<div class="tabs" id="tabs" role="navigation" aria-label="Sections"></div>
+<main><div class="wrap" id="app">
+<!-- ============ 0 SUMMARY ============ -->
+<section class="view" id="v-summary" data-title="Recommendation" data-n="00">
+  <p class="eyebrow">Executive recommendation</p>
+  <h1>Start as a decision-led growth operator for established consumer brands. Earn the platform from the work.</h1>
+  <p class="lede">Do not launch as a full-service agency and do not launch as self-serve SaaS. Launch a productized, managed service that owns one recurring decision for mid-sized consumer brands: <b>where the next euro of marketing budget should go, proven in contribution margin, with every change approved, logged and evaluated</b>. Build the software only where the service repeats.</p>
+  <div class="legend" aria-label="Evidence legend">
+    <span><span class="t t-f">F</span>founder context</span>
+    <span><span class="t t-s">S</span>sourced fact</span>
+    <span><span class="t t-h">H</span>hypothesis</span>
+    <span><span class="t t-a">A</span>assumption</span>
+    <span><span class="t t-r">R</span>recommendation</span>
+    <span><span class="t t-q">Q</span>open question</span>
+  </div>
+
+  <div class="grid2">
+    <div class="box">
+      <h4>The five calls</h4>
+      <ol class="small">
+        <li><span class="t t-r">R</span><b>Beachhead:</b> established, mid-sized consumer brands selling direct online and on marketplaces, spending roughly €30k–€300k a month on paid media across 2+ channels (bands to validate).</li>
+        <li><span class="t t-r">R</span><b>First use case:</b> a monthly “profit per euro” budget decision cycle: diagnose, reallocate within guardrails, run one causal test per quarter, report in contribution margin.</li>
+        <li><span class="t t-r">R</span><b>Model:</b> managed service on an internal platform, sold as a fixed fee banded by spend under management, not as a percentage of media.</li>
+        <li><span class="t t-r">R</span><b>Defer</b> enterprise CPG as a primary market for 12–18 months; re-enter through retail-media and promotion measurement once the measurement core is proven.</li>
+        <li><span class="t t-r">R</span><b>Autonomy:</b> recommendations by default; autonomous execution only for reversible, pre-budgeted actions inside a written policy each client signs.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h4>Why this shape</h4>
+      <ul class="small">
+        <li><span class="t t-s">S</span>Platforms are automating execution itself. Meta has publicly targeted end-to-end automated campaign creation by end-2026<a class="ref" href="#sources">[9]</a>, so competing on campaign operation is a shrinking moat.</li>
+        <li><span class="t t-s">S</span>Holding groups now sell integrated AI platforms (Omnicom Omni after the IPG deal, WPP Open, Publicis CoreAI)<a class="ref" href="#sources">[6][7][8]</a>, and WPP has an SME tier, Open Pro<a class="ref" href="#sources">[8]</a>. Head-on “AI agency” positioning lands in a crowded field.</li>
+        <li><span class="t t-h">H</span>What stays scarce for mid-sized brands is independent judgement about incrementality and margin, plus the discipline to turn it into approved actions. That is service-heavy at first and productizable later.</li>
+        <li><span class="t t-f">F</span>The founders already plan a scenario-forecasting tool for SMEs. It becomes the diagnosis and planning module rather than a separate bet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flow" aria-label="Operating loop">
+    <span>Business goal</span><i>→</i><span>Data-readiness &amp; diagnosis</span><i>→</i><span>Scenario plan</span><i>→</i><span>Approved budget &amp; brief</span><i>→</i><span>Activation</span><i>→</i><span>Sales &amp; margin</span><i>→</i><span>Causal test</span><i>→</i><span>Decision log</span><i>→</i><span>Next plan</span>
+  </div>
+
+  <h2>What must be true</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Condition</th><th>Kill / revise signal</th><th>How we learn it</th><th>By</th></tr></thead>
+    <tbody>
+      <tr><td><span class="t t-h">H</span>Mid-sized brand leaders feel budget-allocation uncertainty as a costly, recurring problem</td><td>Fewer than 8 of 15 interviewees can name a budget decision in the last 90 days they doubted</td><td>Problem interviews</td><td class="num">Day 30</td></tr>
+      <tr><td><span class="t t-h">H</span>They will pay for a pilot before software exists</td><td>Fewer than 2 paid pilots from 10 qualified proposals</td><td>Concierge pilot offer</td><td class="num">Day 60</td></tr>
+      <tr><td><span class="t t-h">H</span>Their data supports a credible causal read within 90 days</td><td>Fewer than half of audited prospects pass the data-readiness gate</td><td>Paid data audits</td><td class="num">Day 45</td></tr>
+      <tr><td><span class="t t-h">H</span>Delivery fits inside ~40 hours a client-month by month 9</td><td>Above 60 hours after 3 cycles with no downward trend</td><td>Time tracking per workflow</td><td class="num">Month 9</td></tr>
+      <tr><td><span class="t t-h">H</span>A pilot produces a decision the client acts on and would not have taken otherwise</td><td>No reallocation approved, or test inconclusive with no design fix</td><td>Decision log, pilot review</td><td class="num">Day 90</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn">
+    <p><b>Biggest unresolved input:</b> launch geography. This plan assumes an EU entity serving EU and UK brands in English. A Russian-speaking or CIS launch changes the ad platforms, payment rails, legal review and data tooling enough to need a separate plan. See question Q1.</p>
+  </div>
+</section>
+
+<!-- ============ 1 QUESTIONS & ASSUMPTIONS ============ -->
+<section class="view" id="v-questions" data-title="Assumptions &amp; questions" data-n="01" hidden>
+  <p class="eyebrow">01 · Founding decisions</p>
+  <h1>Eight questions that could change the plan</h1>
+  <p>Each question has a working answer so the plan can proceed. Answers that differ from the default are flagged with what they would change. You can answer them in the <a href="#feedback">feedback form</a>.</p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>#</th><th>Question</th><th>Working assumption</th><th>If the answer differs</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Q1</td><td><span class="t t-q">Q</span><b>Launch geography and working language?</b></td><td><span class="t t-a">A</span>EU legal entity (e.g. Finland or Estonia), clients in Nordics, Baltics, DACH and UK; English delivery, Russian as an extra language for founders’ networks.</td><td>A Russia/CIS launch replaces Google and Meta with local ad systems and marketplaces, changes payment, sanctions and data-residency review, and removes most EU sources used here. Treat as a separate plan; verify current platform availability before any work.</td></tr>
+      <tr><td class="num">Q2</td><td><span class="t t-q">Q</span><b>Who is on the founding team and how much time each commits?</b></td><td><span class="t t-a">A</span>2–3 founders: one commercial/operator, one with modelling or analytics depth, engineering partly contracted. <span class="t t-f">F</span>One founder brings operating experience in cross-border commerce and is learning React.</td><td>Without a marketing-science lead, hire one before the first pilot. Without a seller, pilots stall regardless of product quality.</td></tr>
+      <tr><td class="num">Q3</td><td><span class="t t-q">Q</span><b>Budget and runway for the first 12 months?</b></td><td><span class="t t-a">A</span>€250k–€450k available (savings, angels or pre-seed). Base plan spends ~€380k.</td><td>Below €150k: run as a 2-person service business for 6 months, delay platform hires, fund engineering from pilot revenue.</td></tr>
+      <tr><td class="num">Q4</td><td><span class="t t-q">Q</span><b>Which customers can founders reach personally?</b></td><td><span class="t t-a">A</span>Warm access to 15–30 mid-sized consumer and e-commerce businesses; little or no access to enterprise CPG marketing leadership.</td><td>Strong CPG relationships raise the CPG score (use the slider preset in section 02) and justify a parallel CPG measurement offer.</td></tr>
+      <tr><td class="num">Q5</td><td><span class="t t-q">Q</span><b>Agency cash flow now, or software economics later?</b></td><td><span class="t t-a">A</span>Profitable service revenue first; platform licensing from year 2.</td><td>A venture path pushes earlier software hires and a narrower product scope, and needs proof of falling delivery hours per client.</td></tr>
+      <tr><td class="num">Q6</td><td><span class="t t-q">Q</span><b>How much execution liability will you hold?</b></td><td><span class="t t-a">A</span>Clients own ad accounts and pay platforms directly; we hold scoped user access and a written action policy.</td><td>Taking media billing creates working-capital exposure and credit risk; not advised in year 1.</td></tr>
+      <tr><td class="num">Q7</td><td><span class="t t-q">Q</span><b>Initial channel and service scope?</b></td><td><span class="t t-a">A</span>Paid social, paid search and up to one marketplace; creative briefs and variant production yes; brand campaigns, PR, SEO and retail media no.</td><td>Adding creative-heavy scope raises delivery hours sharply; adding retail media pulls the plan toward CPG.</td></tr>
+      <tr><td class="num">Q8</td><td><span class="t t-q">Q</span><b>How does the planned SME scenario-forecasting tool relate?</b></td><td><span class="t t-a">A</span>It becomes the planning and scenario module of this platform, and a free lead-generation tool (a 10-minute diagnostic).</td><td>If it stays a separate product, keep shared data model and metric definitions so both can merge later.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Assumptions table used in this plan</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Area</th><th>Assumption</th><th>Risk if wrong</th></tr></thead>
+    <tbody>
+      <tr><td>Market</td><td><span class="t t-a">A</span>EU/UK mid-sized consumer brands, English working language</td><td class="num">High</td></tr>
+      <tr><td>Team</td><td><span class="t t-a">A</span>4–6 people by month 6, including a marketing scientist and a full-stack engineer</td><td class="num">High</td></tr>
+      <tr><td>Capital</td><td><span class="t t-a">A</span>~€380k first-year spend, base case</td><td class="num">Med</td></tr>
+      <tr><td>Access</td><td><span class="t t-a">A</span>Ad platform APIs for reporting and management obtainable on standard terms (see section 05 for verified constraints)</td><td class="num">Med</td></tr>
+      <tr><td>Pricing</td><td><span class="t t-a">A</span>€6k pilot month, €9k steady-state monthly fee (base); not yet tested with buyers</td><td class="num">High</td></tr>
+      <tr><td>Delivery</td><td><span class="t t-a">A</span>~38 delivery hours per client-month at steady state</td><td class="num">High</td></tr>
+      <tr><td>Retention</td><td><span class="t t-a">A</span>3% monthly logo churn after pilot conversion</td><td class="num">Med</td></tr>
+      <tr><td>Law</td><td><span class="t t-a">A</span>GDPR and EU AI Act transparency duties apply; no high-risk AI use case in scope</td><td class="num">Med</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 2 CUSTOMERS & SEGMENTS ============ -->
+<section class="view" id="v-customers" data-title="Customers &amp; segments" data-n="02" hidden>
+  <p class="eyebrow">02 · Customer needs and segment selection</p>
+  <h1>Three segments, one classification rule, one beachhead</h1>
+
+  <h2>Definitions before rankings</h2>
+  <div class="grid2">
+    <div class="box">
+      <h4>“Largest CPG market”</h4>
+      <p class="small"><span class="t t-r">R</span>Rank countries by <b>FMCG retail sales value, all channels, in constant USD at fixed exchange rates</b>, covering food, beverages, personal care and home care. This is the measure Euromonitor uses for its global figure of about USD 6.6 trillion in 2025<a class="ref" href="#sources">[1]</a>.</p>
+      <p class="small"><span class="t t-q">Q</span>The country-level top-10 list sits in a paid Euromonitor report<a class="ref" href="#sources">[2]</a>, so no ranking is given here. Buy that table, or use a proxy: household final consumption on food, non-alcoholic beverages and household/personal goods from national accounts. Do not substitute ad-spend rankings.</p>
+    </div>
+    <div class="box">
+      <h4>“Top-five local brand”</h4>
+      <p class="small"><span class="t t-r">R</span>A brand ranked in the top five by retail value share <b>within one category in one country</b>, whose brand owner is headquartered in that country and is not one of the 50 largest global FMCG companies.</p>
+      <p class="small">Keep four entities separate in the CRM: <b>brand</b> (what is advertised), <b>brand owner</b> (who signs), <b>category</b>, <b>country</b>. A company like a global food group is one owner with many brands across many category-country cells; it is one account with several possible buyers.</p>
+    </div>
+  </div>
+
+  <h3>Classification rule (one segment per account)</h3>
+  <ol class="small">
+    <li><b>Enterprise CPG</b> if the brand owner sells mainly through third-party retail and either is a global top-50 FMCG company or owns a top-five local brand in a top-10 market.</li>
+    <li>Else <b>High-growth</b> if company revenue grew ≥40% in the last 12 months <i>and</i> its category grew faster than the national FMCG or sector average <i>and</i> it shows product–market-fit evidence (repeat purchase or retention cohorts).</li>
+    <li>Else <b>Mid-sized established</b> if it has ≥3 years of trading, positive gross margin, an existing repeat-customer base and the eligibility criteria below.</li>
+  </ol>
+  <p class="small muted">Size, category growth, product maturity and marketing need are stored as separate attributes; the segment label is derived from them in this order, so no account is counted twice. Thresholds are <span class="t t-a">A</span>assumptions to tune after 30 accounts are scored.</p>
+
+  <h3>Eligibility for “mid-sized, commercially durable”</h3>
+  <p class="small">“Sustainable product offering” is read as commercial durability. Measurable criteria, to calibrate in discovery:</p>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Criterion</th><th>Starting band <span class="t t-a">A</span></th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>Annual revenue</td><td class="num">€5M–€100M</td><td>Enough spend to fund a fee and produce signal</td></tr>
+      <tr><td>Monthly paid media</td><td class="num">€30k–€300k</td><td>Below: fee is too large a share; above: in-house team or larger agency likely</td></tr>
+      <tr><td>Trading history with clean order data</td><td class="num">≥18 months</td><td>Seasonality and baseline modelling</td></tr>
+      <tr><td>Repeat-customer share of revenue</td><td class="num">≥25%</td><td>Proxy for product durability; lifecycle levers exist</td></tr>
+      <tr><td>Gross margin known per product line</td><td>Yes / can be built in 2 weeks</td><td>Contribution-margin reporting is the core promise</td></tr>
+      <tr><td>Decision maker reachable</td><td>Owner, CEO or Head of Marketing</td><td>Budget authority for pilot</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Buying-centre map</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Segment</th><th>Economic buyer</th><th>Champion</th><th>Users</th><th>Procurement</th><th>Blockers</th></tr></thead>
+    <tbody>
+      <tr><td><b>Enterprise CPG</b></td><td>Regional/category CMO; sometimes global media or marketing-effectiveness lead</td><td>Brand manager, media manager, consumer-insights lead</td><td>Brand, media, insights, e-commerce and sales teams</td><td>Formal: vendor onboarding, infosec, DPA, master agency contract checks</td><td>Agency of record and its holding-group platform; global measurement standards; IT security; legal on claims</td></tr>
+      <tr><td><b>Mid-sized established</b></td><td>Founder/CEO or CFO</td><td>Head of marketing or growth</td><td>Marketing lead, 1–3 marketers, finance</td><td>Light: owner signs; DPA and access review</td><td>Incumbent agency; “we tried an agency before”; finance distrust of marketing numbers</td></tr>
+      <tr><td><b>High-growth</b></td><td>Founder/CEO</td><td>Growth lead</td><td>Growth, product, lifecycle</td><td>Light, fast</td><td>Cash constraints; fundraise timing; desire to build in-house</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Pain-to-value matrix</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Segment</th><th>Buyer</th><th>Job</th><th>Pain</th><th>Current workaround</th><th>Business impact</th><th>Proposed capability</th><th>Required data</th><th>Proof of value</th><th>Confidence</th></tr></thead>
+    <tbody>
+      <tr><td>Enterprise CPG</td><td>Regional CMO</td><td>Defend and reallocate brand budget across media, retail media and promotion</td><td>Retail-media and platform results are self-reported; sell-out lags and is aggregated</td><td>Annual MMM from a vendor; agency dashboards</td><td>Mis-spent trade and media budgets; weak case to finance</td><td>Independent retail-media incrementality + promo/media scenario planning</td><td>Retailer sell-out (weekly, by store or region), media logs, promo calendar, price, distribution</td><td>Geo or store-level test that changes a quarterly plan</td><td><span class="t t-h">H</span>Low</td></tr>
+      <tr><td>Enterprise CPG</td><td>Brand manager</td><td>Produce localized creative and claims fast</td><td>Slow approvals, regulatory claim checks</td><td>In-house studio, holding-group production hub</td><td>Missed retail windows</td><td>Claim-checked creative variant pipeline</td><td>Approved claim library, brand guidelines</td><td>Cycle-time reduction with zero claim incidents</td><td><span class="t t-h">H</span>Low</td></tr>
+      <tr><td>Mid-sized</td><td>Owner/CEO</td><td>Know which marketing spend actually grows profit</td><td>Platform ROAS conflicts; no one owns incrementality</td><td>Spreadsheet of platform numbers; agency monthly report</td><td>Over-spend on channels taking credit for organic demand; under-spend on working ones</td><td>Contribution-margin dashboard + causal test calendar + approved reallocation</td><td>Orders with margin, ad spend by day and channel, sessions, discounts, returns</td><td>A reallocation approved and evaluated against a pre-registered test</td><td><span class="t t-h">H</span>Medium</td></tr>
+      <tr><td>Mid-sized</td><td>Head of marketing</td><td>Keep creative fresh without a large team</td><td>Creative fatigue; testing is ad hoc</td><td>Freelancers, platform auto-generation</td><td>Rising acquisition cost</td><td>Brief-to-variant pipeline tied to test results</td><td>Creative-level performance, brand assets</td><td>Win-rate of new variants vs control</td><td><span class="t t-h">H</span>Medium</td></tr>
+      <tr><td>High-growth</td><td>Founder</td><td>Find the next scalable channel without breaking unit economics</td><td>Growth stalls when first channel saturates</td><td>Hire growth marketer; freelancers</td><td>Burn without learning</td><td>Experiment backlog with payback guardrails</td><td>Cohorts, CAC by channel, payback, margin</td><td>Channel test reaching a pre-set payback threshold</td><td><span class="t t-h">H</span>Medium</td></tr>
+    </tbody>
+  </table></div>
+
+  <details>
+    <summary>Segment detail: jobs, requests vs needs, triggers, disqualifiers, interview questions</summary>
+    <div class="grid3">
+      <div class="box">
+        <h4>Enterprise CPG</h4>
+        <p class="small"><b>Expressed request:</b> “AI for faster content”, “a retail-media strategy”.<br><b>Underlying need:</b> a defensible, independent read on which mix of media, trade and retail media grows category share, and faster localized execution.</p>
+        <p class="small"><b>Buying triggers:</b> annual planning, agency review, a retailer’s new media network, category share loss.</p>
+        <p class="small"><b>Data reality:</b> <span class="t t-s">S</span>channels vary sharply by country; online channels are about 40% of FMCG sales in China and South Korea but most other APAC markets are offline-led<a class="ref" href="#sources">[3]</a>. Consumer-level data is mostly absent; retailer data access is negotiated.</p>
+        <p class="small"><b>Disqualifiers:</b> exclusive holding-group measurement contract; no sell-out access; procurement cycle longer than 9 months for a pilot.</p>
+        <p class="small"><b>Interview questions:</b> Walk me through how this year’s retail-media budget was set. Which number did finance challenge? What would make you trust an outside test over your network’s report?</p>
+        <p class="small"><b>Evidence to observe:</b> a budget line under review; access to weekly sell-out by region; willingness to fund a paid test.</p>
+      </div>
+      <div class="box">
+        <h4>Mid-sized established</h4>
+        <p class="small"><b>Expressed request:</b> “more sales”, “a better agency”, “lower CAC”.<br><b>Underlying need:</b> confidence and time. Someone accountable who connects spend to profit and explains what to approve next.</p>
+        <p class="small"><b>Buying triggers:</b> margin squeeze, a bad quarter after raising spend, incumbent agency renewal, new marketing hire.</p>
+        <p class="small"><b>Data reality:</b> e-commerce and ad data usually complete; margin per SKU often sits in finance spreadsheets.</p>
+        <p class="small"><b>Disqualifiers:</b> spend below the band; no clean order history; expectation of guaranteed revenue; refusal to pause any spend for testing.</p>
+        <p class="small"><b>Interview questions:</b> Tell me about the last time you changed the marketing budget. What did you look at? How did you know it worked? Who disagreed?</p>
+        <p class="small"><b>Evidence to observe:</b> names a doubted decision; can export data within a week; asks about price.</p>
+      </div>
+      <div class="box">
+        <h4>High-growth (discovery)</h4>
+        <p class="small"><b>Expressed request:</b> “growth hacking”, “scale fast”.<br><b>Underlying need:</b> a disciplined experiment system that protects unit economics.</p>
+        <p class="small"><b>Candidate verticals to compare:</b> functional food and beverage D2C, protein and GLP-1-adjacent nutrition<a class="ref" href="#sources">[18]</a>; vertical SaaS with self-serve funnels; subscription health and wellness services; premium pet care; refurbished electronics.</p>
+        <p class="small"><b>Out of scope:</b> tactics that breach platform policies, fake reviews or engagement, dark patterns, unsupported health claims, and growth with negative contribution after returns and discounts.</p>
+        <p class="small"><b>Interview questions:</b> What is your payback period by channel? Which test last changed your plan? What would you never do to grow?</p>
+        <p class="small"><b>Evidence to observe:</b> cohort retention data; a growth lead with authority; tolerance for null results.</p>
+      </div>
+    </div>
+  </details>
+
+  <h2>Attractiveness, weighted</h2>
+  <p class="small">Scores 1–5 per criterion (higher is better for us, so burden and competition are inverted). Move the weights or pick a founder profile. <span class="t t-h">H</span>Scores are judgements to replace with discovery evidence.</p>
+  <div class="box">
+    <label for="preset">Founder profile
+      <select id="preset">
+        <option value="boot">Bootstrapped, mid-market network (default)</option>
+        <option value="cpg">Funded, strong CPG relationships</option>
+        <option value="vc">Venture path, startup network</option>
+      </select>
+    </label>
+    <div class="sliders" id="sliders"></div>
+    <div id="segbars" style="display:flex;flex-direction:column;gap:10px;margin-top:6px"></div>
+    <p class="small muted" id="segnote"></p>
+  </div>
+  <div class="tbl w-mid"><table id="segtable"></table></div>
+</section>
+
+<!-- ============ 3 BEACHHEAD & POSITIONING ============ -->
+<section class="view" id="v-beachhead" data-title="Beachhead &amp; positioning" data-n="03" hidden>
+  <p class="eyebrow">03 · Beachhead and positioning</p>
+  <h1>Own the budget decision for established direct-selling consumer brands</h1>
+
+  <div class="box">
+    <h4>Beachhead ICP <span class="t t-r">R</span></h4>
+    <p class="small">EU/UK consumer brands, €5M–€100M revenue, selling through their own e-commerce plus at most one or two marketplaces, €30k–€300k monthly paid media on 2+ channels, ≥18 months of order data, a marketing lead without a marketing-science function, and a CEO or CFO who doubts the reported return. Categories that overlap CPG (food, beverage, personal care, home) are preferred: they build the capabilities the CPG segment later needs.</p>
+    <h4>Initial use case</h4>
+    <p class="small"><b>Monthly profit-per-euro cycle:</b> one shared goal (contribution margin at a target growth rate), a reallocation proposal across channels with confidence ranges, an approval inbox, execution inside guardrails, and one pre-registered incrementality test per quarter that updates the model.</p>
+    <h4>Customer promise</h4>
+    <p class="small">“Every month you will know what your marketing spend returned in margin, what we will change next and why, and what needs your approval. Every major change is tested or explained.”</p>
+    <h4>We are responsible for</h4>
+    <p class="small">Diagnosis, measurement design, budget recommendations, executing approved changes in agreed channels, creative briefs and variants within scope, reporting. <b>We are not responsible for</b> total company growth, pricing, product, stock levels, retailer negotiations or sales-team performance; those appear in reports as stated constraints and confounders.</p>
+  </div>
+
+  <dl class="why box">
+    <dt>Why this</dt><dd>The decision recurs monthly, has a visible money consequence, needs data the client already has, and is hard to do well without statistics skills that mid-sized brands rarely employ.</dd>
+    <dt>Why now</dt><dd><span class="t t-s">S</span>Strong open-source MMM and geo-testing libraries exist (Meridian, Robyn, PyMC-Marketing, GeoLift)<a class="ref" href="#sources">[14][15]</a>, but practitioners report that data quality and judgement remain the binding constraint<a class="ref" href="#sources">[14]</a>. Platform automation also concentrates targeting decisions inside each platform, raising the value of an independent cross-channel view.</dd>
+    <dt>Rejected alternative</dt><dd>Full-funnel agency for enterprise CPG first: highest willingness to pay, but long procurement, entrenched holding-group platforms<a class="ref" href="#sources">[6][7]</a> and poor data access make it slow to learn.</dd>
+    <dt>What must be true</dt><dd>Enough clients pass the data gate; buyers value independence enough to pay a fixed fee; delivery hours fall with each cycle.</dd>
+    <dt>What would change it</dt><dd>A CPG design partner willing to fund a retail-media measurement pilot within 90 days, or evidence that mid-market buyers only pay for execution volume, not decisions.</dd>
+  </dl>
+
+  <h2>Competition and substitution</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Alternative</th><th>What it does well</th><th>Where it leaves a gap</th><th>Our response</th></tr></thead>
+    <tbody>
+      <tr><td>Holding groups and their platforms</td><td><span class="t t-s">S</span>Omnicom completed its IPG acquisition in Nov 2025, combining over USD 25bn revenue around the Omni platform<a class="ref" href="#sources">[6]</a>; WPP launched Agent Hub on WPP Open in Jan 2026<a class="ref" href="#sources">[7]</a></td><td>Mid-sized brands sit below their service floor; independence of measurement is questioned when the same group buys media</td><td>Independent measurement; no media margin; fixed fee</td></tr>
+      <tr><td>Independent and specialist agencies</td><td>Relationships, craft, channel depth</td><td>Measurement is often platform-reported; fee tied to spend</td><td>Partner and white-label the measurement core to them (year 2)</td></tr>
+      <tr><td>Ad-platform automation</td><td><span class="t t-s">S</span>Advantage+ type automation of targeting, budgets and creative<a class="ref" href="#sources">[9]</a></td><td>Each platform optimizes and reports on itself</td><td>Use platform automation for execution; we own the cross-channel budget and the test</td></tr>
+      <tr><td>Martech point solutions (attribution, MMM SaaS)</td><td>Tooling and dashboards</td><td>Software without someone accountable for the decision</td><td>Sell the decision and its follow-through, not the dashboard</td></tr>
+      <tr><td>Internal teams</td><td><span class="t t-s">S</span>82% of ANA members reported an in-house agency in 2023<a class="ref" href="#sources">[12]</a> (US-skewed, larger advertisers)</td><td>Rarely include causal-inference skills at mid-market size</td><td>Augment in-house teams; offer a “measurement only” tier</td></tr>
+      <tr><td>AI-native operators</td><td><span class="t t-s">S</span>Funded entrants include Multiply (B2B media), Mega (SMB growth), daydream (SEO) and Gradial (enterprise content ops)<a class="ref" href="#sources">[13]</a></td><td>Most focus on execution speed in one channel</td><td>Differentiate on causal measurement and accountable approvals across channels</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Moat: what could compound</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Candidate</th><th>How it forms</th><th>Time</th><th>How it fails</th></tr></thead>
+    <tbody>
+      <tr><td><b>Calibrated priors library</b>: experiment results by category, channel and spend level</td><td>Every pre-registered test adds an effect estimate that improves the next client’s model and test design</td><td class="num">18–36 mo</td><td>Too few tests; client contracts forbid anonymized reuse; heterogeneity makes priors useless</td></tr>
+      <tr><td><b>Decision history</b> per client</td><td>Approved decisions, outcomes and reasons become the client’s institutional memory; switching loses it</td><td class="num">6–12 mo</td><td>Client exports it (they should be able to); value only if decisions keep being made</td></tr>
+      <tr><td><b>Trust and governance</b> record</td><td>Zero unapproved actions, audited logs, independence from media sales</td><td class="num">12+ mo</td><td>One incident; a media-margin deal that compromises independence</td></tr>
+      <tr><td>Not a moat</td><td colspan="3">Model access, prompt libraries, a list of integrations, dashboards. Competitors can buy all of these.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Reasons to buy rather than build:</b> one marketing scientist costs more than the fee; the priors library is not available in-house; independent tests are more credible to finance; the cadence and approval discipline arrive on day one.</p>
+</section>
+<!-- ============ 4 BUSINESS & OPERATING MODEL ============ -->
+<section class="view" id="v-model" data-title="Business &amp; operating model" data-n="04" hidden>
+  <p class="eyebrow">04 · Business and operating model</p>
+  <h1>A managed service on an internal platform, sold as a decision cycle</h1>
+
+  <h2>Model comparison</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Model</th><th>Revenue quality</th><th>Time to first revenue</th><th>Learning speed</th><th>Capital need</th><th>Main risk</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>AI-native managed agency</td><td>Recurring, people-heavy</td><td class="num">1–2 mo</td><td>High</td><td>Low</td><td>Becomes a consultancy; margins capped by hours</td><td>Good start, bad end state</td></tr>
+      <tr><td><b>Managed service + platform hybrid</b></td><td>Recurring, improving margin</td><td class="num">2–3 mo</td><td>High</td><td>Medium</td><td>Platform built ahead of repeated need</td><td><span class="t t-r">R</span>Start here</td></tr>
+      <tr><td>Software-first platform</td><td>High margin if adopted</td><td class="num">9–15 mo</td><td>Low early</td><td>High</td><td>Mid-market buyers lack time and skill to self-serve; competes with free libraries and platform tools</td><td>Not yet</td></tr>
+      <tr><td>Partner / white-label to independent agencies</td><td>Licence fees, low touch</td><td class="num">12+ mo</td><td>Medium</td><td>Medium</td><td>Channel conflict; partner quality</td><td>Year 2 expansion</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Evolution:</b> months 0–6 concierge service with scripts and notebooks → months 6–12 client-facing decision workspace (approval inbox, decision log, margin dashboard) → year 2 measurement core licensed to 3–5 independent agencies and a “measurement-only” tier for in-house teams.</p>
+
+  <h2>Full-cycle workflow, onboarding to renewal</h2>
+  <p class="small">“Full-cycle” here means we own the agreed workflow and its interfaces to sales, commerce and product. Columns follow the requested specification. Owner roles: <b>MS</b> marketing scientist, <b>GO</b> growth operator, <b>CP</b> creative producer, <b>CL</b> client approver.</p>
+  <div class="tbl w-wide"><table style="min-width:1280px">
+    <thead><tr><th>Workflow</th><th>Trigger</th><th>Inputs</th><th>Decision logic</th><th>Execution</th><th>Output</th><th>Owner</th><th>Approval rule</th><th>Success metric</th><th>Failure handling</th><th>Learning feedback</th></tr></thead>
+    <tbody>
+      <tr><td><b>1 Commercial &amp; data-readiness diagnosis</b></td><td>Signed pilot</td><td>Read access to ad accounts, store, analytics; margin sheet</td><td>Rules: completeness, history length, spend variation, tracking consistency; scored gates</td><td>Connectors + automated checks; MS review</td><td>Readiness score, data gaps, measurement tier (L0–L3)</td><td>MS</td><td>None (read-only)</td><td>Report in ≤10 working days</td><td>Fail gate → offer data-fix sprint or stop</td><td>Gate thresholds tuned per outcome of later tests</td></tr>
+      <tr><td><b>2 Research &amp; insight</b></td><td>Diagnosis done; quarterly</td><td>Order/cohort data, reviews, search terms, competitor ad libraries, 5–8 customer calls</td><td>Segment by value and behaviour; LLM synthesis of text with citations to source rows</td><td>Analyst + LLM summarization</td><td>Segments, jobs, objections, positioning hypotheses</td><td>GO</td><td>CL reviews positioning</td><td>Hypotheses used in briefs</td><td>Unsupported claims flagged by citation check</td><td>Which insights produced winning variants</td></tr>
+      <tr><td><b>3 Strategy, forecast &amp; budget</b></td><td>Monthly cycle; quarterly plan</td><td>Model estimates with uncertainty, goal, constraints (stock, cash, capacity)</td><td>Optimizer on response curves; scenarios at 3 budget levels; reject plans beyond evidence range</td><td>Scenario workspace</td><td>Reallocation proposal with ranges and expected margin</td><td>MS</td><td>CL approves any change &gt;10% per channel or total change</td><td>Proposal accepted; forecast error inside band</td><td>Wide intervals → propose a test instead of a shift</td><td>Forecast vs actual feeds model recalibration</td></tr>
+      <tr><td><b>4 Creative brief &amp; production</b></td><td>Fatigue signal, new test, new offer</td><td>Insights, brand kit, approved claims library, performance by creative attribute</td><td>Attribute-level analysis; LLM drafts brief and variants inside brand and claim rules</td><td>Generation + human edit + QA checklist</td><td>Brief, variants, test plan</td><td>CP</td><td>CL approves new claims, offers, people/likeness; variants within approved templates auto-approved</td><td>Variant win-rate vs control</td><td>Claim checker block; brand QA reject</td><td>Attribute scores updated</td></tr>
+      <tr><td><b>5 Activation (paid, owned, lifecycle, marketplace)</b></td><td>Approved plan or brief</td><td>Approved changes, policy limits</td><td>Deterministic policy check; idempotency key per change</td><td>Execution adapters; platform automation inside our budgets</td><td>Change log, confirmation from platform</td><td>GO</td><td>Per autonomy matrix (section 06)</td><td>Changes applied as approved; zero policy breaches</td><td>Retry with backoff; reconcile; roll back or compensate</td><td>Change outcomes linked in decision log</td></tr>
+      <tr><td><b>6 Landing pages &amp; conversion</b></td><td>Funnel drop detected; test plan</td><td>Analytics funnels, heatmaps if available</td><td>Prioritize by expected margin × traffic</td><td>Client team or our builder in staging</td><td>A/B or sequential test</td><td>GO</td><td>CL approves any live page change</td><td>Conversion and margin per session</td><td>Auto-stop on guardrail breach</td><td>Test registry</td></tr>
+      <tr><td><b>7 CRM &amp; sales handoff</b> (where relevant)</td><td>Lead or high-value customer event</td><td>CRM fields, consent status</td><td>Consent check first; rules for routing</td><td>Lifecycle tool or CRM via client’s integration</td><td>Segments, journeys, handoff</td><td>GO</td><td>CL approves new journeys and messaging</td><td>Repeat rate, revenue per recipient (holdout-based)</td><td>Suppress on consent mismatch</td><td>Holdout groups measure lift</td></tr>
+      <tr><td><b>8 Measurement &amp; experiments</b></td><td>Quarterly; large planned shift; model disagreement</td><td>Geo/time series, spend, power analysis</td><td>Pre-registration: hypothesis, metric, MDE, duration, decision rule</td><td>Geo test, holdout, platform lift study</td><td>Effect estimate with interval; decision</td><td>MS</td><td>CL approves test design and spend at risk</td><td>Test reaches planned power; decision taken</td><td>Underpowered → extend or redesign; contamination → invalidate and log</td><td>Updates model priors and priors library</td></tr>
+      <tr><td><b>9 Reporting &amp; review</b></td><td>Weekly brief; monthly review</td><td>All of the above</td><td>Template: what happened, why it matters, what next, what needs approval</td><td>Generated narrative from computed numbers only; MS sign-off</td><td>Brief and decision log</td><td>MS</td><td>Internal sign-off before send</td><td>Read and acted on within 5 days</td><td>Number mismatch → block send</td><td>Questions asked by client → new report items</td></tr>
+      <tr><td><b>10 Renewal</b></td><td>Month 2 of each quarter</td><td>Decision log, measured outcomes</td><td>Value review against pilot goals</td><td>Review meeting</td><td>Renewal, scope change or exit</td><td>Founder</td><td>CL</td><td>Net revenue retention</td><td>Exit with data export</td><td>Churn reasons coded</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>CPG-specific requirements (for later entry)</h3>
+  <ul class="small">
+    <li><b>Sell-in vs sell-out:</b> shipments to retailers distort weekly sales; model on sell-out (retailer EPOS or panel) and treat sell-in as an inventory signal.</li>
+    <li><b>Confounders to model explicitly:</b> distribution (weighted numeric distribution), price index vs category, promotion depth and frequency, out-of-stocks, feature/display.</li>
+    <li><b>Retail media:</b> <span class="t t-s">S</span>WARC forecasts USD 200.4bn of retail media spend in 2026 and USD 223.4bn in 2027, with growth outside Amazon slowing to 9.8% in 2027<a class="ref" href="#sources">[4]</a>. Network-reported ROAS needs independent geo or store-level validation.</li>
+    <li><b>Brand time horizon:</b> long-term effects need longer adstock and brand-health tracking; short tests understate them.</li>
+    <li><b>Dependencies:</b> retailers and distributors control data, shelf and price; the platform records these as external constraints, never as our levers.</li>
+  </ul>
+
+  <h3>Platform core vs segment workflows vs custom work</h3>
+  <div class="grid3">
+    <div class="box"><h4>Repeatable core</h4><p class="small">Connectors, canonical metrics, margin model, readiness gates, MMM/test engine, approval inbox, policy engine, decision log, weekly brief.</p></div>
+    <div class="box"><h4>Segment workflows</h4><p class="small">D2C: cohort and payback. CPG: sell-out, promo and retail media. High-growth: experiment backlog and payback guardrails.</p></div>
+    <div class="box"><h4>Custom (priced separately or refused)</h4><p class="small">Bespoke integrations, brand campaigns, PR, one-off research. Rule: any custom task repeated for a third client becomes a core or segment feature, or is dropped.</p></div>
+  </div>
+  <p class="small"><b>Avoiding the consultancy trap:</b> track delivery hours per workflow per client each month; automate the top two hour-consumers each quarter; cap custom work at 15% of delivery hours; standard SOW with fixed scope; decline clients outside the ICP even when they would pay.</p>
+</section>
+
+<!-- ============ 5 PRODUCT & ARCHITECTURE ============ -->
+<section class="view" id="v-product" data-title="Product &amp; architecture" data-n="05" hidden>
+  <p class="eyebrow">05 · Product, UX and architecture</p>
+  <h1>Simple decisions first, inspectable depth underneath</h1>
+  <p class="lede">Product vision: every marketing change a client makes is a decision with an owner, evidence, an expected result and a later verdict.</p>
+
+  <h2>Users and surfaces</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Surface</th><th>Primary user</th><th>Job</th><th>P-level</th></tr></thead>
+    <tbody>
+      <tr><td>Onboarding &amp; readiness check</td><td>Client marketing lead</td><td>Connect sources; see readiness score and gaps in plain language</td><td>P0</td></tr>
+      <tr><td>Goals &amp; constraints</td><td>Owner / CMO</td><td>Set the target (e.g. margin at growth rate), budget ceiling, stock, cash and capacity limits</td><td>P0</td></tr>
+      <tr><td>Approval inbox</td><td>Client approver</td><td>Approve, reject or modify proposals; each shows evidence, expected impact and reversibility</td><td>P0</td></tr>
+      <tr><td>Executive view &amp; decision history</td><td>Owner / CFO</td><td>Margin from marketing, decisions taken, verdicts</td><td>P0</td></tr>
+      <tr><td>Planning &amp; scenario workspace</td><td>Marketing lead, MS</td><td>Compare 2–3 scenarios with ranges</td><td>P1</td></tr>
+      <tr><td>Campaign &amp; experiment workflows</td><td>GO, MS</td><td>Design, pre-register, run, read tests</td><td>P1</td></tr>
+      <tr><td>Agency operations console</td><td>Our team</td><td>Queue by client, SLA, incidents, hours per workflow</td><td>P0 (internal)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Three journeys</h2>
+  <div class="grid3">
+    <div class="box">
+      <h4>Regional brand lead, enterprise CPG</h4>
+      <ol class="small">
+        <li>Receives quarterly retail-media test proposal from her brand team champion.</li>
+        <li>Reviews design: regions, duration, spend at risk, decision rule; approves with legal note.</li>
+        <li>Sees a weekly status line, not a dashboard.</li>
+        <li>Gets a verdict with interval and a finance-ready memo; exports to her planning tool.</li>
+      </ol>
+      <p class="small muted">Needs: governance, exports, single sign-on, no new tool to learn.</p>
+    </div>
+    <div class="box">
+      <h4>Owner of a mid-sized brand</h4>
+      <ol class="small">
+        <li>Monday: phone notification, “3 decisions need you, 2 minutes”.</li>
+        <li>Opens inbox: “Move €6k from search brand terms to prospecting video. Expected +€2–5k margin. Reversible within 1 day.” Approves.</li>
+        <li>Month-end: one page with margin from marketing, what changed, what was learned.</li>
+      </ol>
+      <p class="small muted">Needs: plain language, money units, mobile, trust.</p>
+    </div>
+    <div class="box">
+      <h4>Growth lead, high-growth company</h4>
+      <ol class="small">
+        <li>Works in the experiment board daily; adds hypotheses.</li>
+        <li>Inspects power analysis, raw data and model diagnostics.</li>
+        <li>Sets guardrails (max CAC, payback) that let the system run tests autonomously.</li>
+      </ol>
+      <p class="small muted">Needs: depth, speed, APIs and exports, more autonomy.</p>
+    </div>
+  </div>
+
+  <h2>Architecture</h2>
+  <pre class="diagram" aria-label="Architecture diagram">
+ SOURCES                      INGESTION & TRUST                     MODEL & DECIDE
+ ┌────────────────┐   ┌──────────────────────────────┐   ┌──────────────────────────────┐
+ │ Ad platforms   │──▶│ Connectors (buy/OSS) + API   │──▶│ Canonical model & metric     │
+ │ Store/ERP/CRM  │   │ adapters; raw zone per tenant│   │ layer (spend, orders, margin,│
+ │ Analytics      │   │ Data quality checks, lineage,│   │ sessions, tests, decisions)  │
+ │ Retailer files │   │ freshness SLAs               │   └──────────────┬───────────────┘
+ └────────────────┘   └──────────────────────────────┘                  │
+                                                        ┌───────────────▼───────────────┐
+ IDENTITY & ISOLATION                                   │ Analytics & causal models     │
+ ┌──────────────────────────────┐                       │ MMM (Bayesian), geo tests,    │
+ │ SSO, roles, consent registry │                       │ forecasting, optimizer        │
+ │ Tenant = schema + row policy │                       └───────────────┬───────────────┘
+ │ Per-tenant keys & indexes    │                                       │
+ └──────────────────────────────┘          ┌────────────────────────────▼───────────────┐
+                                           │ Workflow orchestration (durable execution) │
+ KNOWLEDGE                                 │  steps · timers · retries · idempotency    │
+ ┌────────────────────────────┐            └───┬───────────────┬───────────────┬────────┘
+ │ Brand kit, claims library, │──retrieval──▶  │               │               │
+ │ past decisions (per tenant)│      ┌─────────▼─────┐ ┌───────▼──────┐ ┌──────▼────────┐
+ └────────────────────────────┘      │ LLM reasoning │ │ Policy &     │ │ Approval inbox│
+                                     │ bounded tools │ │ budget guard │ │ (humans)      │
+                                     └─────────┬─────┘ │ (determin.)  │ └──────┬────────┘
+                                               └──────▶└──────┬───────┘◀───────┘
+                                                       ┌──────▼───────────────┐
+                                                       │ Execution adapters   │──▶ platforms
+                                                       │ dry-run · shadow ·   │
+                                                       │ live · rollback/comp │
+                                                       └──────┬───────────────┘
+ ┌───────────────────────────────────────────────────────────▼──────────────────────────┐
+ │ Evaluations · observability · immutable audit log · incident response · cost meter   │
+ └──────────────────────────────────────────────────────────────────────────────────────┘</pre>
+
+  <h3>Which tool for which task</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Task</th><th>Rules</th><th>Optimization</th><th>Statistics</th><th>LLM</th><th>Human</th></tr></thead>
+    <tbody>
+      <tr><td>Data validation, policy limits, consent</td><td>●</td><td></td><td></td><td></td><td>exceptions</td></tr>
+      <tr><td>Budget allocation across channels</td><td>limits</td><td>●</td><td>response curves</td><td>explains</td><td>approves</td></tr>
+      <tr><td>Incrementality estimates, forecasts</td><td></td><td></td><td>●</td><td></td><td>reviews</td></tr>
+      <tr><td>Insight synthesis from reviews, calls</td><td></td><td></td><td></td><td>●</td><td>checks</td></tr>
+      <tr><td>Briefs, copy and visual variants</td><td>brand rules</td><td></td><td></td><td>●</td><td>edits new concepts</td></tr>
+      <tr><td>Positioning, claims, offers, pricing</td><td></td><td></td><td></td><td>drafts</td><td>●</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><span class="t t-r">R</span>No multi-agent system at launch. One orchestrated workflow per process, with LLM calls as bounded steps that read computed numbers and never produce numbers themselves.</p>
+
+  <h3>AI roles</h3>
+  <div class="tbl w-wide"><table style="min-width:1100px">
+    <thead><tr><th>Role</th><th>Objective</th><th>Inputs</th><th>Tools</th><th>Permissions</th><th>Outputs</th><th>Evaluation</th><th>Escalation</th><th>Owner</th></tr></thead>
+    <tbody>
+      <tr><td>Data steward</td><td>Explain data anomalies</td><td>Quality-check results</td><td>Read-only SQL on tenant views</td><td>Read</td><td>Anomaly notes</td><td>Precision vs MS labels</td><td>Freshness breach &gt;24h</td><td>MS</td></tr>
+      <tr><td>Diagnosis writer</td><td>Narrate what happened and why</td><td>Computed metrics, model outputs</td><td>Template, retrieval of past decisions</td><td>Read</td><td>Draft brief</td><td>Number-match check (100% required); MS rating</td><td>Any number not in source table</td><td>MS</td></tr>
+      <tr><td>Experiment designer</td><td>Draft test plans</td><td>Geo data, power results from statistical code</td><td>Power-analysis function</td><td>Read; create draft test</td><td>Pre-registration draft</td><td>MS acceptance rate</td><td>MDE above 15% or &lt;10 geos</td><td>MS</td></tr>
+      <tr><td>Creative assistant</td><td>Briefs and variants</td><td>Brand kit, claims library, attribute scores</td><td>Generation models, claim checker</td><td>Create drafts</td><td>Variants with claim tags</td><td>Brand QA pass rate; win rate</td><td>New claim, person likeness, regulated category</td><td>CP</td></tr>
+      <tr><td>Media operator</td><td>Apply approved changes</td><td>Approved change set</td><td>Execution adapters via policy engine</td><td>Write within policy</td><td>Change log</td><td>Reconciliation match; zero breaches</td><td>Any policy reject or API error after retries</td><td>GO</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Safety controls</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Threat</th><th>Control</th></tr></thead>
+    <tbody>
+      <tr><td>Prompt injection from reviews, web pages, emails</td><td>Untrusted text never reaches tool-calling steps; LLM output cannot call execution directly; actions pass the deterministic policy engine</td></tr>
+      <tr><td>Cross-client leakage</td><td>Tenant-scoped credentials, schemas and retrieval indexes; no shared prompt context; tests in CI that try cross-tenant reads</td></tr>
+      <tr><td>Hallucinated claims or numbers</td><td>Numbers inserted from queries by template; number-match check blocks send; claims only from approved library</td></tr>
+      <tr><td>Unsafe content</td><td>Category rules (health, finance, alcohol, children), moderation, human approval for regulated categories</td></tr>
+      <tr><td>Duplicate execution</td><td>Idempotency key per change; durable workflow state; reconcile before retry</td></tr>
+      <tr><td>Budget overruns</td><td>Hard daily and monthly caps per client in the policy engine, checked before and reconciled after each change; kill switch</td></tr>
+      <tr><td>API changes and failed integrations</td><td>Versioned adapters, contract tests, shadow mode after upgrades, manual fallback runbook</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Verified API constraints</h3>
+  <ul class="small">
+    <li><span class="t t-s">S</span>Google Ads API tokens have access levels; Explorer allows 2,880 production operations a day, Basic 15,000, and Standard is unlimited after a manual audit<a class="ref" href="#sources">[10]</a>. Plan for Basic in year 1.</li>
+    <li><span class="t t-s">S</span>Meta’s Marketing API starts in a limited development tier; managing other businesses’ ad accounts requires Advanced Access through App Review, and the ads-management quota per ad account scales with active ads<a class="ref" href="#sources">[11]</a>. Budget 4–8 weeks for review and business verification <span class="t t-a">A</span>.</li>
+    <li><span class="t t-q">Q</span>Marketplace and retailer APIs (Amazon Ads, regional marketplaces) vary; verify per launch market before scoping.</li>
+  </ul>
+
+  <h3>Build, buy, partner, open source</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Component</th><th>Choice</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Ingestion connectors</td><td>Buy or open source</td><td>Commodity; build only missing ones</td></tr>
+      <tr><td>Warehouse</td><td>Managed Postgres early, cloud warehouse later</td><td>Small volumes per tenant; isolation simpler</td></tr>
+      <tr><td>MMM and geo tests</td><td>Open source (PyMC-Marketing or Meridian; GeoLift)<a class="ref" href="#sources">[14][15]</a></td><td>Transparent, free; our value is calibration and judgement</td></tr>
+      <tr><td>Durable workflow engine</td><td>Open-source or managed durable-execution engine</td><td>Retries, timers and idempotency are hard to build safely</td></tr>
+      <tr><td>Policy engine, decision log, approval inbox, adapters</td><td><b>Build</b></td><td>This is the product</td></tr>
+      <tr><td>LLMs</td><td>API providers with no-training and EU data terms</td><td>Swap-able behind one interface; evaluate per task</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">The founders’ React and TypeScript experience suits the client workspace. The modelling stack is Python. Choose each layer on these needs, not on familiarity.</p>
+</section>
+<!-- ============ 6 MEASUREMENT & GOVERNANCE ============ -->
+<section class="view" id="v-measurement" data-title="Measurement &amp; governance" data-n="06" hidden>
+  <p class="eyebrow">06 · Measurement, decision science, autonomy and governance</p>
+  <h1>Measure at the level the data can support, and say so</h1>
+
+  <div class="callout">
+    <p><b>Five numbers that are not the same thing.</b> <i>Correlation</i> (spend and sales moved together) · <i>attributed conversions</i> (a platform or model assigned credit) · <i>modelled contribution</i> (MMM estimate, assumption-dependent) · <i>experimental lift</i> (randomized or quasi-experimental difference) · <i>incremental profit</i> (lift × margin − media − fees − discount and return costs). Reports label every figure with which one it is.</p>
+  </div>
+
+  <h2>Measurement ladder by data maturity</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Tier</th><th>Entry condition</th><th>Methods used</th><th>Not used</th><th>Decisions it can support</th></tr></thead>
+    <tbody>
+      <tr><td><b>L0</b> Reporting</td><td>&lt;12 months data or tracking breaks</td><td>Financial reporting, contribution margin, cohort basics, qualitative evidence</td><td>MMM, fine-grained attribution</td><td>Fix tracking; protect margin; small reversible tests</td></tr>
+      <tr><td><b>L1</b> Diagnostic</td><td>12–18 months, 2+ channels</td><td>Platform attribution as diagnostic, pre/post with synthetic control, platform lift studies</td><td>MMM as a decision tool</td><td>Creative and audience choices within channel; flag suspicious ROAS</td></tr>
+      <tr><td><b>L2</b> Causal</td><td>≥18 months; geo-level sales; ≥10–20 comparable regions</td><td>Geo experiments, holdouts, switchback tests</td><td>MMM without calibration</td><td>Channel-level budget shifts</td></tr>
+      <tr><td><b>L3</b> Integrated</td><td>≥2 years weekly data, spend variation, several completed tests</td><td>Bayesian MMM calibrated with test results, forecasting and scenario optimization</td><td>Uncalibrated extrapolation beyond observed spend</td><td>Annual and quarterly budget allocation across channels</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Data sufficiency and failure modes</h3>
+  <ul class="small">
+    <li><span class="t t-s">S</span>Geo tests: practitioner guidance suggests planning a minimum detectable effect of 5–10% over 4–8 weeks, with a cooldown after<a class="ref" href="#sources">[15]</a>; quasi-experiments want roughly 25+ pre-treatment periods and 10–20+ geo units, ideally a year of history<a class="ref" href="#sources">[15]</a>.</li>
+    <li><span class="t t-s">S</span>MMM can mislead badly under default settings: one published synthetic test reported a modelled return of 10.61 for a channel whose true return was 4.20<a class="ref" href="#sources">[14]</a>. Calibrate with experiments and check against known effects.</li>
+    <li><b>Confounders:</b> promotions, price, stockouts, seasonality, competitor activity, PR, distribution changes, platform algorithm shifts, tracking changes.</li>
+    <li><b>Small brands:</b> when power is too low, do not pretend. Use larger, longer, reversible changes; Bayesian priors from the library; and state the decision as a bet with a review date.</li>
+  </ul>
+
+  <h3>From evidence to decision</h3>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Evidence</th><th>Changes which choice</th><th>Approver</th><th>Speed</th><th>Evaluated by</th></tr></thead>
+    <tbody>
+      <tr><td>Test shows channel lift below breakeven at current spend</td><td>Budget down 20–50% for that channel</td><td>Client approver</td><td>Within 1 week</td><td>Margin trend vs forecast band for 4 weeks</td></tr>
+      <tr><td>Response curve not saturated, test positive</td><td>Budget up in steps ≤20%/week</td><td>Client approver</td><td>2–4 weeks</td><td>Marginal cost per incremental order</td></tr>
+      <tr><td>Creative attribute wins in 3+ tests</td><td>Brief defaults</td><td>Creative producer</td><td>Next brief</td><td>Win rate of new variants</td></tr>
+      <tr><td>Offer raises orders but cuts margin after returns</td><td>Offer withdrawn or reshaped</td><td>Client (offer owner)</td><td>Next cycle</td><td>Contribution per order</td></tr>
+      <tr><td>Audience segment shows higher 90-day value</td><td>Audience and bid targets</td><td>Growth operator within policy</td><td>Days</td><td>Cohort value at 90 days</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Horizons and quality:</b> short tests are read with brand metrics in parallel (search demand for brand terms, direct traffic, survey-based awareness where funded). Every result is netted for discounts, returns, stockouts and sales capacity. Reporting separates <b>causal marketing impact</b> from <b>total company growth</b>, which also depends on product, price, distribution and macro conditions.</p>
+
+  <h2>Autonomy matrix</h2>
+  <p class="small"><span class="pill p-auto">Auto</span> autonomous inside policy · <span class="pill p-appr">Approve</span> explicit client approval · <span class="pill p-human">Human-led</span> human decides, AI supports · <span class="pill p-no">Not automated</span></p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Action</th><th>Mid-sized</th><th>Enterprise CPG</th><th>High-growth</th><th>Limits</th><th>Monitoring &amp; reversibility</th></tr></thead>
+    <tbody>
+      <tr><td>Generate a draft (brief, copy, report)</td><td><span class="pill p-auto">Auto</span></td><td><span class="pill p-auto">Auto</span></td><td><span class="pill p-auto">Auto</span></td><td>Internal only until reviewed</td><td>Versioned; no external effect</td></tr>
+      <tr><td>Publish content (organic, email)</td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-auto">Auto</span> for approved templates</td><td>Approved claims only</td><td>Unpublish possible; sent email is not reversible</td></tr>
+      <tr><td>Launch a campaign</td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-appr">Approve</span></td><td>Within approved monthly budget</td><td>Pause within minutes; spend is not recoverable</td></tr>
+      <tr><td>Change bids or budgets</td><td><span class="pill p-auto">Auto</span> ≤10%/day per channel</td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-auto">Auto</span> ≤20%/day</td><td>Hard monthly cap; total unchanged</td><td>Reverse next day; alerts on pacing</td></tr>
+      <tr><td>Rotate creative within approved set</td><td><span class="pill p-auto">Auto</span></td><td><span class="pill p-auto">Auto</span></td><td><span class="pill p-auto">Auto</span></td><td>Approved assets only</td><td>Reversible</td></tr>
+      <tr><td>Change claims, offers or prices</td><td><span class="pill p-human">Human-led</span></td><td><span class="pill p-human">Human-led</span></td><td><span class="pill p-human">Human-led</span></td><td>Client legal / offer owner</td><td>Price and claim history logged</td></tr>
+      <tr><td>Export customer data</td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-appr">Approve</span></td><td><span class="pill p-appr">Approve</span></td><td>Named destination, DPA in place</td><td>Not reversible; logged</td></tr>
+      <tr><td>Delete customer data</td><td><span class="pill p-no">Not automated</span></td><td><span class="pill p-no">Not automated</span></td><td><span class="pill p-no">Not automated</span></td><td>Data-subject requests via client process</td><td>Irreversible; two-person rule</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>Granting and revoking permission:</b> autonomy levels are written into an action policy annexed to the SOW, set per channel and action, signed by the client approver. Default is recommend-only. A level is raised after 2 clean cycles at the level below, reviewed quarterly, revocable instantly in the workspace (kill switch), and every action records who or what acted, under which policy version. A recommendation never changes anything outside our system; execution is a separate, logged step.</p>
+
+  <h3>Legal and contractual questions for qualified review <span class="t t-q">Q</span></h3>
+  <ul class="small">
+    <li>GDPR roles per data flow (processor vs controller), DPA template, sub-processor list including LLM providers, international transfers.</li>
+    <li><span class="t t-s">S</span>EU AI Act: Article 50 transparency duties applied from 2 Aug 2026; machine-readable marking of AI-generated content for systems already on the market applies from 2 Dec 2026; the Digital Omnibus moved stand-alone high-risk obligations to 2 Dec 2027<a class="ref" href="#sources">[16]</a>. Counsel should confirm our obligations as deployer and provider for generated ad content.</li>
+    <li>Platform terms on agency access, automation and AI-generated ads; consumer-protection and comparative-advertising rules; sector rules for health, food and supplement claims.</li>
+    <li>Liability caps, no-guarantee clauses, IP ownership of generated assets and of the anonymized priors library.</li>
+  </ul>
+  <p class="small muted">This list is a starting point for counsel, not legal clearance.</p>
+</section>
+
+<!-- ============ 7 ECONOMICS ============ -->
+<section class="view" id="v-economics" data-title="Economics" data-n="07" hidden>
+  <p class="eyebrow">07 · Commercial model and unit economics</p>
+  <h1>Fixed fee, banded by spend, with media kept off our books</h1>
+
+  <h2>Pricing options</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Model</th><th>Pros</th><th>Cons and conflicts</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>% of media spend</td><td>Market norm; <span class="t t-s">S</span>commonly reported at 10–20% of spend<a class="ref" href="#sources">[17]</a></td><td>Pays us to recommend more spend; undermines independence</td><td>No</td></tr>
+      <tr><td>Retainer</td><td>Predictable</td><td>Scope creep; weak link to value</td><td>Base of hybrid</td></tr>
+      <tr><td>Subscription (software)</td><td>Scalable</td><td>Buyers want outcomes, not seats</td><td>Measurement-only tier, year 2</td></tr>
+      <tr><td>Usage pricing</td><td>Fits variants and tests</td><td>Hard to forecast for buyers</td><td>Add-on for creative volume</td></tr>
+      <tr><td>Implementation fee</td><td>Pays onboarding cost</td><td>Friction at signing</td><td>Inside paid pilot</td></tr>
+      <tr><td>Performance incentive</td><td>Aligns on outcomes</td><td>Disputes about counterfactuals; rewards luck and seasonality</td><td>Optional, capped at 20% of fee, paid only on pre-registered tests</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><span class="t t-r">R</span><b>Price structure:</b> paid 90-day pilot (€18k <span class="t t-a">A</span>), then a monthly fee banded by spend under management: €6k (&lt;€60k spend), €9k (€60–150k), €13k (€150–300k) <span class="t t-a">A</span>. The fee moves only when the band changes. Clients contract and pay ad platforms directly, so media is never our revenue and we carry no media credit risk. No outcome guarantees.</p>
+
+  <h2>Unit economics calculator</h2>
+  <p class="small">Per client, steady-state month. Defaults are the base case. All inputs are assumptions.</p>
+  <div class="calc box">
+    <div class="inputs" id="calcInputs"></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="kpis" id="calcOut"></div>
+      <div class="status info" id="calcVerdict"></div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn" type="button" data-scn="down">Downside</button>
+    <button class="btn primary" type="button" data-scn="base">Base</button>
+    <button class="btn" type="button" data-scn="up">Upside</button>
+  </div>
+
+  <h3>Scenario table</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Assumption / output</th><th class="num">Downside</th><th class="num">Base</th><th class="num">Upside</th></tr></thead>
+    <tbody>
+      <tr><td>Monthly fee</td><td class="num">€6,000</td><td class="num">€9,000</td><td class="num">€12,000</td></tr>
+      <tr><td>Delivery hours / client-month</td><td class="num">45</td><td class="num">38</td><td class="num">30</td></tr>
+      <tr><td>Loaded cost per hour</td><td class="num">€85</td><td class="num">€85</td><td class="num">€85</td></tr>
+      <tr><td>Software, data, inference</td><td class="num">€600</td><td class="num">€550</td><td class="num">€500</td></tr>
+      <tr><td>Creative production</td><td class="num">€900</td><td class="num">€700</td><td class="num">€600</td></tr>
+      <tr><td><b>Gross profit / month</b></td><td class="num">€675</td><td class="num">€4,520</td><td class="num">€8,350</td></tr>
+      <tr><td><b>Gross margin</b></td><td class="num">11.3%</td><td class="num">50.2%</td><td class="num">69.6%</td></tr>
+      <tr><td>Monthly churn</td><td class="num">5%</td><td class="num">3%</td><td class="num">2%</td></tr>
+      <tr><td>CAC (incl. founder selling time)</td><td class="num">€25,000</td><td class="num">€20,000</td><td class="num">€15,000</td></tr>
+      <tr><td><b>CAC payback</b></td><td class="num">37.0 mo</td><td class="num">4.4 mo</td><td class="num">1.8 mo</td></tr>
+      <tr><td><b>LTV : CAC</b> (gross profit ÷ churn)</td><td class="num">0.5</td><td class="num">7.5</td><td class="num">27.8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Formulas: delivery cost = hours × rate; COGS = delivery + software + creative; gross profit = fee − COGS; payback = CAC ÷ gross profit; LTV = gross profit ÷ monthly churn. <b>Reading:</b> the business only works if delivery hours fall. At €6k and 45 hours it loses money on every client after acquisition. Delivery hours per client-month is the single metric the platform must move.</p>
+
+  <h3>First 12 months, company level</h3>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th></th><th class="num">Downside</th><th class="num">Base</th></tr></thead>
+    <tbody>
+      <tr><td>Paying clients at month 12</td><td class="num">4</td><td class="num">8</td></tr>
+      <tr><td>Revenue, 12 months</td><td class="num">~€145k</td><td class="num">~€405k</td></tr>
+      <tr><td>Operating cost, 12 months (team ramps to 5–6)</td><td class="num">~€300k</td><td class="num">~€380k</td></tr>
+      <tr><td>Net cash need</td><td class="num">~€155k</td><td class="num">~€115k peak deficit (month 6); slightly positive by month 12</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Base revenue: months 4–6 three pilots at €6k/month; months 7–9 five clients at €9k; months 10–12 eight clients at €9k. Downside: two pilots, then two and four clients at €6k. Working capital: monthly invoicing in advance; no media float. Liability: capped at fees paid in the prior 12 months, subject to counsel.</p>
+</section>
+<!-- ============ 8 VALIDATION & ROADMAP ============ -->
+<section class="view" id="v-roadmap" data-title="Validation &amp; roadmap" data-n="08" hidden>
+  <p class="eyebrow">08 · MVP, validation and roadmap</p>
+  <h1>Prove the decision before building the machine</h1>
+
+  <h2>Smallest paid pilot</h2>
+  <div class="box">
+    <p class="small"><b>90 days, €18k, 2–3 design partners.</b> Week 1–2 data-readiness diagnosis; weeks 3–4 margin baseline and first reallocation proposal; weeks 5–10 one pre-registered geo or holdout test plus monthly approvals; weeks 11–12 verdict and renewal decision.</p>
+    <p class="small"><b>Concierge allowed:</b> notebooks instead of a modelling service, spreadsheets for the approval inbox, manual report assembly, manual execution by our operator. <b>Not allowed even in concierge:</b> acting without written approval, invented numbers, unreviewed claims.</p>
+  </div>
+
+  <h2>Capability priorities</h2>
+  <div class="grid3">
+    <div class="box"><h4>P0 (by day 90)</h4><ul class="small"><li>Connectors: Google Ads, Meta, GA4, Shopify/WooCommerce, margin CSV</li><li>Canonical metrics and contribution margin model</li><li>Readiness gate report</li><li>Geo-test design and readout (open-source library wrapped)</li><li>Approval inbox and decision log (simple web app)</li><li>Weekly brief generator with number-match check</li><li>Audit log, tenant isolation, spend caps</li></ul></div>
+    <div class="box"><h4>P1 (months 4–9)</h4><ul class="small"><li>Calibrated Bayesian MMM and scenario workspace</li><li>Execution adapters with dry-run and shadow modes</li><li>Creative brief and variant pipeline with claim checker</li><li>Ops console with hours per workflow</li><li>Marketplace connector for one priority marketplace</li></ul></div>
+    <div class="box"><h4>Deferred</h4><ul class="small"><li>Retail-media and sell-out modules (CPG)</li><li>Self-serve onboarding</li><li>Multi-agent orchestration</li><li>Partner white-label</li><li>Landing-page builder</li></ul></div>
+  </div>
+
+  <h2>Gates</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Gate</th><th>Scale</th><th>Revise</th><th>Stop</th></tr></thead>
+    <tbody>
+      <tr><td>Day 30: problem</td><td>≥8/15 confirm costly doubt; ≥5 ask for a proposal</td><td>Pain real but about execution capacity → reposition</td><td>&lt;4/15 confirm</td></tr>
+      <tr><td>Day 60: willingness to pay</td><td>≥2 paid pilots signed</td><td>Interest only at lower price → test measurement-only tier</td><td>0 pilots from 10 proposals</td></tr>
+      <tr><td>Day 90: value</td><td>≥2 of 3 pilots convert; ≥1 approved reallocation each</td><td>Value seen but data too weak → strengthen gate</td><td>No pilot acts on a recommendation</td></tr>
+      <tr><td>Month 9: scalability</td><td>Hours ≤40 per client-month, falling</td><td>Hours flat → automate top workflows before selling more</td><td>Hours &gt;60 and rising</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>First 30 days: discovery</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Week</th><th>Evidence to build</th><th>Product</th><th>Commercial</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Interview guide; target list of 60 accounts scored with the classification rule</td><td>Data-readiness checklist</td><td>Outreach to warm network</td></tr>
+      <tr><td class="num">2</td><td>10 problem interviews (mid-sized), 2 CPG, 2 growth</td><td>Readiness scoring notebook</td><td>Free 10-minute diagnostic as door opener</td></tr>
+      <tr><td class="num">3</td><td>5 more interviews; 3 data audits with real exports</td><td>Margin model template</td><td>Pilot offer drafted and priced</td></tr>
+      <tr><td class="num">4</td><td>Synthesis; segment scores updated</td><td>Brief template</td><td>5–10 pilot proposals sent</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>90-day MVP and pilot plan</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Days</th><th>Product delivery</th><th>Onboarding &amp; commercial</th></tr></thead>
+    <tbody>
+      <tr><td class="num">31–45</td><td>Connectors and canonical model for 2 platforms + store</td><td>Pilot 1 kickoff and diagnosis; legal templates (DPA, SOW, action policy)</td></tr>
+      <tr><td class="num">46–60</td><td>Approval inbox and decision log v0; brief generator</td><td>Pilot 2 kickoff; first reallocation approved in pilot 1</td></tr>
+      <tr><td class="num">61–75</td><td>Geo-test wrapper; audit log and caps</td><td>Tests live in pilots 1–2; pilot 3 signed</td></tr>
+      <tr><td class="num">76–90</td><td>Hours instrumentation; P1 backlog ranked by hours saved</td><td>Verdicts, renewal conversations, case notes</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>12-month staged roadmap</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>Stage</th><th>Months</th><th>Clients</th><th>Team</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td>Validate</td><td class="num">1–3</td><td class="num">0–3 pilots</td><td>3: commercial founder, marketing scientist, full-stack engineer</td><td>Interviews, pilots, P0</td></tr>
+      <tr><td>Repeat</td><td class="num">4–6</td><td class="num">3–5</td><td>+ growth operator; creative producer on contract</td><td>Standard SOW, playbooks, P1 start</td></tr>
+      <tr><td>Systematize</td><td class="num">7–9</td><td class="num">5–8</td><td>+ data engineer (part-time)</td><td>MMM calibration, adapters, ops console</td></tr>
+      <tr><td>Scale-ready</td><td class="num">10–12</td><td class="num">8–10</td><td>6–7</td><td>Hours per client below 40; client workspace; partner pilot; decision on CPG entry</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><b>One → ten → one hundred clients.</b> At 1: founders deliver everything; write down every step. At 10: pods of one operator per 5–6 clients and one marketing scientist per 10–12; weekly cadence runs from the platform. At 100: about 40–50 people <span class="t t-a">A</span>, pods by vertical, self-serve onboarding, partner channel through independent agencies, and the priors library is the main reason clients stay.</p>
+  <p class="small muted">Effort ranges, P0: 2 engineers × 10–12 weeks plus marketing scientist half-time. P1: 2–3 engineers × 6 months. Cost assumptions are in section 07.</p>
+</section>
+
+<!-- ============ 9 ARTEFACTS ============ -->
+<section class="view" id="v-artefacts" data-title="Grounding artefacts" data-n="09" hidden>
+  <p class="eyebrow">09 · Grounding material and next actions</p>
+  <h1>Founder thesis and working documents</h1>
+
+  <div class="box">
+    <h4>One-page founder thesis</h4>
+    <p class="small"><b>Problem.</b> Mid-sized consumer brands spend tens to hundreds of thousands a month on marketing without a trustworthy answer to what that spend returns in margin. Platform reports grade their own work, agencies are paid on volume, and statistics skills are scarce.</p>
+    <p class="small"><b>Insight.</b> As platforms automate execution, the scarce asset becomes independent, causal judgement turned into accountable decisions.</p>
+    <p class="small"><b>Solution.</b> A managed decision cycle on our own platform: readiness gate, margin baseline, scenario plan, approval inbox, guarded execution, pre-registered tests, decision log.</p>
+    <p class="small"><b>Business.</b> Fixed fees banded by spend; no media margin. Service first, software as delivery hours fall; licence the measurement core to independent agencies in year 2; enter CPG through retail-media measurement.</p>
+    <p class="small"><b>Moat.</b> A growing library of calibrated effects by category and channel, each client’s decision history, and a clean governance record.</p>
+    <p class="small"><b>Proof required in 90 days.</b> Two paid pilots, one acted-on reallocation each, delivery hours trending toward 40.</p>
+  </div>
+
+  <h2>Decision log</h2>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>#</th><th>Decision</th><th>Rationale</th><th>Revisit when</th></tr></thead>
+    <tbody>
+      <tr><td class="num">D1</td><td>Beachhead: mid-sized direct-selling consumer brands</td><td>Highest score under realistic founder access; fast learning</td><td>Day 30 interview synthesis</td></tr>
+      <tr><td class="num">D2</td><td>Hybrid managed service + internal platform</td><td>Revenue early, product built from repetition</td><td>Month 9 hours review</td></tr>
+      <tr><td class="num">D3</td><td>Fixed banded fee, no % of media</td><td>Independence is the product</td><td>If 3+ prospects refuse fixed fee</td></tr>
+      <tr><td class="num">D4</td><td>Recommend-only default autonomy</td><td>Trust before speed; liability</td><td>After 2 clean cycles per client</td></tr>
+      <tr><td class="num">D5</td><td>Defer CPG to month 12–18</td><td>Procurement, data access, incumbents</td><td>Funded CPG design partner appears</td></tr>
+      <tr><td class="num">D6</td><td>Open-source models; build policy, inbox, log</td><td>Value is calibration and governance</td><td>If a library is abandoned</td></tr>
+      <tr><td class="num">D7</td><td>Clients pay platforms directly</td><td>No working-capital or credit risk</td><td>Never in year 1</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Assumptions register, ranked by risk</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>Rank</th><th>Assumption</th><th>Impact × uncertainty</th><th>Test</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Buyers pay a fixed fee for decisions, not execution volume</td><td class="num">High × High</td><td>Pilot proposals with price</td></tr>
+      <tr><td class="num">2</td><td>Delivery hours can fall below 40/client-month</td><td class="num">High × High</td><td>Time tracking from pilot 1</td></tr>
+      <tr><td class="num">3</td><td>Enough prospects pass the data gate</td><td class="num">High × Med</td><td>Paid data audits</td></tr>
+      <tr><td class="num">4</td><td>Tests reach adequate power at mid-market spend</td><td class="num">High × Med</td><td>Power analysis on audit data</td></tr>
+      <tr><td class="num">5</td><td>Meta and Google API access granted in time</td><td class="num">Med × Med</td><td>Apply in week 1</td></tr>
+      <tr><td class="num">6</td><td>Founder network yields 15 qualified interviews</td><td class="num">Med × Med</td><td>Outreach week 1</td></tr>
+      <tr><td class="num">7</td><td>3% monthly churn after conversion</td><td class="num">Med × High</td><td>Cohort tracking from month 6</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Customer-research plan</h2>
+  <ul class="small">
+    <li><b>Sample:</b> 15 mid-sized, 5 CPG (brand and media roles), 5 high-growth; mix of owners and marketing leads; at least 5 current agency clients.</li>
+    <li><b>Method:</b> 45-minute problem interviews about past decisions (no pitching in the first 30 minutes); then a paid data audit for willing participants.</li>
+    <li><b>Core questions:</b> last budget change and its evidence; who disagreed; what the agency reports and what finance believes; time spent on reporting; what they would stop paying for.</li>
+    <li><b>Output:</b> coded transcripts, pain frequency and intensity, updated segment scores, pricing reactions. Never transfer mid-market findings to CPG without separate evidence.</li>
+  </ul>
+
+  <h2>Prioritized backlog</h2>
+  <div class="tbl w-mid"><table>
+    <thead><tr><th>#</th><th>Item</th><th>Type</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Apply for Google Ads Basic and Meta Advanced Access</td><td>Dependency</td><td>Long lead time</td></tr>
+      <tr><td class="num">2</td><td>Canonical schema: spend, orders, margin, sessions, decisions, tests</td><td>Data</td><td>Everything depends on it</td></tr>
+      <tr><td class="num">3</td><td>Readiness gate scoring</td><td>Product</td><td>Qualifies clients</td></tr>
+      <tr><td class="num">4</td><td>Contribution margin model with returns and discounts</td><td>Model</td><td>Core promise</td></tr>
+      <tr><td class="num">5</td><td>Decision log + approval inbox v0</td><td>Product</td><td>Trust and moat</td></tr>
+      <tr><td class="num">6</td><td>Geo-test wrapper with pre-registration form</td><td>Model</td><td>Causal evidence</td></tr>
+      <tr><td class="num">7</td><td>Brief generator with number-match check</td><td>AI</td><td>Biggest hour saver early</td></tr>
+      <tr><td class="num">8</td><td>Tenant isolation tests, audit log, spend caps</td><td>Safety</td><td>Before any execution</td></tr>
+      <tr><td class="num">9</td><td>Execution adapters in dry-run and shadow</td><td>Platform</td><td>Before autonomy</td></tr>
+      <tr><td class="num">10</td><td>Calibrated MMM</td><td>Model</td><td>L3 clients</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Pilot offer and draft statement of work</h2>
+  <div class="box">
+    <p class="small"><b>Offer.</b> “Profit-per-euro pilot: in 90 days, a contribution-margin baseline, one tested budget reallocation and a monthly decision cycle your finance team can audit.” Fee €18k, invoiced in three monthly instalments; credited against 3 months of the ongoing fee if converted within 30 days of pilot end <span class="t t-a">A</span>.</p>
+    <details>
+      <summary>Draft SOW outline (for counsel review)</summary>
+      <ol class="small">
+        <li><b>Parties, term:</b> 90 days from data access.</li>
+        <li><b>Scope:</b> diagnosis; margin baseline; up to 2 reallocation proposals; 1 pre-registered test; weekly briefs; final verdict.</li>
+        <li><b>Out of scope:</b> media buying fees, creative production beyond 10 variants, website changes, pricing.</li>
+        <li><b>Client responsibilities:</b> read access within 5 days; margin data; named approver; respond to approvals within 3 working days.</li>
+        <li><b>Action policy:</b> annex listing permitted actions and limits; default recommend-only.</li>
+        <li><b>Acceptance criteria:</b> readiness report delivered; test pre-registered and run to plan or documented reason; verdict delivered.</li>
+        <li><b>Data protection:</b> DPA, sub-processors, deletion on exit, export of decision log.</li>
+        <li><b>No guarantees:</b> no revenue or ROAS guarantee; results depend on client-controlled factors.</li>
+        <li><b>Fees and liability:</b> fixed fee; liability cap; IP: client owns its data and outputs; we keep anonymized, aggregated learnings unless the client opts out.</li>
+      </ol>
+    </details>
+  </div>
+
+  <h2>Client intake questionnaire</h2>
+  <details>
+    <summary>Reusable intake (20 questions)</summary>
+    <ol class="small">
+      <li>Annual revenue band and growth last 12 months</li>
+      <li>Channels you sell through and share of revenue each</li>
+      <li>Monthly paid media by channel</li>
+      <li>Who approves budget changes, and how often</li>
+      <li>Your target for the next 12 months (growth, margin, payback)</li>
+      <li>Gross margin by product line: available? where?</li>
+      <li>Return and discount rates</li>
+      <li>Order history length and platform</li>
+      <li>Analytics and tracking setup; known breaks</li>
+      <li>Do you sell in multiple regions or countries?</li>
+      <li>Stock or capacity constraints</li>
+      <li>Current agencies and what each does</li>
+      <li>Last budget decision you doubted</li>
+      <li>Tests run in the last year and what changed after</li>
+      <li>Creative production process and volume</li>
+      <li>CRM or email tool; consent status</li>
+      <li>Regulated claims in your category?</li>
+      <li>Who must sign data agreements</li>
+      <li>Actions you would never let a partner take</li>
+      <li>What would make the next 90 days a success</li>
+    </ol>
+  </details>
+
+  <h2>Five most important next decisions</h2>
+  <ol class="small">
+    <li><b>Launch geography and entity</b> (Q1): determines platforms, law and sources.</li>
+    <li><b>Who leads marketing science</b>: founder or first hire.</li>
+    <li><b>The 60-account target list</b> and who owns outreach.</li>
+    <li><b>Pilot price test</b>: €18k vs a cheaper data-audit entry offer.</li>
+    <li><b>How the forecasting tool fits</b>: module and lead magnet, or separate product.</li>
+  </ol>
+</section>
+
+<!-- ============ SOURCES / EVIDENCE REGISTER ============ -->
+<section class="view" id="v-sources" data-title="Evidence register" data-n="10" hidden>
+  <p class="eyebrow">10 · Evidence register</p>
+  <h1>Sources behind sourced claims</h1>
+  <p class="small">Retrieved 10 Nov 2026. Type: <b>I</b> independent research or press, <b>V</b> vendor or company claim, <b>D</b> official documentation, <b>L</b> law firm analysis. No interviews, customer data or private documents were used; none exist yet.</p>
+  <div class="tbl w-wide"><table>
+    <thead><tr><th>#</th><th>Claim used</th><th>Source</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Global FMCG sales ~USD 6.6tn in 2025; 5.3% value CAGR 2025–29</td><td><a href="https://www.businesswire.com/news/home/20251205817373/en/Global-FMCG-sales-to-reach-USD6.6-trillion-by-year-end-Euromonitor-International" target="_blank" rel="noopener">Euromonitor via Business Wire</a></td><td>Dec 2025</td><td>I</td><td>High</td></tr>
+      <tr><td class="num">2</td><td>Country top-10 FMCG ranking exists but is gated</td><td><a href="https://go.euromonitor.com/report-fmcg-outlook-and-opportunities.html" target="_blank" rel="noopener">Euromonitor FMCG Outlook</a></td><td>Oct 2025</td><td>I</td><td>—</td></tr>
+      <tr><td class="num">3</td><td>Online ~40% of FMCG sales in China and South Korea; most other APAC offline-led</td><td><a href="https://www.bain.com/es-co/insights/asia-pacific-consumer-products-report-2025/" target="_blank" rel="noopener">Bain &amp; NIQ APAC Consumer Products 2025</a></td><td>Dec 2025</td><td>I</td><td>High</td></tr>
+      <tr><td class="num">4</td><td>Retail media USD 200.4bn 2026, 223.4bn 2027; ex-Amazon growth 9.8% in 2027</td><td><a href="https://campaignlive.com/article/warc-report-predicts-retail-ad-market-hit-200b-2026/1967963" target="_blank" rel="noopener">WARC via Campaign</a></td><td>Aug 2026</td><td>I</td><td>Med (forecast)</td></tr>
+      <tr><td class="num">5</td><td>Global ad spend USD 1.06tn in 2026, +5.0%, digital 69%</td><td><a href="https://www.dentsu.com/hu/en/ad-spend-growth-is-projected-to-slow" target="_blank" rel="noopener">dentsu Global Ad Spend Forecasts</a></td><td>May 2026</td><td>V</td><td>Med (forecast)</td></tr>
+      <tr><td class="num">6</td><td>Omnicom completed IPG acquisition; &gt;USD 25bn pro-forma revenue; Omni platform</td><td><a href="https://marketech-apac.com/omnicom-officially-completes-acquisition-of-ipg-creating-new-global-marketing-giant/" target="_blank" rel="noopener">Marketech APAC</a></td><td>Nov 2025</td><td>I</td><td>High</td></tr>
+      <tr><td class="num">7</td><td>WPP launched Agent Hub on WPP Open</td><td><a href="https://www.wpp.com/en/news/2026/01/wpp-launches-agent-hub-on-wpp-open-providing-clients-with-access-to-advanced-agentic-ai" target="_blank" rel="noopener">WPP press release</a></td><td>Jan 2026</td><td>V</td><td>High (launch); capability claims unverified</td></tr>
+      <tr><td class="num">8</td><td>Holding-group AI platforms compared; WPP Open Pro for SMEs</td><td><a href="https://uk.themedialeader.com/agency-groups-ai-platforms-explained/" target="_blank" rel="noopener">The Media Leader</a></td><td>2026</td><td>I</td><td>Med</td></tr>
+      <tr><td class="num">9</td><td>Meta plan to fully automate ad creation and targeting by end-2026; Advantage+ default for new sales, leads and app campaigns from Feb 2026 (vendor blog)</td><td><a href="https://www.socialmediatoday.com/news/meta-plans-to-enable-fully-ai-automated-ads-by-2026/749604/" target="_blank" rel="noopener">Social Media Today</a>; <a href="https://segwise.ai/blog/meta-advantage-plus-ad-creation-guide" target="_blank" rel="noopener">Segwise</a></td><td>Jun 2025; Jul 2026</td><td>I; V</td><td>Med; Low</td></tr>
+      <tr><td class="num">10</td><td>Google Ads API access levels and daily operation limits</td><td><a href="https://developers.google.com/google-ads/api/docs/access-levels" target="_blank" rel="noopener">Google Ads API docs</a></td><td>2026</td><td>D</td><td>High</td></tr>
+      <tr><td class="num">11</td><td>Meta Marketing API tiers, App Review, per-ad-account quotas</td><td><a href="https://developers.facebook.com/documentation/ads-commerce/marketing-api/overview/rate-limiting" target="_blank" rel="noopener">Meta developer docs</a></td><td>May 2026</td><td>D</td><td>High</td></tr>
+      <tr><td class="num">12</td><td>82% of ANA members had an in-house agency (2023)</td><td><a href="https://ana.net/content/show/id/79185" target="_blank" rel="noopener">ANA</a></td><td>2023</td><td>I</td><td>High; US large advertisers</td></tr>
+      <tr><td class="num">13</td><td>AI-native agency funding: Multiply, Mega, daydream, Gradial</td><td><a href="https://pulse2.com/multiply-9-5-million-raised-for-ai-media-agency-focused-on-self-learning-advertising" target="_blank" rel="noopener">Pulse 2.0</a>; <a href="https://cmotech.uk/story/ai-startup-mega-raises-usd-11-5m-to-rival-ad-agencies" target="_blank" rel="noopener">CMOtech</a>; <a href="https://www.lxahub.com/stories/daydream-raises-15m-to-build-an-ai-native-agency-for-seo" target="_blank" rel="noopener">LXA</a>; <a href="https://pulse2.com/gradial-raises-65-million-series-c-to-build-enterprise-marketing-ai-platform/amp/" target="_blank" rel="noopener">Pulse 2.0</a></td><td>Mar–Jun 2026</td><td>I/V</td><td>High (funding); performance unverified</td></tr>
+      <tr><td class="num">14</td><td>Open-source MMM landscape; data and judgement remain the constraint; synthetic mis-estimate example</td><td><a href="https://martech.org/open-source-made-mmm-cheaper-not-easier/" target="_blank" rel="noopener">MarTech</a>; <a href="https://ppc.land/explaining-meridian/" target="_blank" rel="noopener">PPC Land</a>; <a href="https://thearf-org-unified-admin.s3.amazonaws.com/MSI/2026/MSI_Report_26-106.pdf" target="_blank" rel="noopener">MSI report 26-106</a></td><td>2026</td><td>I</td><td>Med</td></tr>
+      <tr><td class="num">15</td><td>Geo-test design guidance (MDE, duration, pre-periods, geo count)</td><td><a href="https://blckalpaca.at/en/knowledge-base/social-media/paid-social-performance-marketing/conversion-lift-meta-tiktok-platform-lift-tests" target="_blank" rel="noopener">blckalpaca</a>; <a href="https://towardsdatascience.com/why-are-marketers-turning-to-quasi-geo-lift-experiments-and-how-to-plan-them/" target="_blank" rel="noopener">Towards Data Science</a></td><td>2026</td><td>I</td><td>Med (practitioner)</td></tr>
+      <tr><td class="num">16</td><td>EU AI Act dates after the Digital Omnibus</td><td><a href="https://www.gibsondunn.com/eu-ai-act-omnibus-agreement" target="_blank" rel="noopener">Gibson Dunn</a>; <a href="https://www.simmons-simmons.com/en/publications/cmoveo6ke00icuxskpgueb0od/ai-omnibus-update" target="_blank" rel="noopener">Simmons &amp; Simmons</a></td><td>2026</td><td>L</td><td>High; confirm with counsel</td></tr>
+      <tr><td class="num">17</td><td>Agency fees commonly 10–20% of ad spend</td><td><a href="https://limelightmarketing.com/blogs/how-much-does-an-ecommerce-agency-cost-in-2025/" target="_blank" rel="noopener">Limelight</a>; <a href="https://saashero.net/strategy/b2b-agency-pricing-models/" target="_blank" rel="noopener">SaaSHero</a></td><td>2026</td><td>V</td><td>Low (agency self-reports)</td></tr>
+      <tr><td class="num">18</td><td>GLP-1 users ~4.5% of US households drove 43% of growth in muscle-health-claim products (NIQ)</td><td><a href="https://develop.nielseniq.com/global/en/insights/analysis/2026/health-and-wellness-consumer-trends-the-rise-of-the-self-directed-health-consumer/" target="_blank" rel="noopener">NIQ</a></td><td>2026</td><td>I</td><td>Med; US only</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ FEEDBACK FORM ============ -->
+<section class="view" id="v-feedback" data-title="Feedback &amp; contact" data-n="11" hidden>
+  <p class="eyebrow">11 · Feedback and design-partner interest</p>
+  <h1>Tell us where this is wrong</h1>
+  <p>Founders, prospective design partners, engineers and investors: your answers shape the next version. Fields marked * are required.</p>
+  <form class="form box" id="leadForm" novalidate>
+    <label for="f-name">Name *<input id="f-name" name="name" required autocomplete="name"></label>
+    <label for="f-contact">Email or phone *<input id="f-contact" name="contact" required></label>
+    <label for="f-company">Company<input id="f-company" name="company" autocomplete="organization"></label>
+    <label for="f-role">Role
+      <select id="f-role" name="role"><option value="">Choose</option><option>Founder / CEO / owner</option><option>Marketing or growth lead</option><option>Finance</option><option>Agency</option><option>Engineer / data</option><option>Investor</option><option>Other</option></select></label>
+    <label for="f-seg">Which describes your business?
+      <select id="f-seg" name="segment"><option value="">Choose</option><option>Enterprise CPG brand</option><option>Mid-sized established company</option><option>High-growth company</option><option>Not a potential client</option></select></label>
+    <label for="f-spend">Monthly paid media
+      <select id="f-spend" name="spend"><option value="">Choose</option><option>Under €30k</option><option>€30k–€150k</option><option>€150k–€300k</option><option>Over €300k</option><option>Prefer not to say</option></select></label>
+    <div class="full"><span style="font-size:13.5px;font-weight:600">Your interest</span>
+      <div class="checks" id="f-interest">
+        <label><input type="checkbox" value="design partner pilot">Design-partner pilot</label>
+        <label><input type="checkbox" value="data audit">Data audit</label>
+        <label><input type="checkbox" value="investing">Investing</label>
+        <label><input type="checkbox" value="advising">Advising</label>
+        <label><input type="checkbox" value="joining the team">Joining the team</label>
+      </div></div>
+    <label class="full" for="f-decision">A marketing decision you wish you had better evidence for<textarea id="f-decision" name="decision"></textarea></label>
+    <label class="full" for="f-feedback">What in this plan is wrong, missing, or worth testing first?<textarea id="f-feedback" name="feedback"></textarea></label>
+    <label class="full" style="flex-direction:row;font-weight:400;gap:8px;align-items:flex-start"><input type="checkbox" id="f-consent" style="width:auto;margin-top:4px"> I agree that the founders may store these answers and contact me about this project. *</label>
+    <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="btn primary" type="submit" id="f-submit">Send feedback</button>
+      <span class="small muted" id="f-mode">Checking whether answers can be saved here…</span>
+    </div>
+    <div class="full" id="f-status" hidden></div>
+    <div class="full" id="f-copywrap" hidden>
+      <p class="small">Your answers, ready to copy and send to the founders:</p>
+      <div class="copytext" id="f-copy"></div>
+      <button class="btn" type="button" id="f-copybtn" style="margin-top:8px">Copy answers</button>
+    </div>
+  </form>
+</section>
+
+<nav class="pager" id="pager" aria-label="Previous and next section"></nav>
+</div></main>
+</div>
+<script>
+window.LW = {
+  lang: "en",
+  form: { claudeDb: true, endpoint: window.LW_FORM_ENDPOINT || "" },
+  seg: {
+    crit: ["Pain intensity","Ability to pay","Sales-cycle speed","Data availability","Low implementation burden","Founder access","Low competitive intensity","Fits repeatable core"],
+    accessIndex: 5,
+    segs: {
+      cpg: {name:"Enterprise CPG", s:[4,5,1,2,1,1,1,3]},
+      mid: {name:"Mid-sized established", s:[4,3,3,4,3,3,3,4]},
+      hg:  {name:"High-growth", s:[4,3,4,3,4,2,2,3]}
+    },
+    presets: {
+      boot: {w:[15,10,20,15,10,15,5,10], access:{cpg:1,mid:3,hg:2}, note:"Speed to revenue and founder access dominate; enterprise CPG scores lowest."},
+      cpg:  {w:[15,20,5,10,5,25,5,15], access:{cpg:5,mid:3,hg:2}, note:"With real CPG relationships and funding, CPG rises; check whether it overtakes mid-sized before changing the beachhead."},
+      vc:   {w:[15,10,20,10,10,15,5,15], access:{cpg:1,mid:2,hg:4}, note:"A startup network lifts high-growth; it can lead, but its churn and cash risk are higher than this score shows."}
+    }
+  },
+  econ: {
+    locale: "en-GB", pre: "€", post: "",
+    fields: [
+      {k:"fee", l:"Monthly fee (€)", step:500},
+      {k:"hours", l:"Delivery hours / month", step:1},
+      {k:"rate", l:"Loaded cost per hour (€)", step:5},
+      {k:"sw", l:"Software, data, inference (€)", step:50},
+      {k:"creative", l:"Creative production (€)", step:50},
+      {k:"churn", l:"Monthly churn (%)", step:0.5},
+      {k:"cac", l:"Acquisition cost per client (€)", step:1000}
+    ],
+    scen: {
+      down:{fee:6000,hours:45,rate:85,sw:600,creative:900,churn:5,cac:25000},
+      base:{fee:9000,hours:38,rate:85,sw:550,creative:700,churn:3,cac:20000},
+      up:{fee:12000,hours:30,rate:85,sw:500,creative:600,churn:2,cac:15000}
+    }
+  },
+  t: {
+    theme: "Theme", themes: {system:"system", dark:"dark", light:"light"},
+    leads: "leads", criterion: "Criterion", weight: "Weight", weighted: "Weighted score (of 5)",
+    k_gp: "Gross profit / client-month", k_gm: "Gross margin", k_pay: "CAC payback", mo: "mo", never: "never",
+    v_loss: "Each client loses money before acquisition costs. Delivery must stay under {h} hours a month at this fee.",
+    v_weak: "Margin or payback is outside a fundable range (target: ≥50% margin, ≤12-month payback). Gross-margin breakeven is {h} delivery hours.",
+    v_ok: "Viable as a service business. Platform investment should push margin past 55%.",
+    v_great: "Software-like margin. Check that the hours assumption is measured, not hoped for.",
+    labels: {name:"Name", contact:"Contact", company:"Company", role:"Role", segment:"Segment", spend:"Monthly media", interest:"Interest", decision:"Decision needing evidence", feedback:"Feedback on the plan"},
+    copy: "Copy answers", copied: "Copied", selected: "Text selected; copy it",
+    e_required: "Add your name and an email or phone number so the founders can reply.",
+    e_consent: "Tick the consent box so your answers can be stored.",
+    s_copy: "Answers aren’t sent automatically from this page. Copy them below and send them to the founders.",
+    sending: "Sending…", send: "Send feedback", update: "Update feedback",
+    s_saved_db: "Saved. Thank you. You can change your answers and send again; your latest version replaces the earlier one.",
+    s_saved_ep: "Sent. Thank you.",
+    e_save: "Your answers weren’t saved ({c}). Copy them below and send them to the founders.",
+    m_db: "Answers are saved privately for the founders.",
+    m_endpoint: "Answers are sent to the founders when you submit.",
+    m_copy: "This page doesn’t send answers; you’ll get a copyable summary instead."
+  }
+};
+</script>
+<script>
+(function(){
+  "use strict";
+  var C = window.LW || {};
+  var T = C.t || {};
+  var views = Array.prototype.slice.call(document.querySelectorAll("section.view"));
+  var ids = views.map(function(v){ return v.id.slice(2); });
+  var navlist = document.getElementById("navlist");
+  var tabs = document.getElementById("tabs");
+  var pager = document.getElementById("pager");
+  function plain(s){ return s.replace(/&amp;/g,"&"); }
+
+  views.forEach(function(v){
+    var id = v.id.slice(2), title = v.getAttribute("data-title"), n = v.getAttribute("data-n");
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#" + id; a.setAttribute("data-id", id);
+    a.innerHTML = '<span class="n">' + n + '</span><span>' + title + '</span>';
+    li.appendChild(a); navlist.appendChild(li);
+    var t = document.createElement("a");
+    t.href = "#" + id; t.setAttribute("data-id", id); t.innerHTML = title;
+    tabs.appendChild(t);
+  });
+
+  function show(id, scroll){
+    if (ids.indexOf(id) < 0) id = ids[0];
+    views.forEach(function(v){ v.hidden = (v.id !== "v-" + id); });
+    document.querySelectorAll("[data-id]").forEach(function(a){
+      if (a.getAttribute("data-id") === id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    var tab = tabs.querySelector('[data-id="' + id + '"]');
+    if (tab && getComputedStyle(tabs).display !== "none") {
+      try { tab.scrollIntoView({block:"nearest", inline:"center"}); } catch(e){}
+    }
+    var i = ids.indexOf(id);
+    pager.innerHTML = "";
+    if (i > 0) { var p = document.createElement("a"); p.className="btn"; p.href="#"+ids[i-1]; p.textContent = "← " + plain(views[i-1].getAttribute("data-title")); pager.appendChild(p); }
+    else pager.appendChild(document.createElement("span"));
+    if (i < ids.length-1) { var nx = document.createElement("a"); nx.className="btn primary"; nx.href="#"+ids[i+1]; nx.textContent = plain(views[i+1].getAttribute("data-title")) + " →"; pager.appendChild(nx); }
+    if (scroll) window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange", function(){ show((location.hash || "").replace("#",""), true); });
+  show((location.hash || "").replace("#",""), false);
+
+  /* Theme toggle: system -> dark -> light */
+  var themeBtn = document.getElementById("themeBtn");
+  var themeNames = T.themes || {system:"system", dark:"dark", light:"light"};
+  function applyTheme(t){
+    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    themeBtn.textContent = (T.theme || "Theme") + ": " + themeNames[t || "system"];
+  }
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem("lw-theme"); } catch(e){}
+  applyTheme(savedTheme);
+  themeBtn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var next = !cur ? "dark" : (cur === "dark" ? "light" : null);
+    applyTheme(next);
+    try { if (next) localStorage.setItem("lw-theme", next); else localStorage.removeItem("lw-theme"); } catch(e){}
+  });
+
+  /* Segment scoring */
+  var S = C.seg;
+  var sliders = document.getElementById("sliders");
+  var segbars = document.getElementById("segbars");
+  var segnote = document.getElementById("segnote");
+  var segtable = document.getElementById("segtable");
+  var presetSel = document.getElementById("preset");
+  var weights = S.presets.boot.w.slice();
+  var access = Object.assign({}, S.presets.boot.access);
+  S.crit.forEach(function(name, i){
+    var lab = document.createElement("label");
+    lab.setAttribute("for", "w-" + i);
+    lab.innerHTML = '<span>' + name + ' <b id="wv-' + i + '" style="font-family:var(--f-mono);font-weight:500"></b></span>';
+    var inp = document.createElement("input");
+    inp.type = "range"; inp.min = 0; inp.max = 30; inp.step = 1; inp.id = "w-" + i;
+    inp.addEventListener("input", function(){ weights[i] = +inp.value; renderSeg(); });
+    lab.appendChild(inp); sliders.appendChild(lab);
+  });
+  function renderSeg(){
+    var tw = weights.reduce(function(a,b){return a+b;},0) || 1;
+    S.crit.forEach(function(c,i){
+      document.getElementById("w-" + i).value = weights[i];
+      document.getElementById("wv-" + i).textContent = Math.round(weights[i]/tw*100) + "%";
+    });
+    var res = Object.keys(S.segs).map(function(k){
+      var s = S.segs[k].s.slice(); s[S.accessIndex] = access[k];
+      var tot = s.reduce(function(a,v,i){return a + v*weights[i];},0)/tw;
+      return {k:k, name:S.segs[k].name, v:tot, s:s};
+    });
+    var best = res.slice().sort(function(a,b){return b.v-a.v;})[0].k;
+    segbars.innerHTML = "";
+    res.forEach(function(r){
+      var row = document.createElement("div"); row.className = "seg-row";
+      row.innerHTML = '<span>' + r.name + (r.k===best ? ' <span class="pill p-auto">' + T.leads + '</span>' : '') + '</span><div class="bar"><i style="width:' + (r.v/5*100).toFixed(1) + '%"></i></div><b>' + r.v.toFixed(2) + '</b>';
+      segbars.appendChild(row);
+    });
+    segnote.textContent = S.presets[presetSel.value].note;
+    var h = '<thead><tr><th>' + T.criterion + '</th><th class="num">' + T.weight + '</th>' + res.map(function(r){return '<th class="num">'+r.name+'</th>';}).join("") + '</tr></thead><tbody>';
+    S.crit.forEach(function(c,i){
+      h += '<tr><td>' + c + '</td><td class="num">' + Math.round(weights[i]/tw*100) + '%</td>' + res.map(function(r){return '<td class="num">'+r.s[i]+'</td>';}).join("") + '</tr>';
+    });
+    h += '<tr><td><b>' + T.weighted + '</b></td><td></td>' + res.map(function(r){return '<td class="num"><b>'+r.v.toFixed(2)+'</b></td>';}).join("") + '</tr></tbody>';
+    segtable.innerHTML = h;
+  }
+  presetSel.addEventListener("change", function(){
+    var p = S.presets[presetSel.value];
+    weights = p.w.slice(); access = Object.assign({}, p.access); renderSeg();
+  });
+  renderSeg();
+
+  /* Unit economics calculator */
+  var E = C.econ;
+  var ci = document.getElementById("calcInputs");
+  var co = document.getElementById("calcOut");
+  var cv = document.getElementById("calcVerdict");
+  E.fields.forEach(function(f){
+    var lab = document.createElement("label"); lab.setAttribute("for","c-"+f.k); lab.textContent = f.l;
+    var inp = document.createElement("input"); inp.type="number"; inp.id="c-"+f.k; inp.step=f.step; inp.min=0; inp.inputMode="decimal";
+    inp.addEventListener("input", calc);
+    lab.appendChild(inp); ci.appendChild(lab);
+  });
+  function money(n){
+    var s = Math.abs(Math.round(n)).toLocaleString(E.locale);
+    return (n<0?"−":"") + E.pre + s + E.post;
+  }
+  function setScn(name){
+    var s = E.scen[name];
+    E.fields.forEach(function(f){ document.getElementById("c-"+f.k).value = s[f.k] != null ? s[f.k] : 0; });
+    document.querySelectorAll("[data-scn]").forEach(function(b){ b.classList.toggle("primary", b.getAttribute("data-scn")===name); });
+    calc();
+  }
+  function calc(){
+    var v = {}; E.fields.forEach(function(f){ v[f.k] = parseFloat(document.getElementById("c-"+f.k).value) || 0; });
+    var levy = v.levy ? v.fee * v.levy / 100 : 0;
+    var cogs = v.hours * v.rate + v.sw + v.creative + levy;
+    var gp = v.fee - cogs;
+    var gm = v.fee > 0 ? gp / v.fee * 100 : 0;
+    var churn = v.churn / 100;
+    var ltv = churn > 0 ? gp / churn : NaN;
+    var pay = gp > 0 ? v.cac / gp : Infinity;
+    var beh = v.rate > 0 ? (v.fee - v.sw - v.creative - levy) / v.rate : 0;
+    co.innerHTML =
+      '<div class="kpi"><b>' + money(gp) + '</b><span>' + T.k_gp + '</span></div>' +
+      '<div class="kpi"><b>' + gm.toFixed(1) + '%</b><span>' + T.k_gm + '</span></div>' +
+      '<div class="kpi"><b>' + (isFinite(pay) ? pay.toFixed(1) + ' ' + T.mo : T.never) + '</b><span>' + T.k_pay + '</span></div>' +
+      '<div class="kpi"><b>' + (isFinite(ltv) && v.cac>0 ? (ltv / v.cac).toFixed(1) : '—') + '</b><span>LTV : CAC</span></div>';
+    var cls = "ok", msg, h = Math.max(0, beh).toFixed(0);
+    if (gp <= 0) { cls = "err"; msg = T.v_loss.replace("{h}", h); }
+    else if (gm < 40 || pay > 12) { cls = "err"; msg = T.v_weak.replace("{h}", h); }
+    else if (gm < 55) { cls = "info"; msg = T.v_ok; }
+    else { msg = T.v_great; }
+    cv.className = "status " + cls; cv.textContent = msg;
+  }
+  document.querySelectorAll("[data-scn]").forEach(function(b){ b.addEventListener("click", function(){ setScn(b.getAttribute("data-scn")); }); });
+  setScn("base");
+
+  /* Feedback form: claude.ai store (if allowed), else configured endpoint, else copyable summary */
+  var form = document.getElementById("leadForm");
+  var modeEl = document.getElementById("f-mode");
+  var statusEl = document.getElementById("f-status");
+  var copyWrap = document.getElementById("f-copywrap");
+  var copyEl = document.getElementById("f-copy");
+  var copyBtn = document.getElementById("f-copybtn");
+  var db = null, userId = null, mode = "copy";
+  var endpoint = (C.form && C.form.endpoint) || "";
+
+  function setStatus(cls, text){ statusEl.hidden = false; statusEl.className = "full status " + cls; statusEl.textContent = text; }
+  function val(id){ return document.getElementById(id).value.trim(); }
+  function collect(){
+    return {
+      name: val("f-name"), contact: val("f-contact"), company: val("f-company"),
+      role: val("f-role"), segment: val("f-seg"), spend: val("f-spend"),
+      interest: Array.prototype.slice.call(document.querySelectorAll("#f-interest input:checked")).map(function(i){return i.value;}),
+      decision: val("f-decision"), feedback: val("f-feedback"),
+      consent: document.getElementById("f-consent").checked,
+      page: C.lang || "en"
+    };
+  }
+  function asText(d){
+    var L = T.labels;
+    return L.name + ": " + d.name + "\n" + L.contact + ": " + d.contact + "\n" + L.company + ": " + d.company + "\n" + L.role + ": " + d.role +
+      "\n" + L.segment + ": " + d.segment + "\n" + L.spend + ": " + d.spend + "\n" + L.interest + ": " + d.interest.join(", ") +
+      "\n\n" + L.decision + ":\n" + d.decision + "\n\n" + L.feedback + ":\n" + d.feedback;
+  }
+  function showCopy(d){ copyEl.textContent = asText(d); copyWrap.hidden = false; copyBtn.textContent = T.copy; }
+  function selectCopy(){
+    var r = document.createRange(); r.selectNodeContents(copyEl);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    copyBtn.textContent = T.selected;
+  }
+  copyBtn.addEventListener("click", function(){
+    try { navigator.clipboard.writeText(copyEl.textContent).then(function(){ copyBtn.textContent = T.copied; }, selectCopy); }
+    catch(e){ selectCopy(); }
+  });
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var d = collect();
+    if (!d.name || !d.contact) { setStatus("err", T.e_required); return; }
+    if (!d.consent) { setStatus("err", T.e_consent); return; }
+    var btn = document.getElementById("f-submit");
+    if (mode === "copy") { setStatus("info", T.s_copy); showCopy(d); return; }
+    btn.disabled = true; btn.textContent = T.sending;
+    d.submittedAt = new Date().toISOString();
+    var p = mode === "db"
+      ? db.doc("leads/" + userId).set(d)
+      : fetch(endpoint, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body: JSON.stringify(d)})
+          .then(function(r){ if (!r.ok) throw {code: "http_" + r.status}; });
+    p.then(function(){
+      setStatus("ok", mode === "db" ? T.s_saved_db : T.s_saved_ep);
+      btn.disabled = false; btn.textContent = mode === "db" ? T.update : T.send;
+    }, function(err){
+      setStatus("err", T.e_save.replace("{c}", (err && err.code) || "error"));
+      showCopy(d); btn.disabled = false; btn.textContent = T.send;
+    });
+  });
+
+  function useCopy(){ mode = "copy"; modeEl.textContent = T.m_copy; }
+  function useEndpoint(){ mode = "endpoint"; modeEl.textContent = T.m_endpoint; }
+  var canUseClaude = C.form && C.form.claudeDb && window.claude && typeof window.claude.use === "function";
+  if (canUseClaude) {
+    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function(r){
+      db = r[0]; var user = r[1];
+      if (!db || !user) { endpoint ? useEndpoint() : useCopy(); return; }
+      return user.id().then(function(id){
+        if (!id) { endpoint ? useEndpoint() : useCopy(); return; }
+        userId = id;
+        return user.can("data.write").then(function(ok){
+          if (ok === false) { endpoint ? useEndpoint() : useCopy(); return; }
+          mode = "db"; modeEl.textContent = T.m_db;
+          return db.doc("leads/" + id).get().then(function(snap){
+            var v = snap && snap.exists ? snap.data() : null;
+            if (!v) return;
+            ["name","contact","company","decision","feedback"].forEach(function(k){ if (v[k]) document.getElementById("f-" + k).value = v[k]; });
+            if (v.role) document.getElementById("f-role").value = v.role;
+            if (v.segment) document.getElementById("f-seg").value = v.segment;
+            if (v.spend) document.getElementById("f-spend").value = v.spend;
+            document.querySelectorAll("#f-interest input").forEach(function(i){ i.checked = (v.interest || []).indexOf(i.value) >= 0; });
+            document.getElementById("f-consent").checked = !!v.consent;
+            document.getElementById("f-submit").textContent = T.update;
+          }).catch(function(){});
+        });
+      });
+    }).catch(function(){ endpoint ? useEndpoint() : useCopy(); });
+  } else if (endpoint) { useEndpoint(); } else { useCopy(); }
+})();
+</script>
+
+</body>
+</html>

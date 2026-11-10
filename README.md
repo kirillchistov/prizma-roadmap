@@ -57,11 +57,3 @@ Pay attention to Russian laws regarding personal data privacy
 
 - Edit `src/ru/index.html`, run `./build.sh`, run the publish script again. Leave `parked/` untouched.
 - To rotate the password: run `./build.sh` with a new `STATICRYPT_PASSWORD`, republish, and tell viewers. Old "remember me" entries stop working.
-
-## 9. Checklist before sharing
-
-- [ ] Only `dist/` is published. `src/` and `parked/` stay in a private repo or on your machine.
-- [ ] Passphrase is 16+ characters and sent separately from the link.
-- [ ] Readers in Russia get the Yandex link.
-- [ ] The form endpoint stores data in Russia, or is left empty.
-- [ ] You opened the published page in a private browser window and the password worked.

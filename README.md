@@ -2,11 +2,12 @@
 
 
 ```
-src/ru/index.html         Russian plan, the only page that is published
+src/landing/index.html    public landing page, the only page on GitHub Pages
+src/ru/index.html         Russian plan, published only via Yandex after build.sh
 src/index.html            local redirect to src/ru/, not published
 build.sh                  encrypts src/ru/index.html into dist/index.html
 publish-yandex.sh         uploads dist/ to Yandex Object Storage
-publish-github-pages.sh   optional mirror for readers outside Russia
+publish-github-pages.sh   uploads only the landing page to GitHub Pages
 ```
 
 ## 1. Choose where to host
@@ -19,14 +20,17 @@ to be continued
 Requires Node.js 18+.
 
 
-## 4. Publish to GitHub Pages (optional, readers outside Russia)
+## 4. Publish to GitHub Pages
 
-1. Keep this folder in a **private** repository (free on GitHub). `.gitignore` already excludes `dist/` etc.
+Publishes `src/landing/index.html` and nothing else. The plan, `parked/`, and `dist/` stay off that site.
+
+1. Keep this folder in a **private** repository. `.gitignore` already excludes `dist/`.
 2. Run:
    ```bash
-   ./publish-github-pages.sh git@github.com:YOUR-NAME/loopwise-site.git
+   ./publish-github-pages.sh git@github.com:kirillchistov/prizma-roadmap.git
    ```
-   The script refuses to push if it finds unencrypted content in `dist/`.
+   The script stops if the staged site is anything other than the landing page, `robots.txt`, and `.nojekyll`.
+3. In the public repo: **Settings → Pages → Deploy from a branch → `gh-pages` / root**.
 
 ## 5. Publish to Yandex Object Storage
 
@@ -55,5 +59,6 @@ Pay attention to Russian laws regarding personal data privacy
 
 ## 8. Updating and rotating
 
-- Edit `src/ru/index.html`, run `./build.sh`, run the publish script again. Leave `parked/` untouched.
+- Landing: edit `src/landing/index.html`, then run `./publish-github-pages.sh` again.
+- Plan: edit `src/ru/index.html`, run `./build.sh`, then `./publish-yandex.sh`. Leave `parked/` untouched.
 - To rotate the password: run `./build.sh` with a new `STATICRYPT_PASSWORD`, republish, and tell viewers. Old "remember me" entries stop working.

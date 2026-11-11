@@ -19,7 +19,7 @@ mkdir -p dist
 
 $STATICRYPT "src/ru/index.html" -d dist \
   --short --remember "$REMEMBER_DAYS" \
-  --template-title "Loopwise · доступ по паролю" \
+  --template-title "unagency · доступ по паролю" \
   --template-instructions "Введите пароль, полученный от основателей." \
   --template-button "Открыть" \
   --template-placeholder "Пароль" \

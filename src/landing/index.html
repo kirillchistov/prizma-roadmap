@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="Loopwise — управляемый цикл решений о бюджете продвижения для брендов на маркетплейсах. Маржа после комиссий, логистики, скидок и возвратов.">
-<title>Loopwise — маржа на рубль продвижения</title>
+<meta name="description" content="unagency считает ДРР и прибыль сейчас, какой она может быть и какой станет через месяц, квартал и год.">
+<title>unagency — каждый рубль приносит прибыль</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@1,8..60,500;1,8..60,600&display=swap">
@@ -106,6 +106,19 @@ h1 em{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:
 .journal{display:flex;flex-direction:column;gap:8px}
 .j-item{display:grid;grid-template-columns:88px 1fr auto;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px}
 .note{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.sheet{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sheet td{padding:8px 12px;border-bottom:1px solid var(--line)}
+.sheet tr:last-child td{border-bottom:0}
+.sheet td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.sheet tr.total td{background:var(--blue-soft);font-weight:700}
+.sheet tr.dim td{color:var(--muted);font-weight:500}
+.sheet tr.dim td:last-child{color:var(--bad)}
+.horiz{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.horiz article{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.horiz .when{font-size:12px;font-weight:600;color:var(--muted)}
+.horiz b{display:block;font-family:var(--d);font-size:18px;letter-spacing:-.03em;margin:4px 0}
+.horiz p{margin:0;font-size:12px;color:var(--muted)}
+.horiz .up{color:var(--good);font-weight:600}
 .stage-foot{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:10px}
 .play{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
 section{padding:72px 0}
@@ -181,6 +194,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
   .bead{display:none}
   .hero{padding-top:28px}
   h1{font-size:34px}
+  .horiz{grid-template-columns:1fr 1fr}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -193,7 +207,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
 <a class="skip" href="#main">К содержанию</a>
 <header id="topbar">
   <div class="wrap nav">
-    <a class="logo" href="#top">Loopwise</a>
+    <a class="logo" href="#top">unagency</a>
     <nav class="nav-links" id="nav" aria-label="Разделы">
       <a href="#cycle">Цикл</a>
       <a href="#screens">Экраны</a>
@@ -208,9 +222,9 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
 
 <main id="main">
   <div class="wrap hero" id="top">
-    <p class="eyebrow"><i></i>Управляемый цикл решений · Россия</p>
-    <h1>Следующий рубль продвижения должен приносить <em>маржу</em></h1>
-    <p class="lede">Для брендов, у которых заметная доля продаж идёт через Wildberries, Ozon и Яндекс Маркет. Каждый месяц — диагноз, сценарий, подпись и проверка. Кабинеты площадок отчитываются сами о себе. Мы считаем маржу после комиссий, логистики, скидок и возвратов.</p>
+    <p class="eyebrow"><i></i>Управляемый цикл решений</p>
+    <h1>Каждый рубль приносит <em>прибыль</em></h1>
+    <p class="lede">Считайте ДРР и прибыль: какие они сейчас, какими могут быть и какими станут через месяц, квартал и год. С учётом комиссий, логистики, скидок, возвратов, рекламы и остальных затрат.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="#contact"><span class="btn-ico" aria-hidden="true">→</span>Запросить пилот</a>
       <a class="btn" href="#cycle">Как устроен цикл</a>
@@ -219,66 +233,91 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
     <div class="stage" id="stage">
       <div class="rail" role="tablist" aria-label="Шаги цикла">
         <span class="bead" id="bead" style="--i:0"></span>
-        <button class="step-btn" type="button" role="tab" data-step="0" aria-selected="true" aria-controls="screen-0"><b>01</b><span>Готовность</span></button>
-        <button class="step-btn" type="button" role="tab" data-step="1" aria-selected="false" aria-controls="screen-1"><b>02</b><span>Сценарий</span></button>
+        <button class="step-btn" type="button" role="tab" data-step="0" aria-selected="true" aria-controls="screen-0"><b>01</b><span>Проработка</span></button>
+        <button class="step-btn" type="button" role="tab" data-step="1" aria-selected="false" aria-controls="screen-1"><b>02</b><span>План</span></button>
         <button class="step-btn" type="button" role="tab" data-step="2" aria-selected="false" aria-controls="screen-2"><b>03</b><span>Согласование</span></button>
         <button class="step-btn" type="button" role="tab" data-step="3" aria-selected="false" aria-controls="screen-3"><b>04</b><span>Журнал</span></button>
       </div>
       <div class="screen-frame">
         <article class="screen is-on" id="screen-0" data-screen="0" role="tabpanel">
-          <div class="ui-top"><span class="ui-kicker">Диагностика данных</span><span class="tag good">Уровень L2 · причинность</span></div>
+          <div class="ui-top"><span class="ui-kicker">Проработка · ноябрь</span><span class="tag warn">кабинет и прибыль расходятся</span></div>
           <div class="kpis">
-            <div class="kpi"><b>18 мес.</b><span>чистая история заказов</span></div>
-            <div class="kpi"><b>3 канала</b><span>WB, Ozon, VK Реклама</span></div>
-            <div class="kpi"><b>SKU</b><span>себестоимость сведена</span></div>
+            <div class="kpi"><b>11%</b><span>ДРР в кабинете, реклама ÷ заказы</span></div>
+            <div class="kpi"><b>530 тыс. ₽</b><span>прибыль после всех затрат</span></div>
+            <div class="kpi"><b>1,1 ₽</b><span>прибыли на 1 ₽ рекламы</span></div>
           </div>
-          <ul class="check">
-            <li>Выкупы, возвраты и комиссии сходятся с кабинетом <span class="tag good">да</span></li>
-            <li>Продажи можно разрезать по регионам <span class="tag good">да</span></li>
-            <li>Склады ограничивают гео-тест на двух кластерах <span class="tag warn">ограничение</span></li>
-          </ul>
-          <p class="note">Пример экрана. Цифры иллюстрируют интерфейс, это не результат клиента.</p>
+          <table class="sheet">
+            <tbody>
+              <tr><td>Заказы</td><td>4 200 000 ₽</td></tr>
+              <tr class="dim"><td>Невыкуп и возвраты</td><td>−630 000 ₽</td></tr>
+              <tr><td>Выкупы</td><td>3 570 000 ₽</td></tr>
+              <tr class="dim"><td>Себестоимость</td><td>−1 430 000 ₽</td></tr>
+              <tr class="dim"><td>Комиссии</td><td>−460 000 ₽</td></tr>
+              <tr class="dim"><td>Логистика</td><td>−390 000 ₽</td></tr>
+              <tr class="dim"><td>Скидки</td><td>−280 000 ₽</td></tr>
+              <tr class="dim"><td>Реклама</td><td>−480 000 ₽</td></tr>
+              <tr class="total"><td>Прибыль сейчас</td><td>530 000 ₽</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Пример экрана, не результат клиента. Кабинет показывает окупаемость около 9×. После затрат на рубль рекламы остаётся 1,1 ₽.</p>
         </article>
         <article class="screen" id="screen-1" data-screen="1" role="tabpanel" hidden>
-          <div class="ui-top"><span class="ui-kicker">Сценарий на месяц</span><span class="tag">общий бюджет без изменений</span></div>
-          <div class="bars" aria-label="Перераспределение между каналами">
-            <div class="bar-row"><span>Поиск WB</span><div class="track"><i style="--w:62%"></i></div><span class="num">2,4 → 2,0 млн</span></div>
-            <div class="bar-row"><span>Ozon</span><div class="track alt"><i style="--w:44%"></i></div><span class="num">1,1 → 1,1 млн</span></div>
-            <div class="bar-row"><span>VK Реклама</span><div class="track"><i style="--w:38%"></i></div><span class="num">0,6 → 1,0 млн</span></div>
+          <div class="ui-top"><span class="ui-kicker">План прибыли</span><span class="tag">тот же бюджет, 480 тыс. ₽</span></div>
+          <div class="horiz">
+            <article>
+              <span class="when">Сейчас</span>
+              <b>530 тыс.</b>
+              <p>факт, 1,1 ₽ на рубль рекламы</p>
+            </article>
+            <article>
+              <span class="when">Месяц</span>
+              <b>680–760 тыс.</b>
+              <p class="up">может быть уже в этом цикле</p>
+            </article>
+            <article>
+              <span class="when">Квартал</span>
+              <b>2,0–2,3 млн</b>
+              <p>три таких месяца</p>
+            </article>
+            <article>
+              <span class="when">Год</span>
+              <b>8,2–9,1 млн</b>
+              <p>если месяц держится</p>
+            </article>
           </div>
           <div class="kpis" style="margin-top:14px">
-            <div class="kpi"><b>+150–350 тыс.</b><span>ожидаемая маржа, диапазон</span></div>
-            <div class="kpi"><b>3 SKU</b><span>в зоне переноса</span></div>
-            <div class="kpi"><b>1 день</b><span>чтобы вернуть бюджет</span></div>
+            <div class="kpi"><b>+150–230 тыс.</b><span>сколько прибыли может прибавиться за месяц</span></div>
+            <div class="kpi"><b>480 тыс.</b><span>реклама в месяц не растёт</span></div>
+            <div class="kpi"><b>диапазон</b><span>не одна цифра «окупаемости»</span></div>
           </div>
-          <p class="note">Пример экрана. Ширина полос показывает долю канала в сценарии, не доказанный эффект.</p>
+          <p class="note">Пример экрана. Квартал и год — тот же месячный диапазон, повторённый. Это не обещание.</p>
         </article>
         <article class="screen" id="screen-2" data-screen="2" role="tabpanel" hidden>
           <div class="ui-top"><span class="ui-kicker">Входящие · 1 решение</span><span class="tag warn">ждёт подписи</span></div>
           <div class="decision">
-            <h3>Перенести 400 тыс. ₽ с поиска WB на VK Рекламу</h3>
-            <p>Три SKU ухода за собой. Ожидаемо +150–350 тыс. ₽ маржи за 4 недели. Изменение больше 10% по каналу, поэтому само не уходит в кабинет. Отмена на следующий день.</p>
+            <h3>Снять 180 тыс. ₽ со связки, где после возвратов прибыль меньше 1 ₽</h3>
+            <p>ДРР в кабинете 8%, выглядит лучше среднего. После комиссий, логистики, скидки и возвратов связка съедает 70 тыс. ₽. Перенос в связку с 2,4 ₽ прибыли на рубль. Бюджет месяца тот же. Отмена на следующий день.</p>
             <div class="actions">
               <button class="mini yes" type="button" id="approveDemo">Согласовать</button>
               <button class="mini" type="button">Изменить сумму</button>
               <button class="mini" type="button">Отклонить</button>
             </div>
           </div>
-          <p class="note" id="approveNote">Пример экрана. Кнопка ничего не отправляет на площадку.</p>
+          <p class="note" id="approveNote">Пример экрана. Кнопка ничего не отправляет в кабинет.</p>
         </article>
         <article class="screen" id="screen-3" data-screen="3" role="tabpanel" hidden>
-          <div class="ui-top"><span class="ui-kicker">Журнал ноября</span><span class="tag muted">три записи</span></div>
+          <div class="ui-top"><span class="ui-kicker">Журнал · план против факта</span><span class="tag muted">три записи</span></div>
           <div class="journal">
-            <div class="j-item"><span class="num">02 ноя</span><span>Бюджет VK +400 тыс. ₽, поиск WB −400 тыс.</span><span class="tag good">подписано</span></div>
-            <div class="j-item"><span class="num">09 ноя</span><span>Гео-тест внешнего трафика, 6 недель, 12 регионов</span><span class="tag">идёт</span></div>
-            <div class="j-item"><span class="num">16 ноя</span><span>Акция на набор: заказы выросли, маржа после возвратов нет</span><span class="tag warn">к отмене</span></div>
+            <div class="j-item"><span class="num">месяц</span><span>План 680–760 тыс. ₽ прибыли. Факт 710 тыс.</span><span class="tag good">внутри</span></div>
+            <div class="j-item"><span class="num">квартал</span><span>План 2,0–2,3 млн ₽. Прошло 6 недель из 13.</span><span class="tag">идёт</span></div>
+            <div class="j-item"><span class="num">акция</span><span>Заказы +18%, прибыль после возвратов −40 тыс. ₽</span><span class="tag warn">к отмене</span></div>
           </div>
-          <p class="note">Пример экрана. Записи показывают, как выглядит журнал, а не историю реальной компании.</p>
+          <p class="note">Пример экрана. Так видно, сбылся ли план, а не только вырос ли ДРР.</p>
         </article>
       </div>
       <div class="stage-foot">
         <button class="play" type="button" id="playBtn" aria-pressed="true">Пауза</button>
-        <span class="note" id="live" aria-live="polite" style="margin:0">Шаг 1 из 4. Готовность данных.</span>
+        <span class="note" id="live" aria-live="polite" style="margin:0">Шаг 1 из 4. Проработка.</span>
       </div>
     </div>
   </div>
@@ -287,12 +326,12 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
     <div class="wrap">
       <div class="center">
         <h2>Восемь шагов, один <em>вопрос</em></h2>
-        <p class="sub">Куда направить следующий рубль — во внутреннюю рекламу маркетплейса, во внешний трафик или в скидку, — чтобы вырос маржинальный доход. Рекламные деньги идут площадкам напрямую, не через нас.</p>
+        <p class="sub">Куда направить следующий рубль продвижения, скидки или акции, чтобы выросла прибыль после комиссий, логистики, возвратов и рекламы. Рекламные деньги идут площадкам напрямую, не через нас.</p>
       </div>
       <div class="loop" id="loop">
-        <article data-loop="0"><span class="n">01</span><strong>Цель</strong><p>Маржа при заданном росте, потолок бюджета, остатки и касса.</p></article>
-        <article data-loop="1"><span class="n">02</span><strong>Готовность</strong><p>История, каналы, себестоимость. Если порог не пройден, сначала учёт.</p></article>
-        <article data-loop="2"><span class="n">03</span><strong>Сценарий</strong><p>Два-три варианта с диапазоном, внутри уже виденных бюджетов.</p></article>
+        <article data-loop="0"><span class="n">01</span><strong>Цель</strong><p>Прибыль на месяц, квартал и год. Потолок бюджета, остатки и касса.</p></article>
+        <article data-loop="1"><span class="n">02</span><strong>Проработка</strong><p>ДРР в кабинете против прибыли после всех затрат. Если учёт не сходится, сначала он.</p></article>
+        <article data-loop="2"><span class="n">03</span><strong>План</strong><p>Какая прибыль может быть и какой станет через месяц, квартал и год.</p></article>
         <article data-loop="3"><span class="n">04</span><strong>Подпись</strong><p>Всё, что больше 10% по каналу, ждёт человека. По умолчанию только рекомендация.</p></article>
         <article data-loop="4"><span class="n">05</span><strong>Маркировка</strong><p>Без erid запуск не проходит. Кабинеты остаются вашими.</p></article>
         <article data-loop="5"><span class="n">06</span><strong>Маржа</strong><p>Заказы минус комиссия, логистика, скидка, возврат и реклама.</p></article>
@@ -306,50 +345,54 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
     <div class="wrap">
       <div class="center">
         <h2>Так это выглядит <em>в работе</em></h2>
-        <p class="sub">Четыре экрана, которыми пользуется собственник и руководитель маркетинга. Глубже — дизайн теста и исходные ряды, они не стоят на первом экране.</p>
+        <p class="sub">Сначала разница между ДРР и прибылью, потом план на месяц, квартал и год. Цифры ниже — пример интерфейса, не отчёт компании.</p>
       </div>
 
       <div class="split">
         <div class="copy">
-          <div class="idx">01 · Готовность</div>
-          <h3>Сначала видно, каким данным можно верить</h3>
-          <p>Отчёт за десять рабочих дней: полнота, длина истории, сходимость выгрузок. Уровень L0–L3 говорит прямо, какой метод ещё рано включать.</p>
+          <div class="idx">01 · Проработка</div>
+          <h3>ДРР в кабинете и прибыль — разные числа</h3>
+          <p>Кабинет делит рекламу на заказы и показывает окупаемость. В прибыль входят ещё себестоимость, комиссии, логистика, скидки и возвраты. Пока их нет в одной таблице, решение о следующем рубле слепое.</p>
           <ul>
-            <li>L0 — починить учёт, без эконометрики</li>
-            <li>L1 — диагностика внутри канала</li>
-            <li>L2 — тест, который может сдвинуть бюджет</li>
+            <li>Сейчас — факт месяца после всех затрат</li>
+            <li>Может быть — если убрать связки, которые прибыль съедают</li>
+            <li>Если выгрузки не сходятся, план не строится</li>
           </ul>
         </div>
         <div class="panel">
-          <div class="ui-top"><span class="ui-kicker">Порог данных</span><span class="tag warn">не L3</span></div>
-          <ul class="check">
-            <li>Месяцев непрерывных продаж <span class="num">18 / 24</span></li>
-            <li>Каналов с дневным расходом <span class="num">3</span></li>
-            <li>Себестоимость SKU <span class="tag good">собрана</span></li>
-            <li>Эконометрика как основа плана <span class="tag warn">рано</span></li>
-          </ul>
-          <p class="note">Если мощности нет, в отчёте так и написано. Модель не дорисовывает точность.</p>
+          <div class="ui-top"><span class="ui-kicker">Пример · один месяц</span><span class="tag warn">ДРР 11% → 1,1 ₽</span></div>
+          <table class="sheet">
+            <tbody>
+              <tr><td>Заказы</td><td>4 200 000 ₽</td></tr>
+              <tr class="dim"><td>Комиссии, логистика, скидки, возвраты</td><td>−1 760 000 ₽</td></tr>
+              <tr class="dim"><td>Себестоимость</td><td>−1 430 000 ₽</td></tr>
+              <tr class="dim"><td>Реклама</td><td>−480 000 ₽</td></tr>
+              <tr class="total"><td>Прибыль</td><td>530 000 ₽</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Пример. 11% ДРР выглядит как девятикратная окупаемость. На рубль рекламы остаётся 1,1 ₽.</p>
         </div>
       </div>
 
       <div class="split reverse">
         <div class="panel">
-          <div class="ui-top"><span class="ui-kicker">Сравнение сценариев</span><span class="tag">ноябрь</span></div>
-          <div class="bars">
-            <div class="bar-row"><span>База</span><div class="track alt"><i style="--w:70%"></i></div><span class="num">4,1 млн ₽</span></div>
-            <div class="bar-row"><span>Перенос</span><div class="track"><i style="--w:70%"></i></div><span class="num">4,1 млн ₽</span></div>
-            <div class="bar-row"><span>Осторожный</span><div class="track alt"><i style="--w:52%"></i></div><span class="num">3,2 млн ₽</span></div>
+          <div class="ui-top"><span class="ui-kicker">План · тот же рекламный бюджет</span><span class="tag">пример</span></div>
+          <div class="horiz">
+            <article><span class="when">Сейчас</span><b>530 тыс.</b><p>факт</p></article>
+            <article><span class="when">Месяц</span><b>680–760</b><p class="up">тыс. ₽</p></article>
+            <article><span class="when">Квартал</span><b>2,0–2,3</b><p>млн ₽</p></article>
+            <article><span class="when">Год</span><b>8,2–9,1</b><p>млн ₽</p></article>
           </div>
-          <p class="note">Общий бюджет в сценарии «перенос» тот же. Меняется смесь каналов, не размер счёта площадкам.</p>
+          <p class="note">Пример диапазона, не прогноз для конкретной компании. Реклама остаётся 480 тыс. ₽ в месяц.</p>
         </div>
         <div class="copy">
-          <div class="idx">02 · Сценарий</div>
-          <h3>Бюджет не растёт только потому, что так удобнее отчёту</h3>
-          <p>Предложение показывает диапазон, а не одну «доходность». За пределами бюджетов, которые бренд уже тратил, план не экстраполируется.</p>
+          <div class="idx">02 · План</div>
+          <h3>Видно, какой прибыль может быть и какой станет</h3>
+          <p>План не предлагает поднять бюджет, чтобы отчёт выглядел лучше. Он показывает диапазон прибыли на месяц, квартал и год при тех же затратах — и что должно сбыться, чтобы верхняя граница стала фактом.</p>
           <ul>
-            <li>Внутренняя реклама против внешнего трафика</li>
-            <li>Скидка как отдельный рычаг, не как «бесплатная продажа»</li>
-            <li>Остатки и оборачиваемость — ограничение, не фон</li>
+            <li>Сейчас и «может быть» стоят рядом с фактом</li>
+            <li>Скидка считается затратой, не бесплатной продажей</li>
+            <li>За пределами уже потраченных бюджетов план не экстраполируется</li>
           </ul>
         </div>
       </div>
@@ -380,8 +423,8 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
         <div class="panel">
           <div class="ui-top"><span class="ui-kicker">Карточка теста</span><span class="tag">зарегистрирован до старта</span></div>
           <ul class="check">
-            <li>Гипотеза <span>внешний трафик даёт прирост сверх органики WB</span></li>
-            <li>Метрика <span class="num">маржа на заказ</span></li>
+            <li>Гипотеза <span>перенос бюджета растит прибыль, а не только заказы</span></li>
+            <li>Метрика <span class="num">прибыль после затрат</span></li>
             <li>Минимальный эффект <span class="num">8%</span></li>
             <li>Срок <span class="num">6 недель + затухание</span></li>
             <li>Регионов в дизайне <span class="num">12</span></li>
@@ -439,27 +482,27 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
   <section id="who">
     <div class="wrap">
       <div class="center">
-        <h2>Один тип клиента <em>на старте</em></h2>
-        <p class="sub">Средний потребительский бренд в России. Крупный FMCG и самообслуживаемый кабинет — позже, если вообще. Диапазоны ниже рабочие, их ещё предстоит подтвердить разговорами.</p>
+        <h2>Кому это нужно</h2>
+        <p class="sub">Сейчас подробно разбираем продвижение, где ДРР в отчёте не равен прибыли. Целевой круг шире: любой бизнес, которому нужно видеть прибыль сейчас, какой она может быть и какой станет через месяц, квартал и год. Продавец на маркетплейсе — частый случай, не единственный.</p>
       </div>
       <div class="who">
         <article class="card">
           <h3>Подходит, если</h3>
           <ul>
-            <li>Выручка примерно 300 млн – 5 млрд ₽, торговля дольше трёх лет</li>
-            <li>Маркетплейсы дают от 30% продаж</li>
-            <li>Реклама 1,5–15 млн ₽ в месяц на двух и более каналах</li>
-            <li>Есть 18 месяцев заказов и человек, который подписывает бюджет</li>
-            <li>Себестоимость можно собрать за две недели</li>
+            <li>Есть бюджет на продвижение, скидки или акции и человек, который его подписывает</li>
+            <li>В отчёте есть ДРР или окупаемость, но нет прибыли после комиссий, логистики, скидок и возвратов</li>
+            <li>Нужен план на месяц, квартал и год, а не разовая настройка кабинета</li>
+            <li>Себестоимость можно собрать</li>
+            <li>Первый подробный разбор — продвижение. Канал может быть любым</li>
           </ul>
         </article>
         <article class="card">
           <h3>Не берём, если</h3>
           <ul>
             <li>Нужна гарантия выручки или ДРР</li>
-            <li>Нельзя остановить канал ради теста</li>
+            <li>Нельзя остановить канал ради проверки</li>
             <li>Нет истории и нет готовности чинить учёт</li>
-            <li>Задача — имиджевая кампания, PR или полка в федеральной сети</li>
+            <li>Задача — имиджевая кампания без учёта прибыли</li>
             <li>Ожидание, что мы примем рекламные деньги на свой счёт</li>
           </ul>
         </article>
@@ -545,7 +588,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
             <option>Больше 15 млн ₽</option>
           </select>
         </label>
-        <label class="full">Где сомневались в последний раз<textarea name="note" placeholder="Например: подняли бюджет на поиск WB, маржа не сдвинулась"></textarea></label>
+        <label class="full">Где сомневались в последний раз<textarea name="note" placeholder="Например: подняли рекламный бюджет, заказы выросли, прибыль нет"></textarea></label>
         <div class="full"><button class="btn btn-primary" type="submit"><span class="btn-ico" aria-hidden="true">→</span>Собрать сообщение</button></div>
         <div class="status" id="status" hidden></div>
       </form>
@@ -554,13 +597,13 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
 </main>
 
 <footer class="wrap">
-  <span>Loopwise · рабочее название · план для России</span>
+  <span>unagency</span>
   <span>Примеры интерфейса не являются результатами клиентов.</span>
 </footer>
 
 <script>
 (function () {
-  var steps = ["Готовность данных.", "Сценарий бюджета.", "Согласование.", "Журнал и тест."];
+  var steps = ["Проработка.", "План.", "Согласование.", "Журнал."];
   var index = 0;
   var playing = true;
   var timer = null;
@@ -653,7 +696,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px;display:flex;justif
     e.preventDefault();
     var data = new FormData(e.target);
     var text = [
-      "Интерес к пилоту Loopwise",
+      "Интерес к пилоту unagency",
       "Имя: " + data.get("name"),
       "Контакт: " + data.get("contact"),
       "Компания: " + (data.get("company") || "—"),
